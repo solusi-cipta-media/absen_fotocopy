@@ -34,7 +34,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        {{-- <tr>
                             <td class="text-center">1</td>
                             <td class="fw-semibold">P001</td>
                             <td>Agus Salim</td>
@@ -46,14 +46,14 @@
                                 <img class="img-avatar" src="{{asset('media/avatars/asa.jpg') }}" alt="">
                             </td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-sm btn-danger" onclick=delete_data() data-bs-toggle="tooltip" title="Hapus">
+                                <button type="button" class="btn btn-sm btn-danger" onclick="delete_data()" data-bs-toggle="tooltip" title="Hapus">
                                     <i class="fa fa-trash"></i>
                                 </button>
                                 <button type="button" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit" id="btn-edit">
                                     <i class="fa fa-edit"></i>
                                 </button>
                             </td>
-                        </tr>
+                        </tr> --}}
                     </tbody>
                 </table>
             </div>
@@ -125,6 +125,26 @@
 <!-- END Main Container -->
 
 <script>
+    $(document).ready(function () {
+        $('#karyawan_table').DataTable({
+            ajax: {
+                url : "{{route('karyawan')}}",
+                type : 'POST'
+            },
+            serverSide:true,
+            column: [
+                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                {data: 'nip', name: 'nip'},
+                {data: 'nama', name: 'nama'},
+                {data: 'alamat', name: 'alamat'},
+                {data: 'no_ktp', name: 'no_ktp'},
+                {data: 'telepon', name: 'telepon'},
+                {data: 'jenis_kelamin', name: 'jenis_kelamin'},
+                {data: 'foto', name: 'foto'},
+                {data: 'action', name: 'action'}
+            ]
+        });
+    });
     $('#btn-add').on('click', function() {
         $('#add-new').show(500);
         $('#list-karyawan').hide();

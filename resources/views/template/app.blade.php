@@ -318,7 +318,6 @@
                 <!-- Right Section -->
                 <div class="space-x-1">
 
-
                     <!-- Notifications -->
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn btn-sm btn-alt-secondary" id="page-header-notifications" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

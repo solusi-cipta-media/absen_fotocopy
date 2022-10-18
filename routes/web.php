@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KaryawanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,9 +26,7 @@ Route::get('/', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::get('karyawan', function () {
-    return view('karyawan');
-})->name('karyawan');
+Route::get('karyawan', [KaryawanController::class, 'index'])->name('karyawan');
 
 Route::get('mesin', function () {
     return view('mesin');
