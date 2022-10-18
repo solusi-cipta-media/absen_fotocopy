@@ -16,10 +16,11 @@
                     <i class="fa fa-plus mr-5"></i> Register Karyawan
                 </button>
             </div>
-            <div class="block-content block-content-full">
+            <div class="block-content block-content-full table-responsive">
                 <!-- DataTables functionality is initialized with .js-dataTable-responsive class in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive">
-                    <!-- <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons"> -->
+                {{-- <table id="karyawan_table" class="table table-bordered table-striped table-vcenter js-dataTable-responsive"> --}}
+                <table id="karyawan_table" class="table table-bordered table-striped table-vcenter w-100">
+                        <!-- <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons"> -->
                     <thead>
                         <tr>
                             <th class="text-center">#</th>
@@ -127,12 +128,11 @@
 <script>
     $(document).ready(function () {
         $('#karyawan_table').DataTable({
-            ajax: {
-                url : "{{route('karyawan')}}",
-                type : 'POST'
-            },
-            serverSide:true,
-            column: [
+            processing: true,
+            serverSide: true,
+            responsive: true,
+            ajax: "{{ route('karyawan') }}",
+            columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'nip', name: 'nip'},
                 {data: 'nama', name: 'nama'},

@@ -39,6 +39,8 @@
     <!-- jQuery (required for DataTables plugin) -->
     <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
 
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+
 </head>
 
 <body>
@@ -468,39 +470,41 @@
         </div>
         <!-- END Page Container -->
 
-        <!--
-        Codebase JS
+    </body>
+    <!--
+    Codebase JS
 
-        Core libraries and functionality
-        webpack is putting everything together at assets/_js/main/app.js
-    -->
-        <script src="{{ asset('js/codebase.app.min.js') }}"></script>
+    Core libraries and functionality
+    webpack is putting everything together at assets/_js/main/app.js
+-->
+    <script src="{{ asset('js/codebase.app.min.js') }}"></script>
 
-        <!-- Page JS Plugins -->
-        <script src="{{ asset('js/plugins/chart.js/chart.min.js') }}"></script>
+    <!-- Page JS Plugins -->
+    <script src="{{ asset('js/plugins/chart.js/chart.min.js') }}"></script>
 
-        <!-- Page JS Plugins -->
-        <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-        <script src="{{ asset('js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
-        <script src="{{ asset('js/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-        <script src="{{ asset('js/plugins/datatables-responsive-bs5/js/responsive.bootstrap5.min.js') }}"></script>
-        <script src="{{ asset('js/plugins/datatables-buttons/dataTables.buttons.min.js') }}"></script>
-        <script src="{{ asset('js/plugins/datatables-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
-        <script src="{{ asset('js/plugins/datatables-buttons-jszip/jszip.min.js') }}"></script>
-        <script src="{{ asset('js/plugins/datatables-buttons-pdfmake/pdfmake.min.js') }}"></script>
-        <script src="{{ asset('js/plugins/datatables-buttons-pdfmake/vfs_fonts.js') }}"></script>
-        <script src="{{ asset('js/plugins/datatables-buttons/buttons.print.min.js') }}"></script>
-        <script src="{{ asset('js/plugins/datatables-buttons/buttons.html5.min.js') }}"></script>
+    <!-- Page JS Plugins -->
+    <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-responsive-bs5/js/responsive.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons/buttons.html5.min.js') }}"></script>
 
-        <!-- Page JS Code -->
-        <script src="{{ asset('js/pages/be_tables_datatables.min.js') }}"></script>
+    <!-- Page JS Code -->
+    <script src="{{ asset('js/pages/be_tables_datatables.min.js') }}"></script>
 
-        <!-- Page JS Code -->
-        <script src="{{ asset('js/pages/be_pages_dashboard.min.js') }}"></script>
+    <!-- Page JS Code -->
+    <script src="{{ asset('js/pages/be_pages_dashboard.min.js') }}"></script>
 
-        <script src="{{ asset('js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
 
-        </body>
-
-        </html>
+</html>

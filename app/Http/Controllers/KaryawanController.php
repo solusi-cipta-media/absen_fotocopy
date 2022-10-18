@@ -30,7 +30,7 @@ class KaryawanController extends Controller
                                 </button>';
                     return $btndel.$btnedit;
                 })
-                ->rawColumn(['foto', 'action'])
+                ->rawColumns(['foto', 'action'])
                 ->make(true);
         }
         return view('karyawan');
