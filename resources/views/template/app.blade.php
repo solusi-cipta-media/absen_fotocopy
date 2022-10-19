@@ -94,7 +94,7 @@
                             </a>
                             <ul class="list-inline mt-3 mb-0">
                                 <li class="list-inline-item">
-                                    <a class="link-fx text-dual fs-sm fw-semibold text-uppercase" href="{{ asset('design/profil') }}">Agus Salim</a>
+                                    <a class="link-fx text-dual fs-sm fw-semibold text-uppercase" href="{{ route('profil') }}">Agus Salim</a>
                                 </li>
                                 <li class="list-inline-item">
                                     <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
@@ -103,7 +103,7 @@
                                     </a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="link-fx text-dual" href="{{ asset('design') }}">
+                                    <a class="link-fx text-dual" href="{{ route('login') }}">
                                         <i class="fa fa-sign-out-alt"></i>
                                     </a>
                                 </li>
