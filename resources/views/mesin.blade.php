@@ -8,18 +8,18 @@
         <h2 class="content-heading">Data Mesin</h2>
 
         <!-- Dynamic Table Responsive -->
-        <div class="block block-rounded" id="list-karyawan">
+        <div class="block block-rounded" id="list-mesin">
             <div class="block-header block-header-default">
                 <h3 class="block-title">
                     Master Mesin
                 </h3>
                 <button type="button" class="btn btn-outline-primary min-width-125" id="btn-add">
-                    <i class="fa fa-plus mr-5"></i> Register Master
+                    <i class="fa fa-plus mr-5"></i> Register Mesin
                 </button>
             </div>
             <div class="block-content block-content-full">
                 <!-- DataTables functionality is initialized with .js-dataTable-responsive class in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive">
+                <table id="mesin_table" class="table table-bordered table-striped table-vcenter w-100">
                     <!-- <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons"> -->
                     <thead>
                         <tr>
@@ -35,7 +35,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        {{-- <tr>
                             <td class="text-center">1</td>
                             <td class="fw-semibold">121</td>
                             <td>DC286</td>
@@ -52,13 +52,13 @@
                                     <i class="fa fa-edit"></i>
                                 </button>
                             </td>
-                        </tr>
+                        </tr> --}}
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <div class="block block-rounded" id="add-new" style="display: none;">
+        <div class="block block-rounded" id="add-form" style="display: none;">
             <div class="block-header block-header-default">
                 <h3 class="block-title">Register Mesin</h3>
                 <div class="block-options">
@@ -66,49 +66,50 @@
                 </div>
             </div>
             <div class="block-content">
-                <form action="be_forms_elements.html" method="POST" enctype="multipart/form-data" onsubmit="return false;">
+                <form action="" method="POST" enctype="multipart/form-data" >
                     <div class="row push">
                         <div class="col-lg-12 col-xl-12">
+                            @csrf
                             <div class="mb-4">
-                                <label class="form-label" for="example-text-input">Nomor Mesin</label>
-                                <input type="text" class="form-control" id="example-text-input" name="example-text-input">
+                                <label class="form-label" for="nomor">Nomor Mesin</label>
+                                <input type="text" class="form-control" id="nomor" name="nomor" required>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="example-email-input">Serial Number</label>
-                                <input type="text" class="form-control" id="example-email-input" name="example-email-input">
+                                <label class="form-label" for="serial">Serial Number</label>
+                                <input type="text" class="form-control" id="serial" name="serial" required>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="example-textarea-input">Model</label>
-                                <input type="text" class="form-control" id="example-email-input" name="example-email-input">
+                                <label class="form-label" for="model">Model</label>
+                                <input type="text" class="form-control" id="model" name="model" required>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="example-email-input">Asal</label>
-                                <select class="form-select" id="example-select" name="example-select">
-                                    <option value="1">Import</option>
-                                    <option value="1">EX-Customer</option>
+                                <label class="form-label" for="asal">Asal</label>
+                                <select class="form-select" id="asal" name="asal" required>
+                                    <option value="import">Import</option>
+                                    <option value="ex-customer">EX-Customer</option>
                                 </select>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="example-email-input">Meter</label>
-                                <input type="text" class="form-control" id="example-email-input" name="example-email-input">
+                                <label class="form-label" for="meter">Meter</label>
+                                <input type="number" class="form-control" id="meter" name="meter" required>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="example-email-input">Tegangan</label>
-                                <input type="text" class="form-control" id="example-email-input" name="example-email-input">
+                                <label class="form-label" for="tegangan">Tegangan</label>
+                                <input type="text" class="form-control" id="tegangan" name="tegangan" required>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="example-email-input">Status</label>
-                                <select class="form-select" id="example-select" name="example-select">
-                                    <option value="1">Import</option>
-                                    <option value="1">Overhaul</option>
-                                    <option value="2">Ready</option>
+                                <label class="form-label" for="status">Status</label>
+                                <select class="form-select" id="status" name="status" required>
+                                    <option value="import">Import</option>
+                                    <option value="overhaul">Overhaul</option>
+                                    <option value="ready">Ready</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-12 col-xl-12">
                             <div class="mb-4">
                                 <button type="submit" class="btn btn-alt-primary"><i class="si si-cloud-upload"></i> Simpan</button>
-                                <button type="button" class="btn btn-alt-danger" id="clear-form"><i class="si si-close"></i> Clear</button>
+                                <button type="reset" class="btn btn-alt-danger" id="clear-form"><i class="si si-close"></i> Clear</button>
                             </div>
                         </div>
                     </div>
@@ -121,6 +122,75 @@
                 </form>
             </div>
         </div>
+
+
+
+        {{-- edit modal --}}
+        <div class="block block-rounded" id="edit-form" style="display: none;">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">Edit Mesin</h3>
+                <div class="block-options">
+                    <button type="button" class="btn btn-outline-danger min-width-125" id="btn-hide-edit"><i class="fa fa-minus-circle"></i> Sembunyikan</button>
+                </div>
+            </div>
+            <div class="block-content">
+                <form action="" method="POST" enctype="multipart/form-data" >
+                    <div class="row push">
+                        <div class="col-lg-12 col-xl-12">
+                            @csrf
+                            <div class="mb-4">
+                                <label class="form-label" for="nomor">Nomor Mesin</label>
+                                <input type="text" class="form-control" id="nomor" name="nomor" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="serial">Serial Number</label>
+                                <input type="text" class="form-control" id="serial" name="serial" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="model">Model</label>
+                                <input type="text" class="form-control" id="model" name="model" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="asal">Asal</label>
+                                <select class="form-select" id="asal" name="asal" required>
+                                    <option value="import">Import</option>
+                                    <option value="ex-customer">EX-Customer</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="meter">Meter</label>
+                                <input type="number" class="form-control" id="meter" name="meter" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="tegangan">Tegangan</label>
+                                <input type="text" class="form-control" id="tegangan" name="tegangan" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="status">Status</label>
+                                <select class="form-select" id="status" name="status" required>
+                                    <option value="import">Import</option>
+                                    <option value="overhaul">Overhaul</option>
+                                    <option value="ready">Ready</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-xl-12">
+                            <div class="mb-4">
+                                <button type="submit" class="btn btn-alt-primary"><i class="si si-cloud-upload"></i> Simpan</button>
+                                <button type="button" class="btn btn-alt-danger" id="clear-form-edit"><i class="si si-close"></i> Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row-push">
+                        <div class="col-lg-12 col-xl-12">
+                            <button type="submit" class="btn btn-alt-primary"><i class="si si-cloud-upload"></i> Simpan</button>
+                            <button type="button" class="btn btn-alt-danger" id="clear-form"><i class="si si-close"></i> Clear</button>
+                        </div>
+                    </div> -->
+                </form>
+            </div>
+        </div>
+
         <!-- Dynamic Table Responsive -->
     </div>
     <!-- END Page Content -->
@@ -128,23 +198,159 @@
 <!-- END Main Container -->
 
 <script>
-    $('#btn-add').on('click', function() {
-        $('#add-new').show(500);
-        $('#list-karyawan').hide();
+
+    var save_id;
+
+    $(document).ready(function () {
+        $('#mesin_table').DataTable({
+            serverSide: true,
+            responsive: true,
+            ajax: "{{ route('mesin') }}",
+            columns: [
+                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                {data: 'nomor', name: 'nomor'},
+                {data: 'model', name: 'model'},
+                {data: 'serial', name: 'serial'},
+                {data: 'asal', name: 'asal'},
+                {data: 'meter', name: 'meter'},
+                {data: 'tegangan', name: 'tegangan'},
+                {data: 'status', name: 'status'},
+                {data: 'action', name: 'action'}
+            ]
+        });
     });
+
+
+    $('#btn-add').on('click', function() {
+        $('#add-form').show(500);
+        $('#list-mesin').hide();
+    });
+
+    $('#add-form form').on('submit', function (event) { 
+        event.preventDefault();
+        $.ajax({
+            type:'POST',
+            url : "{{route('mesin.add')}}",
+            data : $(this).serializeArray(),
+            success : function (res) {
+                var table = $('#mesin_table').DataTable();
+                table.draw();
+                Swal.fire(
+                    'Created!',
+                    'Data berhasil di tambahkan.',
+                    'success'
+                )
+            },
+            error : function (res) {  
+                var errors = res.responseJSON;
+                if (errors.errors.nomor != null) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Errors',
+                        text: 'Nomor Mesin sudah terdaftar di mesin lain',
+                    })
+                }else if (errors.errors.serial != null) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Errors',
+                        text: 'Serial Number sudah terdaftar di mesin lain',
+                    })
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Errors',
+                        text: 'Nomor Mesin dan Serial Number sudah terdaftar di mesin lain',
+                    })
+                }
+            }
+        });
+    })
 
     $('#btn-hide').on('click', function() {
-        $('#list-karyawan').show(500);
-        $('#add-new').hide();
+        $('#list-mesin').show(500);
+        $('#add-form').hide();
     });
 
-    $('#btn-edit').on('click', function() {
-        $('#add-new').show(500);
-        $('#list-karyawan').hide();
+    $('#btn-hide-edit').on('click', function() {
+        $('#list-mesin').show(500);
+        $('#edit-form').hide();
     });
 
-    function delete_data() {
+    $('#clear-form-edit').on('click', function(){
+        edit_data(save_id);
+    });
+    function edit_data(id) {
+        save_id = id;
+        var url = "{{ route('mesin.get', ':id') }}";
+        url = url.replace(':id', id);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            }
+        });
+        $.ajax({
+            type:'GET',
+            url : url,
+            success : function(res) {
+                $('#edit-form #nomor').val(res.data.nomor);
+                $('#edit-form #serial').val(res.data.serial);
+                $('#edit-form #model').val(res.data.model);
+                $('#edit-form #tegangan').val(res.data.tegangan);
+                $('#edit-form #meter').val(res.data.meter);
+                $('#edit-form #meter').val(res.data.meter);
+                $('#edit-form #asal').children('option').removeAttr('selected');
+                $('#edit-form #asal').children('option[value='+res.data.asal+']').attr('selected','selected');
+                $('#edit-form #status').children('option').removeAttr('selected');
+                $('#edit-form #status').children('option[value='+res.data.status+']').attr('selected', 'selected');
+            }
+        });
+        $('#edit-form').show(500);
+        $('#list-mesin').hide();
+    }
 
+    $('#edit-form form').on('submit', function (event) {
+        event.preventDefault();
+        var url = "{{route('mesin.update', ':id')}}",
+        url = url.replace(':id', save_id);
+        $.ajax({
+            type:'PUT',
+            url : url,
+            data : $(this).serializeArray(),
+            success : function (res) {
+                var table = $('#mesin_table').DataTable();
+                table.draw();
+                Swal.fire(
+                    'Updated!',
+                    'Data berhasil di update.',
+                    'success'
+                )
+            },
+            error : function (res) {  
+                var errors = res.responseJSON;
+                if (errors.errors.nomor != null) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Errors',
+                        text: 'Nomor Mesin sudah terdaftar di mesin lain',
+                    })
+                }else if (errors.errors.serial != null) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Errors',
+                        text: 'Serial Number sudah terdaftar di mesin lain',
+                    })
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Errors',
+                        text: 'Nomor Mesin dan Serial Number sudah terdaftar di mesin lain',
+                    })
+                }
+            }
+        });
+    })
+
+    function delete_data(id) {
         Swal.fire({
             title: 'Apakah Anda Yakin ?',
             text: "Data yang dihapus tidak bisa dikembalikan!",
@@ -155,11 +361,26 @@
             confirmButtonText: 'Ya, hapus saja!'
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire(
-                    'Deleted!',
-                    'Data berhasil di hapus.',
-                    'success'
-                )
+                var url = "{{ route('mesin.delete', ':id') }}";
+                var url = url.replace(':id', id);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    }
+                });
+                $.ajax({
+                    type : 'DELETE',
+                    url : url,
+                    success : function (res) {
+                        table = $('#mesin_table').DataTable();
+                        table.draw();
+                        Swal.fire(
+                            'Deleted!',
+                            'Data berhasil di hapus.',
+                            'success'
+                        )
+                    }
+                });
             }
         })
 
