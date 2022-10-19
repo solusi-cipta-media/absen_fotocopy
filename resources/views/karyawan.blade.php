@@ -232,6 +232,11 @@
     }
 
     function get(url) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            }
+        });
         $.ajax({
             type: 'GET',
             url : url,
