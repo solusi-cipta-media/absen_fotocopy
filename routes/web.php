@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\MesinController;
 use Illuminate\Support\Facades\Route;
@@ -38,9 +39,12 @@ Route::put('mesin/{id}', [MesinController::class , 'update'])->name('mesin.updat
 Route::get('mesin/{id}', [MesinController::class , 'get'])->name('mesin.get');
 Route::delete('mesin/{id}', [MesinController::class , 'destroy'])->name('mesin.delete');
 
-Route::get('customer', function () {
-    return view('customer');
-})->name('customer');
+Route::get('customer',[CustomerController::class, 'index'])->name('customer');
+Route::post('customer',[CustomerController::class, 'store'])->name('customer.store');
+Route::get('customer/code',[CustomerController::class, 'generateCode'])->name('customer.code');
+Route::get('customer/{id}',[CustomerController::class, 'get'])->name('customer.get');
+Route::post('customer/{id}',[CustomerController::class, 'update'])->name('customer.update');
+Route::delete('customer/{id}',[CustomerController::class, 'destroy'])->name('customer.delete');
 
 Route::get('kontrak', function () {
     return view('kontrak');

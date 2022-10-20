@@ -19,7 +19,7 @@
             </div>
             <div class="block-content block-content-full">
                 <!-- DataTables functionality is initialized with .js-dataTable-responsive class in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive">
+                <table id="customer_table"class="table table-bordered table-striped table-vcenter">
                     <!-- <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons"> -->
                     <thead>
                         <tr>
@@ -35,7 +35,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        {{-- <tr>
                             <td class="text-center">1</td>
                             <td class="fw-semibold">KLN-1</td>
                             <td>PT. ABC</td>
@@ -55,13 +55,14 @@
                                     <i class="fa fa-edit"></i>
                                 </button>
                             </td>
-                        </tr>
+                        </tr> --}}
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <div class="block block-rounded" id="add-new" style="display: none;">
+        {{-- Add data form --}}
+        <div class="block block-rounded" id="add-form" style="display: none;">
             <div class="block-header block-header-default">
                 <h3 class="block-title">Register Customer</h3>
                 <div class="block-options">
@@ -69,53 +70,123 @@
                 </div>
             </div>
             <div class="block-content">
-                <form action="be_forms_elements.html" method="POST" enctype="multipart/form-data" onsubmit="return false;">
+                <form action="" method="POST" enctype="multipart/form-data" >
                     <div class="row push">
                         <div class="col-lg-12 col-xl-12">
                             <div class="mb-4">
-                                <label class="form-label" for="example-text-input">Kode</label>
-                                <input type="text" class="form-control" id="example-text-input" name="example-text-input" value="KLN-1" readonly>
+                                <label class="form-label" for="kode">Kode</label>
+                                <input type="text" class="form-control" id="kode" name="kode" readonly>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="example-email-input">Nama</label>
-                                <input type="email" class="form-control" id="example-email-input" name="example-email-input">
+                                <label class="form-label" for="nama">Nama</label>
+                                <input type="text" class="form-control" id="nama" name="nama" required>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="example-textarea-input">Alamat</label>
-                                <textarea class="form-control" id="example-textarea-input" name="example-textarea-input" rows="4"></textarea>
+                                <label class="form-label" for="alamat">Alamat</label>
+                                <textarea class="form-control" id="alamat" name="alamat" rows="4" required></textarea>
                             </div>
                             <div class="row mb-4">
                                 <div class="col-6">
-                                    <label class="form-label" for="example-email-input">Longitude</label>
-                                    <input type="email" class="form-control" id="example-email-input" name="example-email-input">
+                                    <label class="form-label" for="latitude">Latitude</label>
+                                    <input type="text" class="form-control" id="latitude" name="latitude" required>
                                 </div>
                                 <div class="col-6">
-                                    <label class="form-label" for="example-email-input">Latitude</label>
-                                    <input type="email" class="form-control" id="example-email-input" name="example-email-input">
+                                    <label class="form-label" for="longitude">Longitude</label>
+                                    <input type="text" class="form-control" id="longitude" name="longitude" required>
                                 </div>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="example-email-input">Klasifikasi</label>
-                                <select class="form-select" id="example-select" name="example-select">
-                                    <option value="1">Rental</option>
-                                    <option value="2">Kontrak</option>
-                                    <option value="2">Beli</option>
+                                <label class="form-label" for="klasifikasi">Klasifikasi</label>
+                                <select class="form-select" id="klasifikasi" name="klasifikasi" required>
+                                    <option value="rental">Rental</option>
+                                    <option value="kontrak">Kontrak</option>
+                                    <option value="beli">Beli</option>
                                 </select>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="example-email-input">Contact Person</label>
-                                <input type="email" class="form-control" id="example-email-input" name="example-email-input">
+                                <label class="form-label" for="kontak_nama">Contact Person</label>
+                                <input type="text" class="form-control" id="kontak_nama" name="kontak_nama">
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="example-email-input">HP Contact Person</label>
-                                <input type="email" class="form-control" id="example-email-input" name="example-email-input">
+                                <label class="form-label" for="kontak_telepon">HP Contact Person</label>
+                                <input type="text" class="form-control" id="kontak_telepon" name="kontak_telepon">
                             </div>
 
                         </div>
                         <div class="col-lg-12 col-xl-12">
                             <div class="mb-4">
                                 <button type="submit" class="btn btn-alt-primary"><i class="si si-cloud-upload"></i> Simpan</button>
-                                <button type="button" class="btn btn-alt-danger" id="clear-form"><i class="si si-close"></i> Clear</button>
+                                <button type="reset" class="btn btn-alt-danger" id="clear-form"><i class="si si-close"></i> Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row-push">
+                        <div class="col-lg-12 col-xl-12">
+                            <button type="submit" class="btn btn-alt-primary"><i class="si si-cloud-upload"></i> Simpan</button>
+                            <button type="button" class="btn btn-alt-danger" id="clear-form"><i class="si si-close"></i> Clear</button>
+                        </div>
+                    </div> -->
+                </form>
+            </div>
+        </div>
+
+
+        {{-- Edit Data FOrm --}}
+        <div class="block block-rounded" id="edit-form" style="display: none;">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">Edit Customer</h3>
+                <div class="block-options">
+                    <button type="button" class="btn btn-outline-danger min-width-125" id="btn-hide-edit"><i class="fa fa-minus-circle"></i> Sembunyikan</button>
+                </div>
+            </div>
+            <div class="block-content">
+                <form action="" method="POST" enctype="multipart/form-data" >
+                    <div class="row push">
+                        <div class="col-lg-12 col-xl-12">
+                            <div class="mb-4">
+                                <label class="form-label" for="kode">Kode</label>
+                                <input type="text" class="form-control" id="kode" name="kode" readonly>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="nama">Nama</label>
+                                <input type="text" class="form-control" id="nama" name="nama" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="alamat">Alamat</label>
+                                <textarea class="form-control" id="alamat" name="alamat" rows="4" required></textarea>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-6">
+                                    <label class="form-label" for="latitude">Latitude</label>
+                                    <input type="text" class="form-control" id="latitude" name="latitude" required>
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label" for="longitude">Longitude</label>
+                                    <input type="text" class="form-control" id="longitude" name="longitude" required>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="klasifikasi">Klasifikasi</label>
+                                <select class="form-select" id="klasifikasi" name="klasifikasi" required>
+                                    <option value="rental">Rental</option>
+                                    <option value="kontrak">Kontrak</option>
+                                    <option value="beli">Beli</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="kontak_nama">Contact Person</label>
+                                <input type="text" class="form-control" id="kontak_nama" name="kontak_nama">
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="kontak_telepon">HP Contact Person</label>
+                                <input type="text" class="form-control" id="kontak_telepon" name="kontak_telepon">
+                            </div>
+
+                        </div>
+                        <div class="col-lg-12 col-xl-12">
+                            <div class="mb-4">
+                                <button type="submit" class="btn btn-alt-primary"><i class="si si-cloud-upload"></i> Simpan</button>
+                                <button type="reset" class="btn btn-alt-danger" id="clear-form"><i class="si si-close"></i> Clear</button>
                             </div>
                         </div>
                     </div>
@@ -135,23 +206,147 @@
 <!-- END Main Container -->
 
 <script>
+    $(document).ready(function () {
+        $('#customer_table').DataTable({
+            serverSide: true,
+            responsive: true,
+            ajax: "{{ route('customer') }}",
+            columns: [
+                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                {data: 'kode', name: 'kode'},
+                {data: 'nama', name: 'nama'},
+                {data: 'alamat', name: 'alamat'},
+                {data: 'klasifikasi', name: 'klasifikasi'},
+                {data: 'kontak_nama', name: 'kontak_nama'},
+                {data: 'kontak_telepon', name: 'kontak_telepon'},
+                {data: 'lokasi', name: 'lokasi'},
+                {data: 'action', name: 'action'}
+            ]
+        });
+    })
+
+    function generateCode() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            }
+        });
+        $.ajax({
+            type : "GET",
+            url : "{{ route('customer.code') }}",
+            success : function (res) {
+                $('#add-form #kode').val(res.data);
+            }
+        });
+    }
     $('#btn-add').on('click', function() {
-        $('#add-new').show(500);
+        generateCode();
+        $('#add-form').show(500);
         $('#list-karyawan').hide();
+    });
+
+    $('#add-form form').on('submit', function (event){
+        event.preventDefault();
+        $.ajax({
+            type:'POST',
+            url : "{{route('customer.store')}}",
+            data : $(this).serializeArray(),
+            success : function (res) {
+                $('#add-form input').val('');
+                $('#add-form textarea').val('');
+                $('#add-form option').removeAttr('selected');
+                var table = $('#customer_table').DataTable();
+                table.draw();
+                Swal.fire(
+                    'Created!',
+                    'Data berhasil di tambahkan.',
+                    'success'
+                )
+                generateCode();
+            },
+            error : function (res) {  
+                var errors = res.responseJSON;
+                var message;
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Errors',
+                    text: 'Data yang dikirim tidak sesuai'
+                });
+            }
+        });
     });
 
     $('#btn-hide').on('click', function() {
         $('#list-karyawan').show(500);
-        $('#add-new').hide();
+        $('#add-form').hide();
     });
 
-    $('#btn-edit').on('click', function() {
-        $('#add-new').show(500);
+    $('#btn-hide-edit').on('click', function() {
+        $('#list-karyawan').show(500);
+        $('#edit-form').hide();
+    });
+
+    var save_id;
+    function edit_data(id){
+        save_id = id;
+        var url = "{{ route('customer.get',':id') }}";
+        url = url.replace(':id', id);
+        console.log(url);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            }
+        });
+        $.ajax({
+            type : "GET",
+            url : url,
+            success : function (res) {
+                $('#edit-form #kode').val(res.data.kode);
+                $('#edit-form #nama').val(res.data.nama);
+                $('#edit-form #alamat').val(res.data.alamat);
+                $('#edit-form #latitude').val(res.data.latitude);
+                $('#edit-form #longitude').val(res.data.longitude);
+                $('#edit-form option').removeAttr('selected');
+                $('#edit-form option[value='+res.data.klasifikasi+']').attr('selected','selected');
+                $('#edit-form #kontak_nama').val(res.data.kontak_nama);
+                $('#edit-form #kontak_telepon').val(res.data.kontak_telepon);
+            }
+        });
+        $('#edit-form').show(500);
         $('#list-karyawan').hide();
+    }
+
+    $('#edit-form form').on('submit', function (event){
+        event.preventDefault();
+        var url = "{{ route('customer.get',':id') }}";
+        url = url.replace(':id', save_id);
+        $.ajax({
+            type:'POST',
+            url : url,
+            data : $(this).serializeArray(),
+            success : function (res) {
+                var table = $('#customer_table').DataTable();
+                table.draw();
+                Swal.fire(
+                    'Updated!',
+                    'Data berhasil di update.',
+                    'success'
+                )
+            },
+            error : function (res) {  
+                var errors = res.responseJSON;
+                var message;
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Errors',
+                    text: 'Data yang dikirim tidak sesuai'
+                });
+            }
+        });
     });
 
-    function delete_data() {
 
+    function delete_data(id) {
         Swal.fire({
             title: 'Apakah Anda Yakin ?',
             text: "Data yang dihapus tidak bisa dikembalikan!",
@@ -162,11 +357,26 @@
             confirmButtonText: 'Ya, hapus saja!'
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire(
-                    'Deleted!',
-                    'Data berhasil di hapus.',
-                    'success'
-                )
+                var url = "{{ route('customer.delete', ':id') }}";
+                var url = url.replace(':id', id);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    }
+                });
+                $.ajax({
+                    type : 'DELETE',
+                    url : url,
+                    success : function (res) {
+                        table = $('#customer_table').DataTable();
+                        table.draw();
+                        Swal.fire(
+                            'Deleted!',
+                            'Data berhasil di hapus.',
+                            'success'
+                        )
+                    }
+                });
             }
         })
 
