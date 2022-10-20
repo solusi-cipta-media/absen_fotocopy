@@ -5,7 +5,7 @@
 <main id="main-container">
     <!-- Page Content -->
     <!-- User Info -->
-    <div class="bg-image bg-image-bottom" style="background-image: url('{{asset('/media/photos/photo13@2x.jpg')}});">
+    <div class="bg-image bg-image-bottom" style="background-image: url('{{ asset("media/photos/photo13@2x.jpg") }}');">
         <div class="bg-black-75 py-4">
             <div class="content content-full text-center">
                 <!-- Avatar -->

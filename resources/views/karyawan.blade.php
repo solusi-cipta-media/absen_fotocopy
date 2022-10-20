@@ -2,6 +2,7 @@
 @section('content')
 <!-- Main Container -->
 <main id="main-container">
+    @csrf
     <!-- Page Content -->
     <div class="content">
         <h2 class="content-heading">Data Karyawan</h2>
@@ -60,11 +61,13 @@
             </div>
         </div>
 
-        <div class="block block-rounded" id="add-new" style="display: none;">
+
+        {{-- Modal Tambah Data --}}
+        <div class="block block-rounded" id="add-form" style="display: none;">
             <div class="block-header block-header-default">
                 <h3 class="block-title">Register Karyawan</h3>
                 <div class="block-options">
-                    <button type="button" class="btn btn-outline-danger min-width-125" id="btn-hide"><i class="fa fa-minus-circle"></i> Sembunyikan</button>
+                    <button type="button" class="btn btn-outline-danger min-width-125" id="btn-hide-add-form"><i class="fa fa-minus-circle"></i> Sembunyikan</button>
                 </div>
             </div>
             <div class="block-content">
@@ -119,6 +122,67 @@
                 </form>
             </div>
         </div>
+
+        {{-- Modal Edit Data --}}
+        <div class="block block-rounded" id="edit-form" style="display: none;">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">Edit Karyawan</h3>
+                <div class="block-options">
+                    <button type="button" class="btn btn-outline-danger min-width-125" id="btn-hide-edit-form"><i class="fa fa-minus-circle"></i> Sembunyikan</button>
+                </div>
+            </div>
+            <div class="block-content">
+                <form action="" method="POST" enctype="multipart/form-data">
+                    <div class="row push">
+                        <div class="col-lg-12 col-xl-12">
+                            <div class="mb-4">
+                                <label class="form-label" for="nama">Nama</label>
+                                <input type="text" class="form-control" id="nama" name="nama" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="nip">Nomor Induk Karyawan</label>
+                                <input type="text" class="form-control" id="nip" name="nip" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="alamat">Alamat</label>
+                                <textarea class="form-control" id="alamat" name="alamat" rows="4" required></textarea>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="no_ktp">No. KTP</label>
+                                <input type="text" class="form-control" id="no_ktp" name="no_ktp" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="telepon">Handphone</label>
+                                <input type="text" class="form-control" id="telepon" name="telepon" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="jenis_kelamin">Jenis Kelamin</label>
+                                <select class="form-select" id="jenis_kelamin" name="jenis_kelamin">
+                                    <option value="laki-laki">Laki-laki</option>
+                                    <option value="perempuan">Perempuan</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="foto">Photo Karyawan</label>
+                                <input class="form-control" type="file" id="foto" name="foto">
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-xl-12">
+                            <div class="mb-4">
+                                <button type="submit" class="btn btn-alt-primary"><i class="si si-cloud-upload"></i> Simpan</button>
+                                <button type="reset" class="btn btn-alt-danger" id="clear-form"><i class="si si-close"></i> Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row-push">
+                        <div class="col-lg-12 col-xl-12">
+                            <button type="submit" class="btn btn-alt-primary"><i class="si si-cloud-upload"></i> Simpan</button>
+                            <button type="button" class="btn btn-alt-danger" id="clear-form"><i class="si si-close"></i> Clear</button>
+                        </div>
+                    </div> -->
+                </form>
+            </div>
+        </div>
         <!-- Dynamic Table Responsive -->
     </div>
     <!-- END Page Content -->
@@ -128,7 +192,6 @@
 <script>
     $(document).ready(function () {
         $('#karyawan_table').DataTable({
-            processing: true,
             serverSide: true,
             responsive: true,
             ajax: "{{ route('karyawan') }}",
@@ -145,23 +208,110 @@
             ]
         });
     });
+
+    // tambah data karyawan
     $('#btn-add').on('click', function() {
-        $('#add-new').show(500);
+        $('#add-form').show(500);
         $('#list-karyawan').hide();
     });
 
-    $('#btn-hide').on('click', function() {
+    $('#btn-hide-add-form').on('click', function() {
         $('#list-karyawan').show(500);
-        $('#add-new').hide();
+        $('#add-form').hide();
     });
 
-    $('#btn-edit').on('click', function() {
-        $('#add-new').show(500);
+    // edit data karyawan
+    var save_id;
+    function edit_data(id) {
+        save_id = id;
+        var url = "{{ route('karyawan.get', ':id') }}";
+        var url = url.replace(':id', id);
+        get(url);
+        $('#edit-form').show(500);
         $('#list-karyawan').hide();
+    }
+
+    function get(url) {
+        $.ajax({
+            type: 'GET',
+            url : url,
+            success : function (res) {
+                $('#edit-form #nama').val(res.data.nama);
+                $('#edit-form #nip').val(res.data.nip);
+                $('#edit-form #alamat').val(res.data.alamat);
+                $('#edit-form #no_ktp').val(res.data.no_ktp);
+                $('#edit-form #telepon').val(res.data.telepon);
+                $('#edit-form option').removeAttr('selected');
+                $('#edit-form option[value='+res.data.jenis_kelamin+']').attr('selected','selected');
+            }
+        });
+    }
+
+    $('#btn-hide-edit-form').on('click', function() {
+        $('#list-karyawan').show(500);
+        $('#edit-form').hide();
     });
 
-    function delete_data() {
+    // update data
+    $('#edit-form form').on('submit', function (event) {
+        event.preventDefault();
+        var url = "{{ route('karyawan.update', ':id') }}";
+        var url = url.replace(':id', save_id);
+        
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            }
+        });
+        $.ajax({
+          type: "PUT",
+          url: url,
+          data: $(this).serialize(),
+          processData: false,
+          success: function (res) {
+                var url = "{{ route('karyawan.get', ':id') }}";
+                var url = url.replace(':id', save_id);
+                get(url);
+                table = $('#karyawan_table').DataTable();
+                table.draw();
+                Swal.fire(
+                    'Updated!',
+                    'Data berhasil di update.',
+                    'success'
+                )
+            }
+        });
 
+        // $.ajaxSetup({
+        //     headers :{
+        //         'X-XSRF-TOKEN' : '{{ csrf_token() }}'
+        //     }
+        // });
+        // $.ajax({
+        //     type: 'PUT', 
+        //     contentType: false,
+        //     processData: false,
+        //     cache:false,
+        //     url: url,
+        //     data: form,
+            // success: function (res) {
+            //     var url = "{{ route('karyawan.get', ':id') }}";
+            //     var url = url.replace(':id', save_id);
+            //     get(url);
+            //     table = $('#karyawan_table').DataTable();
+            //     table.draw();
+            //     Swal.fire(
+            //         'Updated!',
+            //         'Data berhasil di update.',
+            //         'success'
+            //     )
+            // }
+        // });
+    });
+
+
+    // delete data karyawan
+    function delete_data(id) {
         Swal.fire({
             title: 'Apakah Anda Yakin ?',
             text: "Data yang dihapus tidak bisa dikembalikan!",
@@ -172,15 +322,28 @@
             confirmButtonText: 'Ya, hapus saja!'
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire(
-                    'Deleted!',
-                    'Data berhasil di hapus.',
-                    'success'
-                )
+                var url = "{{ route('karyawan.delete', ':id') }}";
+                var url = url.replace(':id', id);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    }
+                });
+                $.ajax({
+                    type : 'DELETE',
+                    url : url,
+                    success : function (res) {
+                        table = $('#karyawan_table').DataTable();
+                        table.draw();
+                        Swal.fire(
+                            'Deleted!',
+                            'Data berhasil di hapus.',
+                            'success'
+                        )
+                    }
+                });
             }
         })
-
-
     }
 </script>
 @endsection

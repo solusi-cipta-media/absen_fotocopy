@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\MesinController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,14 +29,22 @@ Route::get('/', function () {
 })->name('dashboard');
 
 Route::get('karyawan', [KaryawanController::class, 'index'])->name('karyawan');
+Route::get('karyawan/{id}', [KaryawanController::class, 'get'])->name('karyawan.get');
+Route::put('karyawan/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
+Route::delete('karyawan/{id}', [KaryawanController::class, 'destroy'])->name('karyawan.delete');
 
-Route::get('mesin', function () {
-    return view('mesin');
-})->name('mesin');
+Route::get('mesin', [MesinController::class , 'index'])->name('mesin');
+Route::post('mesin', [MesinController::class , 'store'])->name('mesin.add');
+Route::put('mesin/{id}', [MesinController::class , 'update'])->name('mesin.update');
+Route::get('mesin/{id}', [MesinController::class , 'get'])->name('mesin.get');
+Route::delete('mesin/{id}', [MesinController::class , 'destroy'])->name('mesin.delete');
 
-Route::get('customer', function () {
-    return view('customer');
-})->name('customer');
+Route::get('customer',[CustomerController::class, 'index'])->name('customer');
+Route::post('customer',[CustomerController::class, 'store'])->name('customer.store');
+Route::get('customer/code',[CustomerController::class, 'generateCode'])->name('customer.code');
+Route::get('customer/{id}',[CustomerController::class, 'get'])->name('customer.get');
+Route::post('customer/{id}',[CustomerController::class, 'update'])->name('customer.update');
+Route::delete('customer/{id}',[CustomerController::class, 'destroy'])->name('customer.delete');
 
 Route::get('kontrak', function () {
     return view('kontrak');
