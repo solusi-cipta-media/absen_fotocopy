@@ -233,6 +233,8 @@
             url : "{{route('mesin.add')}}",
             data : $(this).serializeArray(),
             success : function (res) {
+                $('#add-form input').val('');
+                $('#add-form option').removeAttr('selected');
                 var table = $('#mesin_table').DataTable();
                 table.draw();
                 Swal.fire(
@@ -243,25 +245,21 @@
             },
             error : function (res) {  
                 var errors = res.responseJSON;
-                if (errors.errors.nomor != null) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Errors',
-                        text: 'Nomor Mesin sudah terdaftar di mesin lain',
-                    })
+                var message;
+                if (errors.errors.nomor != null && errors.errors.serial != null) {
+                    message = 'Nomor Mesin dan Serial Number sudah terdaftar di mesin lain';
                 }else if (errors.errors.serial != null) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Errors',
-                        text: 'Serial Number sudah terdaftar di mesin lain',
-                    })
+                    message = 'Serial Number sudah terdaftar di mesin lain';
+                }else if (errors.errors.nomor != null){
+                    message = 'Nomor Mesin sudah terdaftar di mesin lain';
                 }else{
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Errors',
-                        text: 'Nomor Mesin dan Serial Number sudah terdaftar di mesin lain',
-                    })
+                    message = 'Error tidak diketahui'
                 }
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Errors',
+                    text: message
+                });
             }
         });
     })
@@ -327,25 +325,21 @@
             },
             error : function (res) {  
                 var errors = res.responseJSON;
-                if (errors.errors.nomor != null) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Errors',
-                        text: 'Nomor Mesin sudah terdaftar di mesin lain',
-                    })
+                var message;
+                if (errors.errors.nomor != null && errors.errors.serial != null) {
+                    message = 'Nomor Mesin dan Serial Number sudah terdaftar di mesin lain';
                 }else if (errors.errors.serial != null) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Errors',
-                        text: 'Serial Number sudah terdaftar di mesin lain',
-                    })
+                    message = 'Serial Number sudah terdaftar di mesin lain';
+                }else if (errors.errors.nomor != null){
+                    message = 'Nomor Mesin sudah terdaftar di mesin lain';
                 }else{
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Errors',
-                        text: 'Nomor Mesin dan Serial Number sudah terdaftar di mesin lain',
-                    })
+                    message = 'Error tidak diketahui'
                 }
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Errors',
+                    text: message
+                });
             }
         });
     })
