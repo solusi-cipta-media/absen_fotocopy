@@ -71,45 +71,45 @@
                 </div>
             </div>
             <div class="block-content">
-                <form action="be_forms_elements.html" method="POST" enctype="multipart/form-data" onsubmit="return false;">
+                <form action="" method="POST" enctype="multipart/form-data">
                     <div class="row push">
                         <div class="col-lg-12 col-xl-12">
                             <div class="mb-4">
-                                <label class="form-label" for="example-text-input">Nama</label>
-                                <input type="text" class="form-control" id="example-text-input" name="example-text-input">
+                                <label class="form-label" for="nama">Nama</label>
+                                <input type="text" class="form-control" id="nama" name="nama" required>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="example-email-input">Nomor Induk Karyawan</label>
-                                <input type="email" class="form-control" id="example-email-input" name="example-email-input">
+                                <label class="form-label" for="nip">Nomor Induk Karyawan</label>
+                                <input type="text" class="form-control" id="nip" name="nip" required>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="example-textarea-input">Alamat</label>
-                                <textarea class="form-control" id="example-textarea-input" name="example-textarea-input" rows="4"></textarea>
+                                <label class="form-label" for="alamat">Alamat</label>
+                                <textarea class="form-control" id="alamat" name="alamat" rows="4" required></textarea>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="example-email-input">No. KTP</label>
-                                <input type="email" class="form-control" id="example-email-input" name="example-email-input">
+                                <label class="form-label" for="no_ktp">No. KTP</label>
+                                <input type="text" class="form-control" id="no_ktp" name="no_ktp" required>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="example-email-input">Handphone</label>
-                                <input type="email" class="form-control" id="example-email-input" name="example-email-input">
+                                <label class="form-label" for="telepon">Handphone</label>
+                                <input type="text" class="form-control" id="telepon" name="telepon" required>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="example-email-input">Jenis Kelamin</label>
-                                <select class="form-select" id="example-select" name="example-select">
-                                    <option value="1">Laki-laki</option>
-                                    <option value="2">Perempuan</option>
+                                <label class="form-label" for="jenis_kelamin">Jenis Kelamin</label>
+                                <select class="form-select" id="jenis_kelamin" name="jenis_kelamin">
+                                    <option value="laki-laki">Laki-laki</option>
+                                    <option value="perempuan">Perempuan</option>
                                 </select>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="example-file-input">Photo Karyawan</label>
-                                <input class="form-control" type="file" id="example-file-input">
+                                <label class="form-label" for="foto">Photo Karyawan</label>
+                                <input class="form-control" type="file" id="foto" name="foto" accept="image/png, image/jpeg" multiple required>
                             </div>
                         </div>
                         <div class="col-lg-12 col-xl-12">
                             <div class="mb-4">
                                 <button type="submit" class="btn btn-alt-primary"><i class="si si-cloud-upload"></i> Simpan</button>
-                                <button type="button" class="btn btn-alt-danger" id="clear-form"><i class="si si-close"></i> Clear</button>
+                                <button type="reset" class="btn btn-alt-danger" id="clear-form"><i class="si si-close"></i> Clear</button>
                             </div>
                         </div>
                     </div>
@@ -164,13 +164,13 @@
                             </div>
                             <div class="mb-4">
                                 <label class="form-label" for="foto">Photo Karyawan</label>
-                                <input class="form-control" type="file" id="foto" name="foto">
+                                <input class="form-control" type="file" id="foto" name="foto" accept="image/png, image/jpeg" multiple>
                             </div>
                         </div>
                         <div class="col-lg-12 col-xl-12">
                             <div class="mb-4">
                                 <button type="submit" class="btn btn-alt-primary"><i class="si si-cloud-upload"></i> Simpan</button>
-                                <button type="reset" class="btn btn-alt-danger" id="clear-form"><i class="si si-close"></i> Clear</button>
+                                <button type="button" onclick="resetEdit()" class="btn btn-alt-danger" id="clear-form"><i class="si si-close"></i> Clear</button>
                             </div>
                         </div>
                     </div>
@@ -231,6 +231,12 @@
         $('#list-karyawan').hide();
     }
 
+    function resetEdit(){
+        var url = "{{ route('karyawan.get', ':id') }}";
+        var url = url.replace(':id', save_id);
+        get(url);
+    }
+
     function get(url) {
         $.ajaxSetup({
             headers: {
@@ -257,23 +263,84 @@
         $('#edit-form').hide();
     });
 
-    // update data
-    $('#edit-form form').on('submit', function (event) {
+
+    // Add data
+    $('#add-form form').on('submit', function (event) {
         event.preventDefault();
-        var url = "{{ route('karyawan.update', ':id') }}";
+        var form = $(this)[0];
+        var data = new FormData(form);
+        var url = "{{ route('karyawan.store', ':id') }}";
         var url = url.replace(':id', save_id);
-        
+    
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
             }
         });
         $.ajax({
-          type: "PUT",
-          url: url,
-          data: $(this).serialize(),
-          processData: false,
-          success: function (res) {
+            type: "POST",
+            enctype: "multipart/form-data",
+            url: url,
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (res) {
+                $('#add-form input').val('');
+                $('#add-form textarea').val('');
+                $('#add-form option').removeAttr('selected');
+                table = $('#karyawan_table').DataTable();
+                table.draw();
+                Swal.fire(
+                    'Created!',
+                    'Data berhasil ditambahkan.',
+                    'success'
+                )
+            },
+            error : function (res) {
+                var errors = res.responseJSON;
+                var message;
+                if (errors.errors.nip != null && errors.errors.no_ktp != null) {
+                    message = 'Nomor Induk Karyawan dan Nomor KTP sudah terdaftar di karyawan lain'
+                }else if (errors.errors.no_ktp != null) {
+                    message = 'Nomor KTP sudah terdaftar di karyawan lain';
+                }else if (errors.errors.nip != null){
+                    message = 'Nomor Induk Karyawan sudah terdaftar di karyawan lain';
+                }else if (errors.errors.foto != null){
+                    message = 'Gambar yang dipilih tidak sesuai';
+                }else{
+                    message = 'Error tidak diketahui';
+                }
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Errors',
+                    text: message,
+                });
+            }
+        });
+    });
+
+    // update data
+    $('#edit-form form').on('submit', function (event) {
+        event.preventDefault();
+        var form = $(this)[0];
+        var data = new FormData(form);
+        var url = "{{ route('karyawan.update', ':id') }}"
+        url = url.replace(':id', save_id);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            }
+        });
+        $.ajax({
+            type: "POST",
+            enctype: "multipart/form-data",
+            url: url,
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (res) {
                 var url = "{{ route('karyawan.get', ':id') }}";
                 var url = url.replace(':id', save_id);
                 get(url);
@@ -284,6 +351,26 @@
                     'Data berhasil di update.',
                     'success'
                 )
+            },
+            error : function (res) {
+                var errors = res.responseJSON;
+                var message;
+                if (errors.errors.nip != null && errors.errors.no_ktp != null) {
+                    message = 'Nomor Induk Karyawan dan Nomor KTP sudah terdaftar di karyawan lain'
+                }else if (errors.errors.no_ktp != null) {
+                    message = 'Nomor KTP sudah terdaftar di karyawan lain';
+                }else if (errors.errors.nip != null){
+                    message = 'Nomor Induk Karyawan sudah terdaftar di karyawan lain';
+                }else if (errors.errors.foto != null){
+                    message = 'Gambar yang dipilih tidak sesuai';
+                }else{
+                    message = 'Error tidak diketahui';
+                }
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Errors',
+                    text: message,
+                });
             }
         });
 
@@ -345,6 +432,9 @@
                             'Data berhasil di hapus.',
                             'success'
                         )
+                    },
+                    error : function (res) {
+                        
                     }
                 });
             }

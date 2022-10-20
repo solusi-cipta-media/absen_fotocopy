@@ -27,8 +27,9 @@ Route::get('/', function () {
 })->name('dashboard');
 
 Route::get('karyawan', [KaryawanController::class, 'index'])->name('karyawan');
+Route::post('karyawan', [KaryawanController::class, 'store'])->name('karyawan.store');
 Route::get('karyawan/{id}', [KaryawanController::class, 'get'])->name('karyawan.get');
-Route::put('karyawan/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
+Route::post('karyawan/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
 Route::delete('karyawan/{id}', [KaryawanController::class, 'destroy'])->name('karyawan.delete');
 
 Route::get('mesin', function () {
