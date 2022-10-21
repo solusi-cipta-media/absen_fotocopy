@@ -72,8 +72,12 @@
                                 <input type="text" class="form-control" id="example-text-input" name="example-text-input">
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="example-email-input">Customer</label>
-                                <input type="email" class="form-control" id="example-email-input" name="example-email-input" value="select2 method">
+                                <label class="form-label" for="customer">Customer</label>
+                                <br>
+                                <select class="select2 form-control" style="width: 100%" id="customer" name="customer_id">
+                                    <option value="1">PT. A</option>
+                                    <option value="2">PT. B</option>
+                                </select>
                             </div>
                             <div class="mb-4">
                                 <label class="form-label" for="example-email-input">Awal Kontrak</label>
@@ -113,8 +117,12 @@
     <!-- END Page Content -->
 </main>
 <!-- END Main Container -->
-
 <script>
+    $(document).ready(function () {
+        $('.select2').select2({
+
+        }); 
+    });
     $('#btn-add').on('click', function() {
         $('#add-new').show(500);
         $('#list-karyawan').hide();
@@ -149,8 +157,6 @@
                 )
             }
         })
-
-
     }
 </script>
 @endsection
