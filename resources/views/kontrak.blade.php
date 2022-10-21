@@ -134,7 +134,7 @@
 
         <div class="block block-rounded" id="edit-form" style="display: none;">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Register Kontrak</h3>
+                <h3 class="block-title">Edit Kontrak</h3>
                 <div class="block-options">
                     <button type="button" class="btn btn-outline-danger min-width-125" id="btn-hide-edit"><i class="fa fa-minus-circle"></i> Sembunyikan</button>
                 </div>
