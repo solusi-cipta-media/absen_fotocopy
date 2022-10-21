@@ -39,7 +39,7 @@
     <!-- jQuery (required for DataTables plugin) -->
     <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css"> --}}
 
     {{-- select 2 --}}
     <link rel="stylesheet" href=" {{ asset('js/plugins/select2/css/select2.css') }}">
@@ -511,8 +511,8 @@
 
 
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js"></script> --}}
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    {{-- <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script> --}}
 
     
 </html>

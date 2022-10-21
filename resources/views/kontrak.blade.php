@@ -19,7 +19,7 @@
             </div>
             <div class="block-content block-content-full">
                 <!-- DataTables functionality is initialized with .js-dataTable-responsive class in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive">
+                <table id="kontrak_table" class="table table-bordered table-striped table-vcenter">
                     <!-- <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons"> -->
                     <thead>
                         <tr>
@@ -34,7 +34,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        {{-- <tr>
                             <td class="text-center">1</td>
                             <td class="fw-semibold">12345</td>
                             <td>PT. ABC</td>
@@ -50,11 +50,30 @@
                                     <i class="fa fa-edit"></i>
                                 </button>
                             </td>
-                        </tr>
+                        </tr> --}}
                     </tbody>
                 </table>
             </div>
         </div>
+
+        {{-- Modal PDF viewer --}}
+        <div class="modal" id="modal_pdf" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Modal title</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
         <div class="block block-rounded" id="add-new" style="display: none;">
             <div class="block-header block-header-default">
@@ -75,8 +94,8 @@
                                 <label class="form-label" for="customer">Customer</label>
                                 <br>
                                 <select class="select2 form-control" style="width: 100%" id="customer" name="customer_id">
-                                    <option value="1">PT. A</option>
-                                    <option value="2">PT. B</option>
+                                    {{-- <option value="1">PT. A</option>
+                                    <option value="2">PT. B</option> --}}
                                 </select>
                             </div>
                             <div class="mb-4">
@@ -119,8 +138,43 @@
 <!-- END Main Container -->
 <script>
     $(document).ready(function () {
-        $('.select2').select2({
+        $('#kontrak_table').DataTable({
+            serverSide: true,
+            responsive: true,
+            ajax: "{{ route('kontrak') }}",
+            columns: [
+                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                {data: 'nomor', name: 'nomor'},
+                {data: 'customer', name: 'customer'},
+                {data: 'awal', name: 'awal'},
+                {data: 'akhir', name: 'akhir'},
+                {data: 'reminder', name: 'reminder'},
+                {data: 'pdf', name: 'pdf'},
+                {data: 'action', name: 'action'}
+            ]
+        });
 
+        $('.select2').select2({
+            placeholder: "Pilih Customer",
+            allowClear: true,
+            ajax: { 
+            url: "{{route('customer.select')}}",
+            type: "post",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                _token: "{{ csrf_token() }}",
+                search: params.term // search term
+                };
+            },
+            processResults: function (res) {
+                return {
+                results: res
+                };
+            },
+            cache: true
+            }
         }); 
     });
     $('#btn-add').on('click', function() {
@@ -137,6 +191,10 @@
         $('#add-new').show(500);
         $('#list-karyawan').hide();
     });
+
+    function openPdf(src) {
+        $('#modal_pdf').modal('show');
+    }
 
     function delete_data() {
 
