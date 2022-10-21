@@ -32,7 +32,7 @@ class KontrakController extends Controller
             })
             ->addColumn('pdf', function ($row)
             {
-                return '<button type="button" onclick="openPdf('.asset($row->pdf).')" class="btn btn-danger"><i class="fa fa-file-pdf"></i> Lihat</button>';
+                return '<button type="button" onclick="openPdf('.$row->id.')" class="btn btn-danger"><i class="fa fa-file-pdf"></i> Lihat</button><a id="link_pdf'.$row->id.'" href="'.asset($row->pdf).'" style="display:none;"></a>';
             })
             ->addColumn('action', function ($row)
             {
@@ -50,4 +50,6 @@ class KontrakController extends Controller
 
         return view('kontrak');
     }
+
+
 }

@@ -19,7 +19,7 @@
             </div>
             <div class="block-content block-content-full">
                 <!-- DataTables functionality is initialized with .js-dataTable-responsive class in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
-                <table id="kontrak_table" class="table table-bordered table-striped table-vcenter">
+                <table id="kontrak_table" class="table table-bordered table-striped table-vcenter w-100">
                     <!-- <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons"> -->
                     <thead>
                         <tr>
@@ -58,18 +58,17 @@
 
         {{-- Modal PDF viewer --}}
         <div class="modal" id="modal_pdf" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title">Modal title</h5>
+                  <h5 class="modal-title">Dokumen Kontrak</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <p>Modal body text goes here.</p>
+                    <iframe src="" frameborder="0" class="w-100" style="height: 400px"></iframe>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
               </div>
             </div>
@@ -192,8 +191,10 @@
         $('#list-karyawan').hide();
     });
 
-    function openPdf(src) {
+    function openPdf(id) {
         $('#modal_pdf').modal('show');
+        url = $('#link_pdf'+id).attr('href');
+        $('#modal_pdf iframe').attr('src', url);
     }
 
     function delete_data() {
