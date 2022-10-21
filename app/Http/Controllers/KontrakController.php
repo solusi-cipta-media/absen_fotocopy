@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Kontrak;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\File;
 use Yajra\DataTables\Facades\DataTables;
 
 class KontrakController extends Controller
 {
-    public function index(Request $request)
-    {
+    public function index(Request $request){
         if ($request->ajax()) {
             $kontraks = Kontrak::all();
             return DataTables::of($kontraks)
@@ -51,5 +51,60 @@ class KontrakController extends Controller
         return view('kontrak');
     }
 
+    public function store(Request $request){
+        $kontrak = new Kontrak;
+        $kontrak->customer_id = $request->customer_id;
+        $kontrak->nomor = $request->nomor;
+        $kontrak->awal = $request->awal;
+        $kontrak->akhir = $request->akhir;
+        $kontrak->reminder = $request->reminder;
 
+        $file = $request->file('pdf');
+        $name = $file->hashName();
+        $file->move('media/kontrak', $name);
+
+        $kontrak->pdf = 'media/kontrak/'.$name;
+        $kontrak->save();
+
+        return response()->json(['message'=>'Data telah ditambahkan'],200);
+    }
+
+    public function update(Request $request, $id){
+        $kontrak = Kontrak::find($id);
+        $kontrak->customer_id = $request->customer_id;
+        $kontrak->nomor = $request->nomor;
+        $kontrak->awal = $request->awal;
+        $kontrak->akhir = $request->akhir;
+        $kontrak->reminder = $request->reminder;
+
+        if ($request->file()) {
+            if(File::exists($kontrak->pdf)){
+                File::delete($kontrak->pdf);
+            }
+            $file = $request->file('pdf');
+            $name = $file->hashName();
+            $file->move('media/kontrak', $name);
+            $kontrak->pdf = 'media/kontrak/'.$name;
+        }
+
+        $kontrak->save();
+
+        return response()->json(['message'=>'Data telah diupdate'],200);
+    }
+
+    public function get($id){
+        $kontrak = Kontrak::find($id);
+
+        return response()->json(['data' => $kontrak, 'message' => 'success'], 200);
+    }
+
+    public function destroy($id){
+
+        $kontrak = Kontrak::find($id);
+        if(File::exists($kontrak->pdf)){
+            File::delete($kontrak->pdf);
+        }
+        $kontrak->delete();
+        return response()->json(['message', 'Data berhasil dihapus'],200);
+    }
 }

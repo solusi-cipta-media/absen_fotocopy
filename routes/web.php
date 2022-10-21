@@ -50,6 +50,10 @@ Route::delete('customer/{id}',[CustomerController::class, 'destroy'])->name('cus
 
 
 Route::get('kontrak', [KontrakController::class, 'index'])->name('kontrak');
+Route::post('kontrak', [KontrakController::class, 'store'])->name('kontrak.store');
+Route::get('kontrak/{id}', [KontrakController::class, 'get'])->name('kontrak.get');
+Route::post('kontrak/{id}', [KontrakController::class, 'update'])->name('kontrak.update');
+Route::delete('kontrak/{id}', [KontrakController::class, 'destroy'])->name('kontrak.delete');
 
 Route::get('cuti', function () {
     return view('cuti');
