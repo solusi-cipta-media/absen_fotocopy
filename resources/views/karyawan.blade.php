@@ -269,8 +269,7 @@
         event.preventDefault();
         var form = $(this)[0];
         var data = new FormData(form);
-        var url = "{{ route('karyawan.store', ':id') }}";
-        var url = url.replace(':id', save_id);
+        var url = "{{ route('karyawan.store') }}";
     
         $.ajaxSetup({
             headers: {
