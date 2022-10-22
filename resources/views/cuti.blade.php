@@ -115,7 +115,9 @@
     var url_get = "{{ route('cuti.get', ':id') }}"; //Get one obj url 
     var url_update = "{{ route('cuti.update', ':id') }}"; //Update url 
     var url_delete = "{{ route('cuti.delete', ':id') }}"; //Delete url
-    var access_token = ["X-CSRF-TOKEN" => "{{ csrf_token() }}"]; //Token
+    var ajax_header = {
+            "X-CSRF-TOKEN" : "{{ csrf_token() }}"
+        }; //Token
 
     // local variable
     var datatable_element = list_element.find('table'); //Init datatable variable
@@ -149,13 +151,12 @@
         }else{
             // For Edit data
             method = 'edit';
+            save_id = id;
             form_header_element.text(form_header_text[1]);
             var url = url_get;
             url = url.replace(':id', id);
             $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': access_token
-                }
+                headers: ajax_header
             });
             $.ajax({
                 type:'GET',
@@ -191,9 +192,7 @@
             var form = $(this)[0];
             var data = new FormData(form);
             $.ajaxSetup({
-                headers: {
-                    
-                }
+                headers: ajax_header
             });
             $.ajax({
                 type: "POST",
@@ -223,95 +222,42 @@
             });
         }else if(method=='edit'){
             //IF Method Edit || Update data
-            console.log("Update");
+            event.preventDefault();
+            var url = url_update;
+            url = url.replace(':id', save_id);
+            var form = $(this)[0];
+            var data = new FormData(form);
+            $.ajaxSetup({
+                headers: ajax_header
+            });
+            $.ajax({
+                type: "POST",
+                enctype: "multipart/form-data",
+                url: url,
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function (res) {
+                    table = datatable_element.DataTable();
+                    table.draw();
+                    Swal.fire(
+                        'Created!',
+                        'Data berhasil diubah.',
+                        'success'
+                    )
+                },
+                error : function (res) {
+                    var errors = res.responseJSON;
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Errors',
+                        text: 'Gagal mengubah data',
+                    });
+                }
+            });
         }
     });
-
-    // $('#add-form form').on('submit', function (event) { 
-    //     event.preventDefault();
-    //     $.ajaxSetup({
-    //         headers: {
-    //             'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    //         }
-    //     });
-    //     $.ajax({
-    //         type:'POST',
-    //         url : "{{route('cuti.store')}}",
-    //         data : $(this).serializeArray(),
-    //         success : function (res) {
-    //             $('#add-form input').val('');
-    //             var table = $('#cuti_table').DataTable();
-    //             table.draw();
-    //             Swal.fire(
-    //                 'Created!',
-    //                 'Data berhasil di tambahkan.',
-    //                 'success'
-    //             )
-    //         },
-    //         error : function (res) {  
-    //             Swal.fire({
-    //                 icon: 'error',
-    //                 title: 'Errors',
-    //                 text: 'Gagal menambahkan data',
-    //             });
-    //         }
-    //     });
-    // })
-
-    // function edit_data(id){
-    //     save_id = id;
-        // var url = "{{ route('cuti.get', ':id') }}";
-        // url = url.replace(':id', id);
-        // $.ajaxSetup({
-        //     headers: {
-        //         'X-CSRF-TOKEN': "{{ csrf_token() }}"
-        //     }
-        // });
-        // $.ajax({
-        //     type:'GET',
-        //     url : url,
-        //     success : function(res) {
-        //         $('#edit-form #nama').val(res.data.nama);
-        //         $('#edit-form #waktu').val(res.data.waktu);
-        //     }
-        // });
-        // $('#edit-form').show(500);
-        // $('#list').hide();
-    // }
-
-    // $('#edit-form form').on('submit', function (event) { 
-    //     event.preventDefault();
-    //     var url = "{{ route('cuti.update',':id') }}";
-    //     url = url.replace(':id', save_id);
-
-    //     $.ajaxSetup({
-    //         headers: {
-    //             'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    //         }
-    //     });
-    //     $.ajax({
-    //         type:'POST',
-    //         url : url,
-    //         data : $(this).serializeArray(),
-    //         success : function (res) {
-    //             edit_data(save_id);
-    //             var table = $('#cuti_table').DataTable();
-    //             table.draw();
-    //             Swal.fire(
-    //                 'Created!',
-    //                 'Data berhasil di update.',
-    //                 'success'
-    //             )
-    //         },
-    //         error : function (res) {  
-    //             Swal.fire({
-    //                 icon: 'error',
-    //                 title: 'Errors',
-    //                 text: 'Gagal mengupdate data',
-    //             });
-    //         }
-    //     });
-    // })
 
     function delete_data(id) {
         Swal.fire({
@@ -327,9 +273,7 @@
                 var url = url_delete;
                 var url = url.replace(':id', id);
                 $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': access_token
-                    }
+                    headers: ajax_header
                 });
                 $.ajax({
                     type : 'DELETE',
