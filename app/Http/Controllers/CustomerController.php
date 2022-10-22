@@ -129,4 +129,25 @@ class CustomerController extends Controller
         return response()->json(['message' => 'Data telah dihapus']);
     }
 
+    public function select(Request $request)
+    {
+        $search = $request->search;
+
+        if($search == ''){
+            $customers = Customer::orderby('nama','asc')->select('id','nama')->limit(5)->get();
+        }else{
+            $customers = Customer::orderby('nama','asc')->select('id','nama')->where('nama', 'like', '%' .$search . '%')->limit(5)->get();
+        }
+
+        $response = [];
+        foreach ($customers as $customer) {
+            $response[] = array(
+                "id"=>$customer->id,
+                "text"=>$customer->nama
+           );
+        }
+        
+        return response()->json($response);
+    }
+
 }
