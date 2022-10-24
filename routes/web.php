@@ -33,8 +33,8 @@ Route::put('karyawan/{id}', [KaryawanController::class, 'update'])->name('karyaw
 Route::delete('karyawan/{id}', [KaryawanController::class, 'destroy'])->name('karyawan.delete');
 
 Route::get('mesin', [MesinController::class , 'index'])->name('mesin');
-Route::post('mesin', [MesinController::class , 'store'])->name('mesin.add');
-Route::put('mesin/{id}', [MesinController::class , 'update'])->name('mesin.update');
+Route::post('mesin', [MesinController::class , 'store'])->name('mesin.store');
+Route::post('mesin/{id}', [MesinController::class , 'update'])->name('mesin.update');
 Route::get('mesin/{id}', [MesinController::class , 'get'])->name('mesin.get');
 Route::delete('mesin/{id}', [MesinController::class , 'destroy'])->name('mesin.delete');
 
