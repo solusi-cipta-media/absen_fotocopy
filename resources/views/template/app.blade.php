@@ -488,10 +488,15 @@
             }
 
             var colorThemes = localStorage.getItem('color');
-            if (colorThemes != null) {
+            if (colorThemes != null && colorThemes!= 'text-default') {
                 $('a[data-toggle="theme"]').removeClass('active');
+                var url = $('a[class = "'+colorThemes+'"]').attr('data-theme')
                 $('a[class = "'+colorThemes+'"]').addClass('active');
+                $('link[id="css-theme"]').remove();
+                $('link[id="css-main"]').after('<link id="css-theme" rel="stylesheet" href="">');
+                $('link[id="css-theme"]').attr('href', url);
             }else{
+                var url = $('a[class = "text-default"]').attr('data-theme');
                 $('a[class = "text-default"').addClass('active');
                 localStorage.setItem('color','text-default');
             }
@@ -507,6 +512,7 @@
         }
 
         $('a[data-toggle="theme"]').on('click', function () {
+            $('link[id="css-theme"]').remove();
             $(this).removeClass('active');
             var theme = $(this).attr('class');
             $(this).addClass('active');
