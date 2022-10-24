@@ -84,7 +84,7 @@
                         <div class="col-lg-12 col-xl-12">
                             <div class="mb-4">
                                 <button type="submit" class="btn btn-alt-primary"><i class="si si-cloud-upload"></i> Simpan</button>
-                                <button type="reset" class="btn btn-alt-danger" id="clear-form"><i class="si si-close"></i> Clear</button>
+                                <button type="reset" class="btn btn-alt-danger" id="reset" onclick="clear_form()"><i class="si si-close"></i> Clear</button>
                             </div>
                         </div>
                     </div>
@@ -147,12 +147,14 @@
             form_header_element.text(form_header_text[0]);
             form_element.find('input').val('');
             form_element.find('textarea').val('');
+            form_element.find('#reset').attr('type', 'reset');
             form_element.find('option').removeAttr('selected');
         }else{
             // For Edit data
             method = 'edit';
             save_id = id;
             form_header_element.text(form_header_text[1]);
+            form_element.find('#reset').attr('type', 'button');
             var url = url_get;
             url = url.replace(':id', id);
             $.ajaxSetup({
@@ -298,6 +300,30 @@
                 });
             }
         })
+    }
+
+    function clear_form() {
+        if (method == 'edit') {
+            var url = url_get;
+            url = url.replace(':id', save_id);
+            $.ajaxSetup({
+                headers: ajax_header
+            });
+            $.ajax({
+                type:'GET',
+                url : url,
+                success : function(res) {
+                    var items = res.data;
+                    Object.entries(items).forEach(([key, value]) => {
+                        form_element.find('input[type="text"][name='+key+']').val(value);
+                        form_element.find('input[type="number"][name='+key+']').val(value);
+                        form_element.find('textarea[name='+key+']').val(value);
+                        form_element.find('option[name='+key+']').removeAttr('selected');
+                        form_element.find('select[name='+key+']').find('option[value='+value+']').attr('selected', 'selected');
+                    });
+                }
+            });
+        }
     }
 </script>
 @endsection
