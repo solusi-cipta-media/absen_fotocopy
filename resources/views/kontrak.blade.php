@@ -221,14 +221,14 @@
             dataType: 'json',
             delay: 250,
             data: function (params) {
-                return {
+                    return {
                     _token: "{{ csrf_token() }}",
                     search: params.term // search term
                     };
                 },
                 processResults: function (res) {
                     return {
-                    results: res
+                        results: res
                     };
                 },
                 cache: true
@@ -272,6 +272,7 @@
                         form_element.find('option[name='+key+']').removeAttr('selected');
                         form_element.find('select[name='+key+']').find('option[value='+value+']').attr('selected', 'selected');
                     });
+                    $('.select2').select2('data', {id : items.customer_id, text: 'CustomerName'});
                 }
             });
         }
