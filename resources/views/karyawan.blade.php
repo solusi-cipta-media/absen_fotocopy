@@ -167,6 +167,7 @@
             ]
         });
     })
+    
     //show form
     function open_form(id) {
         if (id == null) {
@@ -208,6 +209,7 @@
         form_element.show(500);
         list_element.hide();
     }
+
     function close_form() { 
         form_element.find('input').val('');
         form_element.find('textarea').val('');
@@ -215,6 +217,7 @@
         list_element.show(500);
         form_element.hide();
     }
+
     form_element.find('form').on('submit', function (event) { 
         if (method == 'add') {
             //IF Method add || Add data
@@ -243,10 +246,22 @@
                 },
                 error : function (res) {
                     var errors = res.responseJSON;
+                    var message;
+                    if (errors.errors.nip != null && errors.errors.no_ktp != null) {
+                        message = 'Nomor Induk Karyawan dan Nomor KTP sudah terdaftar di karyawan lain'
+                    }else if (errors.errors.no_ktp != null) {
+                        message = 'Nomor KTP sudah terdaftar di karyawan lain';
+                    }else if (errors.errors.nip != null){
+                        message = 'Nomor Induk Karyawan sudah terdaftar di karyawan lain';
+                    }else if (errors.errors.foto != null){
+                        message = 'Gambar yang dipilih tidak sesuai';
+                    }else{
+                        message = 'Error tidak diketahui';
+                    }
                     Swal.fire({
                         icon: 'error',
                         title: 'Errors',
-                        text: 'Gagal menambahkan data',
+                        text: message,
                     });
                 }
             });
@@ -279,15 +294,28 @@
                 },
                 error : function (res) {
                     var errors = res.responseJSON;
+                    var message;
+                    if (errors.errors.nip != null && errors.errors.no_ktp != null) {
+                        message = 'Nomor Induk Karyawan dan Nomor KTP sudah terdaftar di karyawan lain'
+                    }else if (errors.errors.no_ktp != null) {
+                        message = 'Nomor KTP sudah terdaftar di karyawan lain';
+                    }else if (errors.errors.nip != null){
+                        message = 'Nomor Induk Karyawan sudah terdaftar di karyawan lain';
+                    }else if (errors.errors.foto != null){
+                        message = 'Gambar yang dipilih tidak sesuai';
+                    }else{
+                        message = 'Error tidak diketahui';
+                    }
                     Swal.fire({
                         icon: 'error',
                         title: 'Errors',
-                        text: 'Gagal mengubah data',
+                        text: message,
                     });
                 }
             });
         }
     });
+
     function delete_data(id) {
         Swal.fire({
             title: 'Apakah Anda Yakin ?',
