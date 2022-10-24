@@ -33,6 +33,7 @@
 
     <!-- Fonts and Codebase framework -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap">
+    
     <link rel="stylesheet" id="css-main" href="{{ asset('css/codebase.min.css') }}">
     <link rel="stylesheet" href=" {{ asset('js/plugins/sweetalert2/sweetalert2.min.css') }}">
 
@@ -101,7 +102,7 @@
                                 </li>
                                 <li class="list-inline-item">
                                     <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                                    <a class="link-fx text-dual" data-toggle="layout" data-action="dark_mode_toggle" href="javascript:void(0)">
+                                    <a class="link-fx text-dual" data-toggle="layout" data-action="dark_mode_toggle" href="javascript:void(0)" onclick="change_mode()">
                                         <i class="fa fa-burn"></i>
                                     </a>
                                 </li>
@@ -474,6 +475,44 @@
         <!-- END Page Container -->
 
     </body>
+
+    {{-- Themes Event --}}
+    <script defer>
+        $(document).ready(function () {
+            if (localStorage.getItem('mode')=='light') {
+                $('#page-container').removeClass('sidebar-dark page-header-dark dark-mode');
+            }else if (localStorage.getItem('mode')=='dark'){
+                $('#page-container').addClass('sidebar-dark page-header-dark dark-mode');
+            }else{
+                localStorage.setItem('mode', 'light');
+            }
+
+            var colorThemes = localStorage.getItem('color');
+            if (colorThemes != null) {
+                $('a[data-toggle="theme"]').removeClass('active');
+                $('a[class = "'+colorThemes+'"]').addClass('active');
+            }else{
+                $('a[class = "text-default"').addClass('active');
+                localStorage.setItem('color','text-default');
+            }
+            
+        })
+
+        function change_mode(){
+            if (localStorage.getItem('mode')=='light') {
+                localStorage.setItem('mode', 'dark');
+            }else if (localStorage.getItem('mode')=='dark') {
+                localStorage.setItem('mode', 'light');
+            }
+        }
+
+        $('a[data-toggle="theme"]').on('click', function () {
+            $(this).removeClass('active');
+            var theme = $(this).attr('class');
+            $(this).addClass('active');
+            localStorage.setItem('color', theme);
+        });
+    </script>
     <!--
     Codebase JS
 
