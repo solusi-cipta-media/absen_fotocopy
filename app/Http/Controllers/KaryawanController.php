@@ -67,9 +67,9 @@ class KaryawanController extends Controller
         // resize image
         $img->fit(400, 400, function ($constraint) {
             $constraint->aspectRatio();
-        })->save('media/avatars/'.$imageName);
+        })->save('media/karyawan/'.$imageName);
 
-        $karyawan->foto = 'media/avatars/'.$imageName;
+        $karyawan->foto = 'media/karyawan/'.$imageName;
         $karyawan->nama = $request->nama;
         $karyawan->nip = $request->nip;
         $karyawan->no_ktp = $request->no_ktp;
@@ -123,9 +123,9 @@ class KaryawanController extends Controller
             // resize image
             $img->fit(400, 400, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save('media/avatars/'.$imageName);
+            })->save('media/karyawan/'.$imageName);
 
-            $karyawan->foto = 'media/avatars/'.$imageName;
+            $karyawan->foto = 'media/karyawan/'.$imageName;
         }
         
         $karyawan->nama = $request->nama;
