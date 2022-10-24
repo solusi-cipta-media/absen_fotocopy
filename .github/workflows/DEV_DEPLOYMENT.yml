@@ -1,0 +1,24 @@
+name: DEV DEPLOYMENT
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy-absen-fotocopy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploying to GCP fotocopy
+        uses: appleboy/ssh-action@master # An action made to control Linux servers
+        with: # We set all our secrets here for the action, these won't be shown in the action logs
+          host: ${{secrets.HOST}}
+          username: ${{secrets.USERNAME}}
+          password: ${{secrets.PASSWORD}}
+          port: ${{secrets.PORT}}
+          script: |
+            sudo bash
+            cd ${{secrets.APP_DIR}}
+            git checkout master
+            git pull
+            echo "yes" | composer update

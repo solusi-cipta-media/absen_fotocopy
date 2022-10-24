@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CutiController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\KontrakController;
 use App\Http\Controllers\MesinController;
@@ -30,8 +31,9 @@ Route::get('/', function () {
 })->name('dashboard');
 
 Route::get('karyawan', [KaryawanController::class, 'index'])->name('karyawan');
+Route::post('karyawan', [KaryawanController::class, 'store'])->name('karyawan.store');
 Route::get('karyawan/{id}', [KaryawanController::class, 'get'])->name('karyawan.get');
-Route::put('karyawan/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
+Route::post('karyawan/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
 Route::delete('karyawan/{id}', [KaryawanController::class, 'destroy'])->name('karyawan.delete');
 
 Route::get('mesin', [MesinController::class , 'index'])->name('mesin');
@@ -55,9 +57,12 @@ Route::get('kontrak/{id}', [KontrakController::class, 'get'])->name('kontrak.get
 Route::post('kontrak/{id}', [KontrakController::class, 'update'])->name('kontrak.update');
 Route::delete('kontrak/{id}', [KontrakController::class, 'destroy'])->name('kontrak.delete');
 
-Route::get('cuti', function () {
-    return view('cuti');
-})->name('cuti');
+Route::get('cuti', [CutiController::class, 'index'])->name('cuti');
+Route::post('cuti', [CutiController::class, 'store'])->name('cuti.store');
+Route::get('cuti/{id}', [CutiController::class, 'get'])->name('cuti.get');
+Route::post('cuti/{id}', [CutiController::class, 'update'])->name('cuti.update');
+Route::delete('cuti/{id}', [CutiController::class, 'destroy'])->name('cuti.delete');
+
 
 Route::get('absensi', function () {
     return view('absensi');

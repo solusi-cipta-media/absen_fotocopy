@@ -54,10 +54,13 @@ class CustomerController extends Controller
 
     public function generateCode()
     {
-        do {
-            $kode = Str::random(6);
-        } while (Customer::where('kode', $kode)->count() != 0);
-        return response()->json(['data' => $kode]);
+        $kode = Customer::max('kode');
+        if (!isset($kode)) {
+            return response()->json(['data' => 'C-0001'],200);
+        }
+        $maxnum = substr($kode,2);
+        $num = str_pad($maxnum+1, 4, '0', STR_PAD_LEFT);
+        return response()->json(['data' => 'C-'.$num],200);
     }
 
     public function store(Request $request)
