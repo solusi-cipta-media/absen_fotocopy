@@ -16,3 +16,5 @@ yarn-error.log
 /.vscode
 /public/media/karyawan/*
 !public/media/karyawan/index.html
+/public/media/kontrak/*
+!/public/media/kontrak/index.html
