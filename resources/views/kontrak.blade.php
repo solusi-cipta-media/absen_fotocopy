@@ -1,6 +1,44 @@
 @extends('template.app')
 
 @section('content')
+
+<style>
+    .select2-container--default .select2-selection--single {
+        border: 1px solid #d8dde5;
+        padding: 1.1rem;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+    margin-top: -0.8rem;
+
+    margin-left: -0.8rem;
+
+    }
+
+    .modal-header{
+        padding: 1rem 1rem 0.3rem 1rem;
+    }
+
+    .modal-footer{
+        padding: 0.1rem 1rem 0.5rem 1rem;
+    }
+
+    .modal-body{
+        padding: 0;
+        padding-top: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .modal-body>div{
+        padding: 5px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow{
+        margin-top: 0.3rem;
+        margin-right: 0.5rem;
+    }
+</style>
+
     <!-- Main Container -->
 <main id="main-container">
     <!-- Page Content -->
@@ -58,14 +96,16 @@
 
         {{-- Modal PDF viewer --}}
         <div class="modal" id="modal_pdf" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-dialog modal-dialog-centered modal-lg rounded" style="background-color:whitesmoke;">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">Dokumen Kontrak</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <iframe src="" frameborder="0" class="w-100" style="height: 400px"></iframe>
+                    <div class="border border-dark border-top border-bottom">
+                        <iframe src="" frameborder="0" class="w-100" style="height: 450px"></iframe>
+                    </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -134,7 +174,7 @@
 
         <div class="block block-rounded" id="edit-form" style="display: none;">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Register Kontrak</h3>
+                <h3 class="block-title">Edit Kontrak</h3>
                 <div class="block-options">
                     <button type="button" class="btn btn-outline-danger min-width-125" id="btn-hide-edit"><i class="fa fa-minus-circle"></i> Sembunyikan</button>
                 </div>
@@ -285,7 +325,6 @@
         save_id = id;
         var url = "{{ route('kontrak.get',':id') }}";
         url = url.replace(':id', id);
-        console.log(url);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
