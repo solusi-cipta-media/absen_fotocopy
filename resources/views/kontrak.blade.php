@@ -212,21 +212,18 @@
                 {data: 'action', name: 'action'}
             ]
         });
-    })
-    
-    //show form
-    function open_form(id) {
         $('.select2').select2({
             placeholder: "Pilih Customer",
+            allowClear: true,
             ajax: { 
             url: "{{route('customer.select')}}",
-            type: "GET",
+            type: "POST",
             dataType: 'json',
             delay: 250,
             data: function (params) {
-                    return {
-                        _token: "{{ csrf_token() }}",
-                        search: params.term // search term
+                return {
+                    _token: "{{ csrf_token() }}",
+                    search: params.term // search term
                     };
                 },
                 processResults: function (res) {
@@ -237,6 +234,10 @@
                 cache: true
             }
         }); 
+    })
+
+    //show form
+    function open_form(id) {
         if (id == null) {
             // For Add data
             method = 'add';
@@ -273,7 +274,6 @@
                     });
                 }
             });
-            
         }
         
         form_element.show(500);
