@@ -29,7 +29,7 @@ class KaryawanController extends Controller
                     $btndel = '<button type="button" class="btn btn-sm btn-danger" onclick="delete_data('.$row->id.')" data-bs-toggle="tooltip" title="Hapus">
                                     <i class="fa fa-trash"></i>
                                 </button>';
-                    $btnedit = '<button type="button" class="btn btn-sm btn-info" onclick="edit_data('.$row->id.')" data-bs-toggle="tooltip" title="Edit">
+                    $btnedit = '<button type="button" class="btn btn-sm btn-info" onclick="open_form('.$row->id.')" data-bs-toggle="tooltip" title="Edit">
                                     <i class="fa fa-edit"></i>
                                 </button>';
                     return $btndel.$btnedit;
