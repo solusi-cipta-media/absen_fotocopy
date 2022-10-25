@@ -20,4 +20,7 @@ yarn-error.log
 !/public/media/kontrak/index.html
 /public/media/absensi/ketidakhadiran/*
 !/public/media/absensi/ketidakhadiran/index.html
-
+/public/media/absensi/kehadiran/in/*
+!/public/media/absensi/kehadiran/in/index.html
+/public/media/absensi/kehadiran/out/*
+!/public/media/absensi/kehadiran/out/index.html
