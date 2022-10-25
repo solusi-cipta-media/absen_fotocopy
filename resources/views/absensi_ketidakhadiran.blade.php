@@ -1,6 +1,22 @@
 @extends('template.app')
 
 @section('content')
+<style>
+    .modal-header{
+        padding: 1rem 1rem 0.3rem 1rem;
+    }
+    .modal-footer{
+        padding: 0.1rem 1rem 0.5rem 1rem;
+    }
+    .modal-body{
+        padding: 0;
+        padding-top: 1rem;
+        margin-bottom: 0.5rem;
+    }
+    .modal-body>div{
+        padding: 5px;
+    }
+</style>
     <!-- Main Container -->
 <main id="main-container">
     <!-- Page Content -->
@@ -8,7 +24,7 @@
         <h2 class="content-heading">Data Absensi</h2>
 
         <!-- Dynamic Table Responsive -->
-        <div class="block block-rounded" id="list-karyawan">
+        <div class="block block-rounded" id="list">
             <div class="block-header block-header-default">
                 <h3 class="block-title">
                     Report Ketidakhadiran
@@ -19,7 +35,7 @@
             </div>
             <div class="block-content block-content-full">
                 <!-- DataTables functionality is initialized with .js-dataTable-responsive class in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive">
+                <table class="table table-bordered table-striped table-vcenter w-100">
                     <!-- <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons"> -->
                     <thead>
                         <tr>
@@ -33,7 +49,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        {{-- <tr>
                             <td class="text-center">1</td>
                             <td class="fw-semibold">Agus Salim</td>
                             <td>12345</td>
@@ -51,12 +67,31 @@
                                     <i class="fa fa-circle-xmark"></i>
                                 </button>
                             </td>
-                        </tr>
+                        </tr> --}}
                     </tbody>
                 </table>
             </div>
         </div>
 
+        {{-- Modal Bukti viewer --}}
+        <div class="modal" id="modal_bukti" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-lg rounded" style="background-color:whitesmoke;">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Bukti Perijinan</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="border border-dark border-top border-bottom p-2">
+                        <img src="" alt="bukti" class="w-100">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+        </div>
 
         <!-- Dynamic Table Responsive -->
     </div>
@@ -64,41 +99,29 @@
 </main>
 <!-- END Main Container -->
 
-<!-- Normal Modal -->
-<div class="modal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="block block-rounded shadow-none mb-0">
-                <div class="block-header block-header-default">
-                    <h3 class="block-title">Terms &amp; Conditions</h3>
-                    <div class="block-options">
-                        <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
-                            <i class="fa fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="block-content fs-sm" id="body-modal">
-                    <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
-                    <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
-                </div>
-                <div class="block-content block-content-full block-content-sm text-end border-top">
-                    <button type="button" class="btn btn-alt-secondary" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                    <button type="button" class="btn btn-alt-primary" data-bs-dismiss="modal">
-                        Done
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- END Normal Modal -->
-
 
 <script>
-    function approve_data() {
+    var ajax_header = {
+            "X-CSRF-TOKEN" : "{{ csrf_token() }}"
+        }; //Token
 
+    $(document).ready(function () {  
+        $('table').DataTable({
+            serverSide: true,
+            responsive: true,
+            ajax: "{{ route('absensi_ketidakhadiran') }}",
+            columns: [
+                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                {data: 'nama', name: 'nama'},
+                {data: 'nip', name: 'nip'},
+                {data: 'tanggal', name: 'tanggal'},
+                {data: 'cuti', name: 'cuti'},
+                {data: 'status', name: 'status'},
+                {data: 'action', name: 'action'}
+            ]
+        });
+    })
+    function approve_data(id) {
         Swal.fire({
             title: 'Apakah Anda Yakin ?',
             text: "Anda akan menyetujui pengajuan ketidakhadiran karyawan!",
@@ -109,18 +132,37 @@
             confirmButtonText: 'Ya, setujui!'
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire(
-                    'Approved!',
-                    'Pengajuan telah disetujui',
-                    'success'
-                )
+                var url = "{{ route('absensi_ketidakhadiran.approve', ':id') }}";
+                var url = url.replace(':id', id);
+                $.ajaxSetup({
+                    headers: ajax_header
+                });
+                $.ajax({
+                    type : 'GET',
+                    url : url,
+                    success : function (res) {
+                        table = $('table').DataTable();
+                        table.draw();
+                        Swal.fire(
+                            'Approved!',
+                            'Pengajuan telah disetujui',
+                            'success'
+                        )
+                    },
+                    error : function (res) {
+                        var errors = res.responseJSON;
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Errors',
+                            text: 'Gagal menyetujui pengajuan',
+                        });
+                    }
+                });
             }
         })
-
-
     }
 
-    function reject_data() {
+    function reject_data(id) {
 
         Swal.fire({
             title: 'Apakah Anda Yakin ?',
@@ -132,25 +174,42 @@
             confirmButtonText: 'Ya, tolak!'
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire(
-                    'Rejected!',
-                    'Pengajuan telah ditolak',
-                    'success'
-                )
+                var url = "{{ route('absensi_ketidakhadiran.reject', ':id') }}";
+                var url = url.replace(':id', id);
+                $.ajaxSetup({
+                    headers: ajax_header
+                });
+                $.ajax({
+                    type : 'GET',
+                    url : url,
+                    success : function (res) {
+                        table = $('table').DataTable();
+                        table.draw();
+                        Swal.fire(
+                            'Rejected!',
+                            'Pengajuan telah ditolak',
+                            'success'
+                        )
+                    },
+                    error : function (res) {
+                        var errors = res.responseJSON;
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Errors',
+                            text: 'Gagal menolak pengajuan',
+                        });
+                    }
+                });
             }
         })
 
 
     }
 
-    function show_data() {
-        var html
-        var nama
-        $('#exampleModalCenter').modal('show')
-        nama = '<h3 class="block-title">Bukti Ketidakhadiran - Agus Salim</h3>'
-        html = '<img src="{{ asset('media/leave/agus.jpg') }}" class="img-fluid" alt="bukti_leave">'
-        $('#body-modal').html(html)
-        $('.block-title').html(nama)
+    function open_bukti(id) {
+        $('#modal_bukti').modal('show');
+        url = $('#link_bukti'+id).attr('href');
+        $('#modal_bukti img').attr('src', url);
     }
 </script>
 @endsection
