@@ -25,6 +25,8 @@
                         <tr>
                             <th class="text-center">#</th>
                             <th>Tanggal</th>
+                            <th>Clock In</th>
+                            <th>Clock Out</th>
                             <th>Status Hari</th>
                             <th class="text-center" style="width: 15%;">Aksi</th>
                         </tr>
@@ -77,6 +79,20 @@
                                     <option value="libur">Libur</option>
                                 </select>
                             </div>
+                            <div class="row clock">
+                                <div class="col-6">
+                                    <div class="mb-4">
+                                        <label class="form-label" for="clock_in">Clock In</label>
+                                        <input type="text" class="form-control" id="clock_in" name="clock_in" value="08:00" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-4">
+                                        <label class="form-label" for="clock_out">Clock Out</label>
+                                        <input type="text" class="form-control" id="clock_out" name="clock_out" value="16:00" required>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-lg-12 col-xl-12">
                             <div class="mb-4">
@@ -101,6 +117,7 @@
 <!-- END Main Container -->
 
 <script>
+    
     //Mostly change
     var list_element = $('#list'); //List
     var form_element = $('#a-form'); //Init form variable
@@ -121,17 +138,44 @@
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'tanggal', name: 'tanggal'},
+                {data: 'clock_in', name: 'clock_in'},
+                {data: 'clock_out', name: 'clock_out'},
                 {data: 'status', name: 'status'},
                 {data: 'action', name: 'action'}
             ]
         });
+
+        
     });
 
     function open_form() {
-        form_element.find('input').val('');
+        form_element.find('input[type="date"]').val('');
+        $('#clock_in').flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            defaultDate: "08:00",
+            time_24hr: true,
+        });
+        $('#clock_out').flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            defaultDate: "16:00",
+            time_24hr: true,
+        });
         form_element.show(500);
         list_element.hide();
     }
+
+    $('#status').on('change', function () {
+        if ($(this).val()=='aktif') {
+            console.log($(this).val());
+            $('.clock').show();
+        }else{
+            $('.clock').hide();
+        }
+    })
 
     function close_form() { 
         form_element.find('input').val('');
@@ -170,7 +214,7 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'Errors',
-                    text: 'Gagal menambahkan data',
+                    text: 'Tanggal periode sudah terdaftar',
                 });
             }
         });
