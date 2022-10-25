@@ -26,6 +26,18 @@ class PeriodeController extends Controller
                         return '<span class="badge bg-danger">Libur</span>';
                     }
                 })
+                ->addColumn('clock_in', function ($row){
+                    if ($row->status == 'libur') {
+                        return '-';
+                    }
+                    return substr($row->clock_in, 0, 5);
+                })
+                ->addColumn('clock_out', function ($row){
+                    if ($row->status == 'libur') {
+                        return '-';
+                    }
+                    return substr($row->clock_out, 0, 5);
+                })
                 ->addColumn('action', function ($row)
                 {
                     $btndel = '<button type="button" class="btn btn-sm btn-danger" onclick="delete_data('.$row->id.')" data-bs-toggle="tooltip" title="Hapus">
@@ -45,6 +57,10 @@ class PeriodeController extends Controller
         $periode = new Periode;
         $periode->tanggal = $request->tanggal;
         $periode->status = $request->status;
+        if ($periode->status === 'aktif') {
+            $periode->clock_in = $request->clock_in;
+            $periode->clock_out = $request->clock_out;
+        }
         $periode->save();
 
         return response()->json(['message' => 'Data telah ditambahkan'],200);
