@@ -45,6 +45,10 @@
     {{-- select 2 --}}
     <link rel="stylesheet" href=" {{ asset('js/plugins/select2/css/select2.min.css') }}">
     {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
+
+    {{-- Flat picker --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
 </head>
 
 <body>
@@ -519,8 +523,10 @@
             localStorage.setItem('color', theme);
         });
     </script>
+    
     <!--
     Codebase JS
+    
 
     Core libraries and functionality
     webpack is putting everything together at assets/_js/main/app.js
@@ -554,6 +560,7 @@
     <script src="{{ asset('js/plugins/select2/js/select2.min.js') }}"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
 
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js"></script> --}}
     {{-- <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
