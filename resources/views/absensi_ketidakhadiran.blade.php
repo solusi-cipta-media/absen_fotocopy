@@ -73,25 +73,35 @@
             </div>
         </div>
 
-        {{-- Modal Bukti viewer --}}
-        <div class="modal" id="modal_bukti" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered modal-lg rounded" style="background-color:whitesmoke;">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Bukti Perijinan</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="border border-dark border-top border-bottom p-2">
-                        <img src="" alt="bukti" class="w-100">
+        <!-- Normal Modal -->
+<div class="modal" id="modal_bukti" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="block block-rounded shadow-none mb-0">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">Terms &amp; Conditions</h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <div class="block-content fs-sm" id="body-modal">
+                    <img src="" alt="bukti-pengajuan" class="w-100">
                 </div>
-              </div>
+                <div class="block-content block-content-full block-content-sm text-end border-top">
+                    <button type="button" class="btn btn-alt-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-alt-primary" data-bs-dismiss="modal">
+                        Done
+                    </button>
+                </div>
             </div>
         </div>
+    </div>
+</div>
+<!-- END Normal Modal -->
 
         <!-- Dynamic Table Responsive -->
     </div>
