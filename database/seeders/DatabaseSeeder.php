@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
             CustomerSeeder::class,
             KontrakSeeder::class,
             CutiSeeder::class,
-            PeriodeSeeder::class
+            PeriodeSeeder::class,
+            AbsensiKetidakhadiranSeeder::class
         ]);
     }
 }

@@ -18,7 +18,9 @@ class PeriodeSeeder extends Seeder
     {
         Periode::create([
             'tanggal' => Carbon::now()->subDays(2),
-            'status' => 'aktif'
+            'status' => 'aktif',
+            'clock_in' => '08:00:00',
+            'clock_out' => '16:00:00'
         ]);
         Periode::create([
             'tanggal' => Carbon::now()->subDays(1),
@@ -26,7 +28,9 @@ class PeriodeSeeder extends Seeder
         ]);
         Periode::create([
             'tanggal' => Carbon::now(),
-            'status' => 'aktif'
+            'status' => 'aktif',
+            'clock_in' => '08:00:00',
+            'clock_out' => '16:00:00'
         ]);
     }
 }
