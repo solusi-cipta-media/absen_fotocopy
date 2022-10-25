@@ -15,24 +15,6 @@
 
     }
 
-    .modal-header{
-        padding: 1rem 1rem 0.3rem 1rem;
-    }
-
-    .modal-footer{
-        padding: 0.1rem 1rem 0.5rem 1rem;
-    }
-
-    .modal-body{
-        padding: 0;
-        padding-top: 1rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .modal-body>div{
-        padding: 5px;
-    }
-
     .select2-container--default .select2-selection--single .select2-selection__arrow{
         margin-top: 0.3rem;
         margin-right: 0.5rem;
