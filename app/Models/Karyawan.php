@@ -18,4 +18,9 @@ class Karyawan extends Model
         'jenis_kelamin',
         'foto'
     ];
+
+    public function absensi_ketidakhadiran()
+    {
+        return $this->hasMany(AbsensiKetidakhadiran::class);
+    }
 }
