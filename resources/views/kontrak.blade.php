@@ -94,25 +94,6 @@
             </div>
         </div>
 
-        {{-- Modal PDF viewer --}}
-        <div class="modal" id="modal_pdf" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered modal-lg rounded" style="background-color:whitesmoke;">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Dokumen Kontrak</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="border border-dark border-top border-bottom">
-                        <iframe src="" frameborder="0" class="w-100" style="height: 450px"></iframe>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </div>
-        </div>
 
         <div class="block block-rounded" id="a-form" style="display: none;">
             <div class="block-header block-header-default">
@@ -170,6 +151,34 @@
                 </form>
             </div>
         </div>
+
+
+        <!-- Normal Modal -->
+        <div class="modal" id="modal_pdf" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="block block-rounded shadow-none mb-0">
+                        <div class="block-header block-header-default">
+                            <h3 class="block-title">Bukti Pengajuan</h3>
+                            <div class="block-options">
+                                <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="block-content fs-sm" id="body-modal" style="height: 500px">
+                            <iframe src="" frameborder="0" class="w-100 h-100"></iframe>
+                        </div>
+                        <div class="block-content block-content-full block-content-sm text-end border-top">
+                            <button type="button" class="btn btn-alt-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END Normal Modal -->
 
         <!-- Dynamic Table Responsive -->
     </div>
