@@ -5,6 +5,7 @@ use App\Http\Controllers\CutiController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\KontrakController;
 use App\Http\Controllers\MesinController;
+use App\Http\Controllers\PeriodeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -73,9 +74,9 @@ Route::get('absensi_ketidakhadiran', function () {
 })->name('absensi_ketidakhadiran');
 
 
-Route::get('periode', function () {
-    return view('periode');
-})->name('periode');
+Route::get('periode', [PeriodeController::class, 'index'])->name('periode');
+Route::post('periode', [PeriodeController::class, 'store'])->name('periode.store');
+Route::delete('periode/{id}', [PeriodeController::class, 'destroy'])->name('periode.delete');
 
 Route::get('overhaul_list', function () {
     return view('overhaul_list');
