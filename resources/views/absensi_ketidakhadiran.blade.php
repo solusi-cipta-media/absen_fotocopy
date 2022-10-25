@@ -79,7 +79,7 @@
                 <div class="modal-content">
                     <div class="block block-rounded shadow-none mb-0">
                         <div class="block-header block-header-default">
-                            <h3 class="block-title">Terms &amp; Conditions</h3>
+                            <h3 class="block-title">Bukti Pengajuan</h3>
                             <div class="block-options">
                                 <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
                                     <i class="fa fa-times"></i>
@@ -92,9 +92,6 @@
                         <div class="block-content block-content-full block-content-sm text-end border-top">
                             <button type="button" class="btn btn-alt-secondary" data-bs-dismiss="modal">
                                 Close
-                            </button>
-                            <button type="button" class="btn btn-alt-primary" data-bs-dismiss="modal">
-                                Done
                             </button>
                         </div>
                     </div>
