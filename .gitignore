@@ -14,5 +14,7 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+/public/media/karyawan/*
+!public/media/karyawan/index.html
 /public/media/kontrak/*
 !/public/media/kontrak/index.html
