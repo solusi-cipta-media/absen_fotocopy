@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbsensiKetidakhadiranController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CutiController;
 use App\Http\Controllers\KaryawanController;
@@ -69,9 +70,9 @@ Route::get('absensi', function () {
     return view('absensi');
 })->name('absensi');
 
-Route::get('absensi_ketidakhadiran', function () {
-    return view('absensi_ketidakhadiran');
-})->name('absensi_ketidakhadiran');
+Route::get('absensi_ketidakhadiran', [AbsensiKetidakhadiranController::class, 'index'])->name('absensi_ketidakhadiran');
+Route::get('absensi_ketidakhadiran/approve/{id}', [AbsensiKetidakhadiranController::class, 'approve'])->name('absensi_ketidakhadiran.approve');
+Route::get('absensi_ketidakhadiran/reject/{id}', [AbsensiKetidakhadiranController::class, 'reject'])->name('absensi_ketidakhadiran.reject');
 
 
 Route::get('periode', [PeriodeController::class, 'index'])->name('periode');
