@@ -9,7 +9,14 @@ class Karyawan extends Model
 {
     use HasFactory;
 
+    protected $hidden = [
+        'password'
+    ];
+
     protected $fillable = [
+        'email',
+        'password',
+        'role',
         'nama',
         'nip',
         'no_ktp',

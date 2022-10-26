@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 use Intervention\Image\Facades\Image;
@@ -43,6 +44,9 @@ class KaryawanController extends Controller
     public function store(Request $request) 
     {
         $validator = Validator::make($request->all(), [
+            'email' => 'required|email|unique:karyawans,email',
+            'password' => 'required|min:6',
+            'role' => 'required',
             'nama' => 'required|min:2',
             'nip' => 'required|unique:karyawans,nip',
             'alamat' => 'required',
@@ -70,6 +74,9 @@ class KaryawanController extends Controller
         })->save('media/karyawan/'.$imageName);
 
         $karyawan->foto = 'media/karyawan/'.$imageName;
+        $karyawan->email = $request->email;
+        $karyawan->password = Hash::make($request->password);
+        $karyawan->role = $request->role;
         $karyawan->nama = $request->nama;
         $karyawan->nip = $request->nip;
         $karyawan->no_ktp = $request->no_ktp;
@@ -93,6 +100,9 @@ class KaryawanController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
+            'email' => 'required|email|unique:karyawans,email,'.$id,
+            'password' => 'nullable|min:6',
+            'role' => 'required',
             'nama' => 'required|min:2',
             'nip' => 'required|unique:karyawans,nip,'.$id,
             'alamat' => 'required',
@@ -128,6 +138,11 @@ class KaryawanController extends Controller
             $karyawan->foto = 'media/karyawan/'.$imageName;
         }
         
+        $karyawan->email = $request->email;
+        if ($request->password != '') {
+            $karyawan->password = Hash::make($request->password);
+        }
+        $karyawan->role = $request->role;
         $karyawan->nama = $request->nama;
         $karyawan->nip = $request->nip;
         $karyawan->no_ktp = $request->no_ktp;
