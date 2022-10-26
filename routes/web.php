@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\AbsensiKetidakhadiranController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CutiController;
@@ -66,9 +67,7 @@ Route::post('cuti/{id}', [CutiController::class, 'update'])->name('cuti.update')
 Route::delete('cuti/{id}', [CutiController::class, 'destroy'])->name('cuti.delete');
 
 
-Route::get('absensi', function () {
-    return view('absensi');
-})->name('absensi');
+Route::get('absensi', [AbsensiController::class, 'index'])->name('absensi');
 
 Route::get('absensi_ketidakhadiran', [AbsensiKetidakhadiranController::class, 'index'])->name('absensi_ketidakhadiran');
 Route::get('absensi_ketidakhadiran/approve/{id}', [AbsensiKetidakhadiranController::class, 'approve'])->name('absensi_ketidakhadiran.approve');
