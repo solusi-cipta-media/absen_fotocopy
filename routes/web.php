@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AbsensiKetidakhadiranController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CutiController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\KontrakController;
 use App\Http\Controllers\MesinController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\PeriodeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +33,7 @@ Route::middleware(['auth', 'supervisor'])->group(function ()
         return view('dashboard');
     })->name('dashboard');
 
+    
     Route::get('karyawan', [KaryawanController::class, 'index'])->name('karyawan');
     Route::post('karyawan', [KaryawanController::class, 'store'])->name('karyawan.store');
     Route::get('karyawan/{id}', [KaryawanController::class, 'get'])->name('karyawan.get');
@@ -83,6 +86,19 @@ Route::middleware(['auth', 'supervisor'])->group(function ()
     Route::post('profil/password', [ProfilController::class, 'update_password'])->name('profil.password');
     Route::post('profil/info', [ProfilController::class, 'update_informasi_pribadi'])->name('profil.informasi');
 
+    Route::get('absensi', function () {
+        return view('absensi');
+    })->name('absensi');
+
+    Route::get('absensi_ketidakhadiran', [AbsensiKetidakhadiranController::class, 'index'])->name('absensi_ketidakhadiran');
+    Route::get('absensi_ketidakhadiran/approve/{id}', [AbsensiKetidakhadiranController::class, 'approve'])->name('absensi_ketidakhadiran.approve');
+    Route::get('absensi_ketidakhadiran/reject/{id}', [AbsensiKetidakhadiranController::class, 'reject'])->name('absensi_ketidakhadiran.reject');
+
+
+    Route::get('periode', [PeriodeController::class, 'index'])->name('periode');
+    Route::post('periode', [PeriodeController::class, 'store'])->name('periode.store');
+    Route::delete('periode/{id}', [PeriodeController::class, 'destroy'])->name('periode.delete');
+
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -102,3 +118,5 @@ Route::middleware(['auth', 'admin'])->group(function () {
         return view('jadwal_spk');
     })->name('jadwal_spk');
 });
+
+

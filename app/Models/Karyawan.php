@@ -26,4 +26,9 @@ class Karyawan extends Authenticatable
         'jenis_kelamin',
         'foto'
     ];
+
+    public function absensi_ketidakhadiran()
+    {
+        return $this->hasMany(AbsensiKetidakhadiran::class);
+    }
 }
