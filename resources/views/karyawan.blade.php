@@ -24,13 +24,14 @@
                     <thead>
                         <tr>
                             <th class="text-center">#</th>
-                            <th>Kode</th>
+                            <th>NIP</th>
                             <th>Nama</th>
-                            <th>Alamat</th>
                             <th>No. KTP</th>
                             <th>Handphone</th>
                             <th>Jenis Kelamin</th>
+                            <th>Jabatan</th>
                             <th>Photo</th>
+                            <th>Alamat</th>
                             <th class="text-center" style="width: 15%;">Aksi</th>
                         </tr>
                     </thead>
@@ -82,12 +83,31 @@
                                 <input type="text" class="form-control" id="nip" name="nip" required>
                             </div>
                             <div class="mb-4">
-                                <label class="form-label" for="alamat">Alamat</label>
-                                <textarea class="form-control" id="alamat" name="alamat" rows="4" required></textarea>
-                            </div>
-                            <div class="mb-4">
                                 <label class="form-label" for="no_ktp">No. KTP</label>
                                 <input type="text" class="form-control" id="no_ktp" name="no_ktp" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" minlength="6" required>
+                                <div class="form-check mt-2 ms-2">
+                                    <input onclick="show_password()" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      Tampilkan Password
+                                    </label>
+                                </div>    
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="role">Jabatan</label>
+                                <select class="form-select" id="role" name="role">
+                                    <option value="admin">Admin</option>
+                                    <option value="supervisor">Supervisor</option>
+                                    <option value="teknisi">Teknisi</option>
+                                    <option value="staff">Staff</option>
+                                </select>
                             </div>
                             <div class="mb-4">
                                 <label class="form-label" for="telepon">Handphone</label>
@@ -100,6 +120,11 @@
                                     <option value="perempuan">Perempuan</option>
                                 </select>
                             </div>
+                            <div class="mb-4">
+                                <label class="form-label" for="alamat">Alamat</label>
+                                <textarea class="form-control" id="alamat" name="alamat" rows="4" required></textarea>
+                            </div>
+                            
                             <div class="mb-4">
                                 <label class="form-label" for="foto">Photo Karyawan</label>
                                 <input class="form-control" type="file" id="foto" name="foto" accept="image/png, image/jpeg" multiple required>
@@ -129,7 +154,13 @@
 <!-- END Main Container -->
 
 <script>
-
+    function show_password() {
+        if ($('#password').attr('type') == 'password') {
+            $('#password').attr('type', 'text');
+        }else{
+            $('#password').attr('type', 'password');
+        }
+    }
     //Mostly change
     var list_element = $('#list'); //List
     var form_element = $('#a-form'); //Init form variable
@@ -158,11 +189,12 @@
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'nip', name: 'nip'},
                 {data: 'nama', name: 'nama'},
-                {data: 'alamat', name: 'alamat'},
                 {data: 'no_ktp', name: 'no_ktp'},
                 {data: 'telepon', name: 'telepon'},
                 {data: 'jenis_kelamin', name: 'jenis_kelamin'},
+                {data: 'role', name: 'role'},
                 {data: 'foto', name: 'foto'},
+                {data: 'alamat', name: 'alamat'},
                 {data: 'action', name: 'action'}
             ]
         });
@@ -178,6 +210,7 @@
             form_element.find('textarea').val('');
             form_element.find('option').removeAttr('selected');
             form_element.find('input[type="file"]').attr('required');
+            form_element.find('input[type="password"]').attr('required');
             form_element.find('#reset').attr('type', 'reset');
         }else{
             // For Edit data
@@ -186,6 +219,7 @@
             form_header_element.text(form_header_text[1]);
             form_element.find('#reset').attr('type', 'button');
             form_element.find('input[type="file"]').removeAttr('required');
+            form_element.find('input[type="password"]').removeAttr('required');
             var url = url_get;
             url = url.replace(':id', id);
             $.ajaxSetup({
@@ -197,10 +231,11 @@
                 success : function(res) {
                     var items = res.data;
                     Object.entries(items).forEach(([key, value]) => {
+                        form_element.find('input[type="email"][name='+key+']').val(value);
                         form_element.find('input[type="text"][name='+key+']').val(value);
                         form_element.find('input[type="number"][name='+key+']').val(value);
                         form_element.find('textarea[name='+key+']').val(value);
-                        form_element.find('option').removeAttr('selected');
+                        form_element.find('select[name='+key+'] option').removeAttr('selected');
                         form_element.find('select[name='+key+']').find('option[value='+value+']').attr('selected', 'selected');
                     });
                 }
@@ -255,6 +290,8 @@
                         message = 'Nomor Induk Karyawan sudah terdaftar di karyawan lain';
                     }else if (errors.errors.foto != null){
                         message = 'Gambar yang dipilih tidak sesuai';
+                    }else if(errors.errors.email != null){
+                        message = 'Email sudah terdaftar di karyawan lain';
                     }else{
                         message = 'Error tidak diketahui';
                     }
@@ -303,6 +340,8 @@
                         message = 'Nomor Induk Karyawan sudah terdaftar di karyawan lain';
                     }else if (errors.errors.foto != null){
                         message = 'Gambar yang dipilih tidak sesuai';
+                    }else if(errors.errors.email != null){
+                        message = 'Email sudah terdaftar di karyawan lain';
                     }else{
                         message = 'Error tidak diketahui';
                     }
@@ -373,7 +412,7 @@
                         form_element.find('input[type="text"][name='+key+']').val(value);
                         form_element.find('input[type="number"][name='+key+']').val(value);
                         form_element.find('textarea[name='+key+']').val(value);
-                        form_element.find('option').removeAttr('selected');
+                        form_element.find('select[name='+key+'] option').removeAttr('selected');
                         form_element.find('select[name='+key+']').find('option[value='+value+']').attr('selected', 'selected');
                     });
                 }
