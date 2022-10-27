@@ -13,4 +13,10 @@ class Kontrak extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+
+    public function notifikasi()
+    {
+        return $this->belongsTo(Notifikasi::class);
+    }
+
 }
