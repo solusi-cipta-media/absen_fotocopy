@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 use Intervention\Image\Facades\Image;
@@ -39,6 +40,46 @@ class KaryawanController extends Controller
         return view('karyawan');
     }
 
+    public function store(Request $request) 
+    {
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|min:2',
+            'nip' => 'required|unique:karyawans,nip',
+            'alamat' => 'required',
+            'no_ktp' => 'required|unique:karyawans,no_ktp',
+            'telepon' => 'required|min:8',
+            'jenis_kelamin' => 'required',
+            'foto' =>  'required|file|mimes:png,jpg|max:2048'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        $karyawan = new Karyawan;
+
+        // foto
+        $file = $request->file('foto');
+        $name = $file->hashName(); // Generate a unique, random name...
+        $imageName = $name;
+        $img = Image::make($file->path());
+        
+        // resize image
+        $img->fit(400, 400, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save('media/karyawan/'.$imageName);
+
+        $karyawan->foto = 'media/karyawan/'.$imageName;
+        $karyawan->nama = $request->nama;
+        $karyawan->nip = $request->nip;
+        $karyawan->no_ktp = $request->no_ktp;
+        $karyawan->alamat = $request->alamat;
+        $karyawan->telepon = $request->telepon;
+        $karyawan->jenis_kelamin = $request->jenis_kelamin;
+        $karyawan->save();
+
+        return response()->json(['message' => 'Data telah ditambahkan'],201);
+    }
 
     // get data for edit
     public function get($id)
@@ -70,17 +111,26 @@ class KaryawanController extends Controller
 
         // cek foto
         if ($request->file()) {
+            if(File::exists($karyawan->foto)){
+                File::delete($karyawan->foto);
+            }
+
             $file = $request->file('foto');
             $name = $file->hashName(); // Generate a unique, random name...
-            $extension = $file->extension(); // Determine the file's extension based on the file's MIME type...
-            $fotoFile = Image::make($file)->resize(400,400); //resize 
-            $fotoName = $name.''.$extension;
-            $fotoFile->move(public_path('media/avatars'), $fotoName);
-            $karyawan->foto = $fotoName;
+            $imageName = $name;
+            $img = Image::make($file->path());
+            
+            // resize image
+            $img->fit(400, 400, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save('media/karyawan/'.$imageName);
+
+            $karyawan->foto = 'media/karyawan/'.$imageName;
         }
         
         $karyawan->nama = $request->nama;
         $karyawan->nip = $request->nip;
+        $karyawan->no_ktp = $request->no_ktp;
         $karyawan->alamat = $request->alamat;
         $karyawan->telepon = $request->telepon;
         $karyawan->jenis_kelamin = $request->jenis_kelamin;
@@ -92,6 +142,9 @@ class KaryawanController extends Controller
     public function destroy($id)
     {
         $karyawan = Karyawan::find($id);
+        if(File::exists($karyawan->foto)){
+            File::delete($karyawan->foto);
+        }
         $karyawan->delete();
         return response()->json(['message' => 'Data telah di hapus']);
     }
