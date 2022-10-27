@@ -16,7 +16,7 @@ class CustomerSeeder extends Seeder
     public function run()
     {
         Customer::create([
-            'kode' => 'A0903',
+            'kode' => 'C-0001',
             'nama' => 'PT. Pertamina',
             'alamat' => 'Jalan Ahmad Yani, Jakarta',
             'latitude' => '-7.8344632',
@@ -26,7 +26,7 @@ class CustomerSeeder extends Seeder
             'kontak_telepon' => '08267371752'
         ]);
         Customer::create([
-            'kode' => 'A0904',
+            'kode' => 'C-0002',
             'nama' => 'PT. Jaya Abadi',
             'alamat' => 'Jalan Angsa Emas, Jakarta',
             'latitude' => '-7.8344662',
@@ -36,7 +36,7 @@ class CustomerSeeder extends Seeder
             'kontak_telepon' => '08267371752'
         ]);
         Customer::create([
-            'kode' => 'A0905',
+            'kode' => '3',
             'nama' => 'PT. Dua Permata',
             'alamat' => 'Jalan Ayam Potong, Jakarta',
             'latitude' => '-8.8344632',
