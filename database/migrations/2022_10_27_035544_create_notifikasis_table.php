@@ -19,7 +19,6 @@ return new class extends Migration
             $table->foreign('kontrak_id')->references('id')->on('kontraks')->onUpdate('cascade')->onDelete('cascade');
             $table->string('pesan');
             $table->date('tanggal');
-            $table->enum('status',['unread', 'read']);
             $table->timestamps();
         });
     }
