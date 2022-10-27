@@ -121,31 +121,38 @@
                                 </a>
                                 <h1 class="h3 fw-bold mt-4 mb-2">Absensi & Laporan Pekerjaan</h1>
                                 <h2 class="h5 fw-medium text-muted mb-0">Please sign in</h2>
+                                @if ( isset($error))
+                                    <h2 class="h5 fw-medium text-muted mb-0">Please sign in</h2>
+                                @endif
                             </div>
                             <!-- END Header -->
 
                             <!-- Sign In Form -->
                             <!-- jQuery Validation functionality is initialized with .js-validation-signin class in js/pages/op_auth_signin.min.js which was auto compiled from _js/pages/op_auth_signin.js -->
                             <!-- For more examples you can check out https://github.com/jzaefferer/jquery-validation -->
-                            <form class="js-validation-signin px-4" action="" method="POST">
+                            <form action="{{ route('login') }}" method="POST">
+                                @csrf
+                                @if (Session::has('errorLogin'))
+                                    <span style="color: rgb(218, 54, 54) " class="ms-2">Email atau Password salah</span>
+                                @endif
                                 <div class="form-floating mb-4">
-                                    <input type="text" class="form-control" id="login-username" name="login-username" placeholder="Enter your username">
-                                    <label class="form-label" for="login-username">Username</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your username" autofocus value="{{ old('email') }}">
+                                    <label class="form-label" for="email">Email</label>
                                 </div>
                                 <div class="form-floating mb-4">
-                                    <input type="password" class="form-control" id="login-password" name="login-password" placeholder="Enter your password">
-                                    <label class="form-label" for="login-password">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+                                    <label class="form-label" for="password">Password</label>
                                 </div>
                                 <div class="mb-4">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="login-remember-me" name="login-remember-me" checked>
-                                        <label class="form-check-label" for="login-remember-me">Remember Me</label>
+                                        <input class="form-check-input" type="checkbox" id="remember" name="remember">
+                                        <label class="form-check-label" for="remember">Remember Me</label>
                                     </div>
                                 </div>
                                 <div class="mb-4">
-                                    <a href="" type="button" class="btn btn-lg btn-alt-primary fw-semibold">
+                                    <button type="submit" class="btn btn-lg btn-alt-primary fw-semibold">
                                         Sign In
-                                    </a>
+                                    </button>
                                     <!-- <div class="mt-4">
                                         <a class="fs-sm fw-medium link-fx text-muted me-2 mb-1 d-inline-block" href="op_auth_signup2.html">
                                             Create Account
@@ -166,7 +173,7 @@
         <!-- END Main Container -->
     </div>
     <!-- END Page Container -->
-
+    
     <!--
         Codebase JS
 
