@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AbsensiKetidakhadiranController;
 use App\Http\Controllers\CustomerController;
@@ -42,7 +43,7 @@ Route::middleware(['auth', 'supervisor'])->group(function ()
 
     Route::get('mesin', [MesinController::class , 'index'])->name('mesin');
     Route::post('mesin', [MesinController::class , 'store'])->name('mesin.add');
-    Route::put('mesin/{id}', [MesinController::class , 'update'])->name('mesin.update');
+    Route::post('mesin/{id}', [MesinController::class , 'update'])->name('mesin.update');
     Route::get('mesin/{id}', [MesinController::class , 'get'])->name('mesin.get');
     Route::delete('mesin/{id}', [MesinController::class , 'destroy'])->name('mesin.delete');
 
@@ -68,36 +69,19 @@ Route::middleware(['auth', 'supervisor'])->group(function ()
     Route::delete('cuti/{id}', [CutiController::class, 'destroy'])->name('cuti.delete');
 
 
-    Route::get('absensi', function () {
-        return view('absensi');
-    })->name('absensi');
-
-    Route::get('absensi_ketidakhadiran', function () {
-        return view('absensi_ketidakhadiran');
-    })->name('absensi_ketidakhadiran');
-
-
-    Route::get('periode', function () {
-        return view('periode');
-    })->name('periode');
-    
-    Route::get('profil', [ProfilController::class, 'index'])->name('profil');
-    Route::post('profil/user', [ProfilController::class, 'update_user_profile'])->name('profil.user');
-    Route::post('profil/password', [ProfilController::class, 'update_password'])->name('profil.password');
-    Route::post('profil/info', [ProfilController::class, 'update_informasi_pribadi'])->name('profil.informasi');
-
-    Route::get('absensi', function () {
-        return view('absensi');
-    })->name('absensi');
-
+    Route::get('absensi', [AbsensiController::class, 'index'])->name('absensi');
     Route::get('absensi_ketidakhadiran', [AbsensiKetidakhadiranController::class, 'index'])->name('absensi_ketidakhadiran');
     Route::get('absensi_ketidakhadiran/approve/{id}', [AbsensiKetidakhadiranController::class, 'approve'])->name('absensi_ketidakhadiran.approve');
     Route::get('absensi_ketidakhadiran/reject/{id}', [AbsensiKetidakhadiranController::class, 'reject'])->name('absensi_ketidakhadiran.reject');
 
-
     Route::get('periode', [PeriodeController::class, 'index'])->name('periode');
     Route::post('periode', [PeriodeController::class, 'store'])->name('periode.store');
     Route::delete('periode/{id}', [PeriodeController::class, 'destroy'])->name('periode.delete');
+
+    Route::get('profil', [ProfilController::class, 'index'])->name('profil');
+    Route::post('profil/user', [ProfilController::class, 'update_user_profile'])->name('profil.user');
+    Route::post('profil/password', [ProfilController::class, 'update_password'])->name('profil.password');
+    Route::post('profil/info', [ProfilController::class, 'update_informasi_pribadi'])->name('profil.informasi');
 
 });
 
@@ -118,5 +102,3 @@ Route::middleware(['auth', 'admin'])->group(function () {
         return view('jadwal_spk');
     })->name('jadwal_spk');
 });
-
-

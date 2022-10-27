@@ -31,4 +31,9 @@ class Karyawan extends Authenticatable
     {
         return $this->hasMany(AbsensiKetidakhadiran::class);
     }
+
+    public function absensi()
+    {
+        return $this->hasMany(AbsensiKetidakhadiran::class);
+    }
 }
