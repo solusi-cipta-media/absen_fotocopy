@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->date('tanggal')->unique();
             $table->enum('status', ['aktif', 'libur']);
+            $table->time('clock_in')->nullable();
+            $table->time('clock_out')->nullable();
             $table->timestamps();
         });
     }

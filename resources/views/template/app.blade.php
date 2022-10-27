@@ -48,6 +48,10 @@
     {{-- select 2 --}}
     <link rel="stylesheet" href=" {{ asset('js/plugins/select2/css/select2.min.css') }}">
     {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
+
+    {{-- Flat picker --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
 </head>
 
 <body>
@@ -93,18 +97,18 @@
                     <div class="content-side content-side-user px-0 py-0">
                         <!-- Visible only in mini mode -->
                         <div class="smini-visible-block animated fadeIn px-3">
-                            <img class="img-avatar img-avatar32" src="{{ asset('/media/avatars/asa.jpg') }}" alt="">
+                            <img class="img-avatar img-avatar32" src="{{ asset(auth()->user()->foto) }}" alt="">
                         </div>
                         <!-- END Visible only in mini mode -->
 
                         <!-- Visible only in normal mode -->
                         <div class="smini-hidden text-center mx-auto">
-                            <a class="img-link" href="be_pages_generic_profile.html">
-                                <img class="img-avatar" src="{{ asset('media/avatars/asa.jpg') }}" alt="">
+                            <a class="img-link" href="{{ asset(auth()->user()->foto) }}">
+                                <img class="img-avatar" src="{{ asset(auth()->user()->foto) }}" alt="">
                             </a>
                             <ul class="list-inline mt-3 mb-0">
                                 <li class="list-inline-item">
-                                    <a class="link-fx text-dual fs-sm fw-semibold text-uppercase" href="{{ route('profil') }}">Agus Salim</a>
+                                    <a class="link-fx text-dual fs-sm fw-semibold text-uppercase" href="{{ route('profil') }}">{{auth()->user()->nama}}</a>
                                 </li>
                                 <li class="list-inline-item">
                                     <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
@@ -113,7 +117,7 @@
                                     </a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="link-fx text-dual" href="{{ route('login') }}">
+                                    <a class="link-fx text-dual" href="{{ route('logout') }}">
                                         <i class="fa fa-sign-out-alt"></i>
                                     </a>
                                 </li>
@@ -183,41 +187,41 @@
                                     <span class="nav-main-link-name">Register Periode</span>
                                 </a>
                             </li>
+                            @if (auth()->user()->role === 'admin')
+                                <li class="nav-main-heading">Overhaul</li>
+                                <li class="nav-main-item">
+                                    <a class="nav-main-link {{ (Route::is('overhaul_list') ? "active" : "") }}" href="{{ route('overhaul_list') }}">
+                                        <i class="nav-main-link-icon fa fa-cash-register"></i>
+                                        <span class="nav-main-link-name">List Mesin</span>
+                                    </a>
+                                </li>
+                                <li class="nav-main-item">
+                                    <a class="nav-main-link {{ (Route::is('overhaul_proses') ? "active" : "") }}" href="{{ route('overhaul_proses') }}">
+                                        <i class="nav-main-link-icon fa fa-dumpster-fire"></i>
+                                        <span class="nav-main-link-name">Proses Overhaul</span>
+                                    </a>
+                                </li>
+                                <li class="nav-main-item">
+                                    <a class="nav-main-link {{ (Route::is('cekqr') ? "active" : "") }}" href="{{ route('cekqr') }}">
+                                        <i class="nav-main-link-icon fa fa-qrcode"></i>
+                                        <span class="nav-main-link-name">Cek QR</span>
+                                    </a>
+                                </li>
 
-                            <li class="nav-main-heading">Overhaul</li>
-                            <li class="nav-main-item">
-                                <a class="nav-main-link {{ (Route::is('overhaul_list') ? "active" : "") }}" href="{{ route('overhaul_list') }}">
-                                    <i class="nav-main-link-icon fa fa-cash-register"></i>
-                                    <span class="nav-main-link-name">List Mesin</span>
-                                </a>
-                            </li>
-                            <li class="nav-main-item">
-                                <a class="nav-main-link {{ (Route::is('overhaul_proses') ? "active" : "") }}" href="{{ route('overhaul_proses') }}">
-                                    <i class="nav-main-link-icon fa fa-dumpster-fire"></i>
-                                    <span class="nav-main-link-name">Proses Overhaul</span>
-                                </a>
-                            </li>
-                            <li class="nav-main-item">
-                                <a class="nav-main-link {{ (Route::is('cekqr') ? "active" : "") }}" href="{{ route('cekqr') }}">
-                                    <i class="nav-main-link-icon fa fa-qrcode"></i>
-                                    <span class="nav-main-link-name">Cek QR</span>
-                                </a>
-                            </li>
-
-                            <li class="nav-main-heading">Kerja Luar</li>
-                            <li class="nav-main-item">
-                                <a class="nav-main-link {{ (Route::is('jadwal_spk') ? "active" : "") }}" href="{{ route('jadwal_spk') }}">
-                                    <i class="nav-main-link-icon fa fa-business-time"></i>
-                                    <span class="nav-main-link-name">Jadwal SPK</span>
-                                </a>
-                            </li>
-                            <li class="nav-main-item">
-                                <a class="nav-main-link {{ (Route::is('machine') ? "active" : "") }}" href="#">
-                                    <i class="nav-main-link-icon fa fa-file-contract"></i>
-                                    <span class="nav-main-link-name">Machine Record</span>
-                                </a>
-                            </li>
-
+                                <li class="nav-main-heading">Kerja Luar</li>
+                                <li class="nav-main-item">
+                                    <a class="nav-main-link {{ (Route::is('jadwal_spk') ? "active" : "") }}" href="{{ route('jadwal_spk') }}">
+                                        <i class="nav-main-link-icon fa fa-business-time"></i>
+                                        <span class="nav-main-link-name">Jadwal SPK</span>
+                                    </a>
+                                </li>
+                                <li class="nav-main-item">
+                                    <a class="nav-main-link {{ (Route::is('machine') ? "active" : "") }}" href="#">
+                                        <i class="nav-main-link-icon fa fa-file-contract"></i>
+                                        <span class="nav-main-link-name">Machine Record</span>
+                                    </a>
+                                </li>
+                            @endif
 
                             <li class="nav-main-heading">Setting</li>
                             <li class="nav-main-item">
@@ -227,7 +231,7 @@
                                 </a>
                             </li>
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="">
+                                <a class="nav-main-link" href="{{ route('logout') }}">
                                     <i class="nav-main-link-icon fa fa-sign-out-alt"></i>
                                     <span class="nav-main-link-name">Logout</span>
                                 </a>
@@ -256,7 +260,7 @@
                     <!-- END Toggle Sidebar -->
 
                     <!-- Open Search Section -->
-                    <!-- Layout API, functionality in Template._uiApiLayout() -->
+                    <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
                     <button type="button" class="btn btn-sm btn-alt-secondary" data-toggle="layout" data-action="header_search_on">
                         <i class="fa fa-fw fa-search"></i>
                     </button>
@@ -499,8 +503,10 @@
             $.cookie('color', theme);
         });
     </script>
+    
     <!--
     Codebase JS
+    
 
     Core libraries and functionality
     webpack is putting everything together at assets/_js/main/app.js
@@ -534,6 +540,7 @@
     <script src="{{ asset('js/plugins/select2/js/select2.min.js') }}"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
 
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js"></script> --}}
     {{-- <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
