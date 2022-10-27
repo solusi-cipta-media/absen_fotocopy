@@ -35,6 +35,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap">
     
     <link rel="stylesheet" id="css-main" href="{{ asset('css/codebase.min.css') }}">
+    @if ($_COOKIE['color'] != 'text-default')
+        <link id="css-theme" rel="stylesheet" href="{{$_COOKIE['color']}}">
+    @endif
     <link rel="stylesheet" href=" {{ asset('js/plugins/sweetalert2/sweetalert2.min.css') }}">
 
     <!-- jQuery (required for DataTables plugin) -->
@@ -52,9 +55,12 @@
 </head>
 
 <body>
-
-    <div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-modern main-content-boxed">
-
+    @if ($_COOKIE['mode'] == 'light')
+        <div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-modern main-content-boxed">
+    @else
+        <div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-modern main-content-boxed sidebar-dark page-header-dark dark-mode">        
+    @endif
+    
         <nav id="sidebar">
             <!-- Sidebar Content -->
             <div class="sidebar-content">
@@ -254,7 +260,6 @@
                     <!-- END Toggle Sidebar -->
 
                     <!-- Open Search Section -->
-                    <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
                     
                     <!-- END Open Search Section -->
 
@@ -479,46 +484,20 @@
     </body>
 
     {{-- Themes Event --}}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script defer>
-        $(document).ready(function () {
-            if (localStorage.getItem('mode')=='light') {
-                $('#page-container').removeClass('sidebar-dark page-header-dark dark-mode');
-            }else if (localStorage.getItem('mode')=='dark'){
-                $('#page-container').addClass('sidebar-dark page-header-dark dark-mode');
-            }else{
-                localStorage.setItem('mode', 'light');
-            }
-
-            var colorThemes = localStorage.getItem('color');
-            if (colorThemes != null && colorThemes!= 'text-default') {
-                $('a[data-toggle="theme"]').removeClass('active');
-                var url = $('a[class = "'+colorThemes+'"]').attr('data-theme')
-                $('a[class = "'+colorThemes+'"]').addClass('active');
-                $('link[id="css-theme"]').remove();
-                $('link[id="css-main"]').after('<link id="css-theme" rel="stylesheet" href="">');
-                $('link[id="css-theme"]').attr('href', url);
-            }else{
-                var url = $('a[class = "text-default"]').attr('data-theme');
-                $('a[class = "text-default"').addClass('active');
-                localStorage.setItem('color','text-default');
-            }
-            
-        })
 
         function change_mode(){
-            if (localStorage.getItem('mode')=='light') {
-                localStorage.setItem('mode', 'dark');
-            }else if (localStorage.getItem('mode')=='dark') {
-                localStorage.setItem('mode', 'light');
+            if ($.cookie('mode')=='light') {
+                $.cookie('mode', 'dark');
+            }else if ($.cookie('mode')=='dark') {
+                $.cookie('mode', 'light');
             }
         }
 
         $('a[data-toggle="theme"]').on('click', function () {
-            $('link[id="css-theme"]').remove();
-            $(this).removeClass('active');
-            var theme = $(this).attr('class');
-            $(this).addClass('active');
-            localStorage.setItem('color', theme);
+            var theme = $(this).attr('data-theme');
+            $.cookie('color', theme);
         });
     </script>
     
