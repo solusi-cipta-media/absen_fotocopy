@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('karyawans', function (Blueprint $table) {
             $table->id();
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->enum('role', ['admin','supervisor', 'teknisi', 'staff']);
             $table->string('nama', 40);
             $table->string('nip', 30)->unique();
             $table->string('alamat', 255);
@@ -23,6 +26,7 @@ return new class extends Migration
             $table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
             $table->string('foto');
             $table->timestamps();
+            $table->rememberToken();
         });
     }
 
