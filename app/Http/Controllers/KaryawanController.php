@@ -33,7 +33,10 @@ class KaryawanController extends Controller
                     $btnedit = '<button type="button" class="btn btn-sm btn-info" onclick="open_form('.$row->id.')" data-bs-toggle="tooltip" title="Edit">
                                     <i class="fa fa-edit"></i>
                                 </button>';
-                    return $btndel.$btnedit;
+                    $btndetail = '<button type="button" class="btn btn-sm btn-outline-info" onclick="detail('.$row->id.')" data-bs-toggle="tooltip" title="Detail">
+                                    <i class="fa fa-eye"></i>
+                                </button>';
+                    return $btndel.$btnedit.$btndetail;
                 })
                 ->rawColumns(['foto', 'action'])
                 ->make(true);
