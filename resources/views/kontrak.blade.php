@@ -54,23 +54,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- <tr>
-                            <td class="text-center">1</td>
-                            <td class="fw-semibold">12345</td>
-                            <td>PT. ABC</td>
-                            <td>05-Nov-2022</td>
-                            <td>05-Nov-2023</td>
-                            <td>05-Oct-2023</td>
-                            <td><button type="button" class="btn btn-danger"><i class="fa fa-file-pdf"></i> Lihat</button></td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-sm btn-danger" onclick=delete_data() data-bs-toggle="tooltip" title="Hapus">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit" id="btn-edit">
-                                    <i class="fa fa-edit"></i>
-                                </button>
-                            </td>
-                        </tr> --}}
+                        
                     </tbody>
                 </table>
             </div>
@@ -96,8 +80,7 @@
                                 <label class="form-label" for="customer">Customer</label>
                                 <br>
                                 <select class="select2 form-control" style="width: 100%" id="customer" name="customer_id" required>
-                                    {{-- <option value="1">PT. A</option>
-                                    <option value="2">PT. B</option> --}}
+                                    
                                 </select>
                             </div>
                             <div class="mb-4">
@@ -124,12 +107,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="row-push">
-                        <div class="col-lg-12 col-xl-12">
-                            <button type="submit" class="btn btn-alt-primary"><i class="si si-cloud-upload"></i> Simpan</button>
-                            <button type="button" class="btn btn-alt-danger" id="clear-form"><i class="si si-close"></i> Clear</button>
-                        </div>
-                    </div> -->
+                    
                 </form>
             </div>
         </div>
