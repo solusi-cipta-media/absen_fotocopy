@@ -71,8 +71,8 @@
                         <span class="smini-visible fw-bold tracking-wide fs-lg">
                             c<span class="text-primary">b</span>
                         </span>
-                        <a class="link-fx fw-bold tracking-wide mx-auto" href="index.html">
-                            <span class="smini-hidden">
+                        <a class="link-fx fw-bold tracking-wide mx-auto" href="{{route('dashboard')}}">
+                            <span class="smini-hidden d-flex justify-content-center">
                                 <img src="{{ asset('media/favicons/cms.png') }}" alt="cms" width="80%">
                                 <!-- <i class="fa fa-fire text-primary"></i> -->
                                 <!-- <span class="fs-4 text-dual">code</span><span class="fs-4 text-primary">base</span> -->
