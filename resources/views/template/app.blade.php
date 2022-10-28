@@ -37,8 +37,6 @@
     <link rel="stylesheet" id="css-main" href="{{ asset('css/codebase.min.css') }}">
     @if (isset($_COOKIE['color']) && $_COOKIE['color'] != 'text-default')
         <link id="css-theme" rel="stylesheet" href="{{$_COOKIE['color']}}">
-    @else
-        {{ $_COOKIE['color'] = 'text-default' }}
     @endif
     <link rel="stylesheet" href=" {{ asset('js/plugins/sweetalert2/sweetalert2.min.css') }}">
 
