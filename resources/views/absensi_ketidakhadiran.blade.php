@@ -34,15 +34,27 @@
                 </button> -->
             </div>
             <div class="block-content block-content-full">
+                <div class="row">
+                    <div class="col-6">
+                        <label for="date-filter" class="form-label">Filter tanggal</label>
+                        <div class="flatpickr input-group mb-4" id="date-filter">
+                            <input type="text" class="form-control" placeholder="Select Date.." data-input> <!-- input is mandatory -->
+                            <div class="input-group-append">
+                                <a class="input-button btn btn-outline-secondary" title="toggle" data-toggle>
+                                    <i class="fa fa-calendar"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- DataTables functionality is initialized with .js-dataTable-responsive class in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
                 <table class="table table-bordered table-striped table-vcenter w-100">
                     <!-- <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons"> -->
                     <thead>
                         <tr>
-                            <th class="text-center">#</th>
-                            <th>Nama</th>
-                            <th>Nomor Induk Karyawan</th>
                             <th>Tanggal</th>
+                            <th>Nomor Induk Karyawan</th>
+                            <th>Nama</th>
                             <th>Tipe</th>
                             <th>Status</th>
                             <th>Aksi</th>
@@ -118,16 +130,33 @@
             responsive: true,
             ajax: "{{ route('absensi_ketidakhadiran') }}",
             columns: [
-                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'nama', name: 'nama'},
+                {data: 'tanggal', name: 'tanggal', "orderable": false},
                 {data: 'nip', name: 'nip'},
-                {data: 'tanggal', name: 'tanggal'},
+                {data: 'nama', name: 'nama'},
                 {data: 'cuti', name: 'cuti'},
                 {data: 'status', name: 'status'},
                 {data: 'action', name: 'action'}
             ]
         });
-    })
+        $('.flatpickr').flatpickr({
+            mode: "range",
+            dateFormat: "d-F-Y",
+            wrap : true,
+            onChange: function(dates, dateStr) {
+                if (dates.length == 2) {
+                    filter(dateStr);
+                }
+            }
+        });
+    });
+
+    function filter(dateRange) {
+        var table = $('table').DataTable();
+        var url = "{{ route('absensi_ketidakhadiran.dateRange',':data') }}";
+        url = url.replace(':data', dateRange);
+        table.ajax.url(url).load();
+    }
+
     function approve_data(id) {
         Swal.fire({
             title: 'Apakah Anda Yakin ?',

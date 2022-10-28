@@ -13,4 +13,9 @@ class Customer extends Model
     {
         return $this->hasMany(Kontrak::class);
     }
+
+    public function notifikasi()
+    {
+        return $this->belongsTo(Notifikasi::class);
+    }
 }
