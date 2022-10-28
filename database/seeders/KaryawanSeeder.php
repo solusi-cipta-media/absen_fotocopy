@@ -26,7 +26,7 @@ class KaryawanSeeder extends Seeder
             'no_ktp' => '3561000012933',
             'telepon' => '089123123123',
             'jenis_kelamin' => 'laki-laki',
-            'foto' => 'media/avatars/asa.jpg'
+            'foto' => 'media/karyawan/karyawan.jpg'
         ]);
 
         Karyawan::create([
@@ -39,7 +39,7 @@ class KaryawanSeeder extends Seeder
             'no_ktp' => '3561000012912',
             'telepon' => '089123123190',
             'jenis_kelamin' => 'laki-laki',
-            'foto' => 'media/avatars/asa.jpg'
+            'foto' => 'media/karyawan/karyawan.jpg'
         ]);
 
         Karyawan::create([
@@ -52,7 +52,7 @@ class KaryawanSeeder extends Seeder
             'no_ktp' => '3561000012951',
             'telepon' => '089123123120',
             'jenis_kelamin' => 'perempuan',
-            'foto' => 'media/avatars/asa.jpg'
+            'foto' => 'media/karyawan/karyawan.jpg'
         ]);
 
         Karyawan::create([
@@ -65,8 +65,7 @@ class KaryawanSeeder extends Seeder
             'no_ktp' => '35610001232951',
             'telepon' => '089123123120',
             'jenis_kelamin' => 'laki-laki',
-            'foto' => 'media/avatars/asa.jpg'
+            'foto' => 'media/karyawan/karyawan.jpg'
         ]);
-
     }
 }

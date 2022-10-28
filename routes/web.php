@@ -8,6 +8,7 @@ use App\Http\Controllers\CutiController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\KontrakController;
 use App\Http\Controllers\MesinController;
+use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\PeriodeController;
 use Illuminate\Support\Facades\Route;
@@ -23,8 +24,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/login', [AuthController::class, 'login_page'])->name('login.form');
+Route::post('login', [AuthController::class, 'login'])->name('login');
+Route::get('login', [AuthController::class, 'login_page'])->name('login.form');
 
 Route::middleware(['auth', 'supervisor'])->group(function ()
 {
@@ -83,6 +84,8 @@ Route::middleware(['auth', 'supervisor'])->group(function ()
     Route::post('profil/password', [ProfilController::class, 'update_password'])->name('profil.password');
     Route::post('profil/info', [ProfilController::class, 'update_informasi_pribadi'])->name('profil.informasi');
 
+    Route::get('notifikasi/load',[NotifikasiController::class, 'load'])->name('notifikasi.load');
+    Route::get('notifikasi',[NotifikasiController::class, 'index'])->name('notifikasi');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
