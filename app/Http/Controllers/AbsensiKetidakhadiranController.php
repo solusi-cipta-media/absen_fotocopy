@@ -14,7 +14,7 @@ class AbsensiKetidakhadiranController extends Controller
         if ($request->ajax()) {
             $ak = AK::with('periode')
                 ->whereRelation('periode', 'tanggal', '>=', Carbon::now()->subDays(30))
-                ->whereRelation('periode', 'tanggal', '<=', Carbon::now())->orderBy('periode_id','DESC')->get();
+                ->whereRelation('periode', 'tanggal', '<=', Carbon::now())->get();
             return DataTables::of($ak)
                 ->addIndexColumn()
                 ->addColumn('nama', function ($row){
@@ -79,7 +79,7 @@ class AbsensiKetidakhadiranController extends Controller
             $to = Carbon::createFromFormat('d-F-Y', $date[1])->format('Y-m-d');
             $ak = AK::with('periode')
                 ->whereRelation('periode', 'tanggal', '>=', $from)
-                ->whereRelation('periode', 'tanggal', '<=', $to)->orderBy('periode_id','DESC')->get();
+                ->whereRelation('periode', 'tanggal', '<=', $to)->get();
             return DataTables::of($ak)
                 ->addIndexColumn()
                 ->addColumn('nama', function ($row){
