@@ -505,6 +505,7 @@
                 }
             });    
         });
+        
         function change_mode(){
             if ($.cookie('mode')=='light') {
                 $.cookie('mode', 'dark');
