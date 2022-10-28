@@ -129,8 +129,9 @@
             serverSide: true,
             responsive: true,
             ajax: "{{ route('absensi_ketidakhadiran') }}",
+            order : [[0, 'desc']],
             columns: [
-                {data: 'tanggal', name: 'tanggal', "orderable": false},
+                {data: 'tanggal', name: 'tanggal'},
                 {data: 'nip', name: 'nip'},
                 {data: 'nama', name: 'nama'},
                 {data: 'cuti', name: 'cuti'},
