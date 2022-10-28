@@ -20,7 +20,6 @@
             <div class="block-content block-content-full">
                 <!-- DataTables functionality is initialized with .js-dataTable-responsive class in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
                 <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive">
-                    <!-- <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons"> -->
                     <thead>
                         <tr>
                             <th class="text-center">#</th>
@@ -85,12 +84,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="row-push">
-                        <div class="col-lg-12 col-xl-12">
-                            <button type="submit" class="btn btn-alt-primary"><i class="si si-cloud-upload"></i> Simpan</button>
-                            <button type="button" class="btn btn-alt-danger" id="clear-form"><i class="si si-close"></i> Clear</button>
-                        </div>
-                    </div> -->
+                    
                 </form>
             </div>
         </div>
