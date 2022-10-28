@@ -27,11 +27,7 @@
             </tr>
           </thead>
           <tbody>
-            {{-- <tr>
-              <td class="text-center">1</td>
-              <td class="fw-semibold">Kontrak dengan PT ABnjasdiawi akan berakhir tanggal 15 agustus 2023</td>
-              <td class="fw-semibold">2 days ago</td>              
-            </tr> --}}
+            
           </tbody>
         </table>
       </div>
