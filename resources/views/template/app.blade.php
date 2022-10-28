@@ -33,6 +33,7 @@
 
     <!-- Fonts and Codebase framework -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap">
+    
     <link rel="stylesheet" id="css-main" href="{{ asset('css/codebase.min.css') }}">
     <link rel="stylesheet" href=" {{ asset('js/plugins/sweetalert2/sweetalert2.min.css') }}">
 
@@ -44,6 +45,10 @@
     {{-- select 2 --}}
     <link rel="stylesheet" href=" {{ asset('js/plugins/select2/css/select2.min.css') }}">
     {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
+
+    {{-- Flat picker --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
 </head>
 
 <body>
@@ -101,7 +106,7 @@
                                 </li>
                                 <li class="list-inline-item">
                                     <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                                    <a class="link-fx text-dual" data-toggle="layout" data-action="dark_mode_toggle" href="javascript:void(0)">
+                                    <a class="link-fx text-dual" data-toggle="layout" data-action="dark_mode_toggle" href="javascript:void(0)" onclick="change_mode()">
                                         <i class="fa fa-burn"></i>
                                     </a>
                                 </li>
@@ -474,8 +479,54 @@
         <!-- END Page Container -->
 
     </body>
+
+    {{-- Themes Event --}}
+    <script defer>
+        $(document).ready(function () {
+            if (localStorage.getItem('mode')=='light') {
+                $('#page-container').removeClass('sidebar-dark page-header-dark dark-mode');
+            }else if (localStorage.getItem('mode')=='dark'){
+                $('#page-container').addClass('sidebar-dark page-header-dark dark-mode');
+            }else{
+                localStorage.setItem('mode', 'light');
+            }
+
+            var colorThemes = localStorage.getItem('color');
+            if (colorThemes != null && colorThemes!= 'text-default') {
+                $('a[data-toggle="theme"]').removeClass('active');
+                var url = $('a[class = "'+colorThemes+'"]').attr('data-theme')
+                $('a[class = "'+colorThemes+'"]').addClass('active');
+                $('link[id="css-theme"]').remove();
+                $('link[id="css-main"]').after('<link id="css-theme" rel="stylesheet" href="">');
+                $('link[id="css-theme"]').attr('href', url);
+            }else{
+                var url = $('a[class = "text-default"]').attr('data-theme');
+                $('a[class = "text-default"').addClass('active');
+                localStorage.setItem('color','text-default');
+            }
+            
+        })
+
+        function change_mode(){
+            if (localStorage.getItem('mode')=='light') {
+                localStorage.setItem('mode', 'dark');
+            }else if (localStorage.getItem('mode')=='dark') {
+                localStorage.setItem('mode', 'light');
+            }
+        }
+
+        $('a[data-toggle="theme"]').on('click', function () {
+            $('link[id="css-theme"]').remove();
+            $(this).removeClass('active');
+            var theme = $(this).attr('class');
+            $(this).addClass('active');
+            localStorage.setItem('color', theme);
+        });
+    </script>
+    
     <!--
     Codebase JS
+    
 
     Core libraries and functionality
     webpack is putting everything together at assets/_js/main/app.js
@@ -509,6 +560,7 @@
     <script src="{{ asset('js/plugins/select2/js/select2.min.js') }}"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
 
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js"></script> --}}
     {{-- <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>

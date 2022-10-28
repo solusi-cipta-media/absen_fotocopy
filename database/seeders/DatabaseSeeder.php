@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
             MesinSeeder::class,
             CustomerSeeder::class,
             KontrakSeeder::class,
-            CutiSeeder::class
+            CutiSeeder::class,
+            PeriodeSeeder::class
         ]);
     }
 }
