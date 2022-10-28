@@ -71,8 +71,8 @@
                         <span class="smini-visible fw-bold tracking-wide fs-lg">
                             c<span class="text-primary">b</span>
                         </span>
-                        <a class="link-fx fw-bold tracking-wide mx-auto" href="index.html">
-                            <span class="smini-hidden">
+                        <a class="link-fx fw-bold tracking-wide mx-auto" href="{{route('dashboard')}}">
+                            <span class="smini-hidden d-flex justify-content-center">
                                 <img src="{{ asset('media/favicons/cms.png') }}" alt="cms" width="80%">
                                 <!-- <i class="fa fa-fire text-primary"></i> -->
                                 <!-- <span class="fs-4 text-dual">code</span><span class="fs-4 text-primary">base</span> -->
@@ -444,20 +444,6 @@
         </header>
         <!-- END Header -->
 
-        <script>
-            const toast = (icon, title) => {
-                Swal.fire({
-                    icon: icon,
-                    title: title,
-                    toast: true,
-                    position: 'top',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                })
-            }
-        </script>
-
         @yield('content')
 
         <!-- Footer -->
@@ -474,11 +460,11 @@
             </div>
         </footer>
         <!-- END Footer -->
-        </div>
+    </div>
         <!-- END Page Container -->
 
-    </body>
-
+</body>
+</html>
     {{-- Themes Event --}}
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script defer>
@@ -561,5 +547,3 @@
     {{-- <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script> --}}
 
-    
-</html>
