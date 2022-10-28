@@ -13,9 +13,11 @@ class AbsensiController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $absensis = Absensi::with('periode')
+            $absensis = Absensi::with(['periode' => function ($q){
+                    $q->orderBy('tanggal', 'DESC');
+                }])
                 ->whereRelation('periode', 'tanggal', '>=', Carbon::now()->subDays(30))
-                ->whereRelation('periode', 'tanggal', '<=', Carbon::now())->orderBy('periode_id','DESC')->get();
+                ->whereRelation('periode', 'tanggal', '<=', Carbon::now())->get();
             // if (isset($dateRange)) {
             //     $date = explode(" to ",$request->dateRange);
             //     $from = Carbon::createFromFormat('d-F-Y', $date[0])->format('Y-m-d');
@@ -101,9 +103,11 @@ class AbsensiController extends Controller
             $date = explode(" to ",$data);
             $from = Carbon::createFromFormat('d-F-Y', $date[0])->format('Y-m-d');
             $to = Carbon::createFromFormat('d-F-Y', $date[1])->format('Y-m-d');
-            $absensis = Absensi::with('periode')
+            $absensis = Absensi::with(['periode' => function ($q){
+                    $q->orderBy('tanggal', 'DESC');
+                }])
                 ->whereRelation('periode', 'tanggal', '>=', $from)
-                ->whereRelation('periode', 'tanggal', '<=', $to)->orderBy('periode_id','DESC')->get();
+                ->whereRelation('periode', 'tanggal', '<=', $to)->get();
 
             return DataTables::of($absensis)
                 ->addColumn('nama', function ($row){
