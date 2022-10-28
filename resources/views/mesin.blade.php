@@ -35,24 +35,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- <tr>
-                            <td class="text-center">1</td>
-                            <td class="fw-semibold">121</td>
-                            <td>DC286</td>
-                            <td>606718</td>
-                            <td>Import</td>
-                            <td>2734</td>
-                            <td>220V</td>
-                            <td><span class="badge bg-warning">Import</span></td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-sm btn-danger" onclick=delete_data() data-bs-toggle="tooltip" title="Hapus">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit" id="btn-edit">
-                                    <i class="fa fa-edit"></i>
-                                </button>
-                            </td>
-                        </tr> --}}
+                        
                     </tbody>
                 </table>
             </div>
