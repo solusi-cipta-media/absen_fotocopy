@@ -120,7 +120,7 @@
                         <div class="col-lg-12 col-xl-12">
                             <div class="mb-4">
                                 <button type="submit" class="btn btn-alt-primary"><i class="si si-cloud-upload"></i> Simpan</button>
-                                <button type="reset" class="btn btn-alt-danger" onclick="clear_form()"><i class="si si-close"></i> Clear</button>
+                                <button type="reset" id="reset" class="btn btn-alt-danger" onclick="clear_form()"><i class="si si-close"></i> Clear</button>
                             </div>
                         </div>
                     </div>
