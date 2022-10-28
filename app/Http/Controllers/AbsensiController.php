@@ -16,14 +16,7 @@ class AbsensiController extends Controller
             $absensis = Absensi::with(['periode'])
                 ->whereRelation('periode', 'tanggal', '>=', Carbon::now()->subDays(30))
                 ->whereRelation('periode', 'tanggal', '<=', Carbon::now())->get();
-            // if (isset($dateRange)) {
-            //     $date = explode(" to ",$request->dateRange);
-            //     $from = Carbon::createFromFormat('d-F-Y', $date[0])->format('Y-m-d');
-            //     $to = Carbon::createFromFormat('d-F-Y', $date[1])->format('Y-m-d');
-            //     $absensis = Absensi::with('periode')
-            //         ->whereRelation('periode', 'tanggal', '>', $from)
-            //         ->whereRelation('periode', 'tanggal', '<', $to)->get();
-            // }else{
+            
             return DataTables::of($absensis)
                 ->addColumn('nama', function ($row){
                     return $row->karyawan->nama;
