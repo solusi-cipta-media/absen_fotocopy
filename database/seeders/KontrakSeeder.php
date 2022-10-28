@@ -21,7 +21,7 @@ class KontrakSeeder extends Seeder
             'nomor' => '12309',
             'awal' => Carbon::now()->subDays(3),
             'akhir' => Carbon::now()->addDays(20),
-            'reminder' => Carbon::now()->addDay(15),
+            'reminder' => Carbon::now()->subDays(2),
             'pdf' => 'media/kontrak/sample.pdf'
         ]);
         Kontrak::create([
@@ -29,7 +29,7 @@ class KontrakSeeder extends Seeder
             'nomor' => '12332',
             'awal' => Carbon::now()->subDays(30),
             'akhir' => Carbon::now()->addDays(30),
-            'reminder' => Carbon::now()->addDay(25),
+            'reminder' => Carbon::now()->subDay(),
             'pdf' => 'media/kontrak/sample.pdf'
         ]);
         Kontrak::create([
@@ -37,7 +37,7 @@ class KontrakSeeder extends Seeder
             'nomor' => '12312',
             'awal' => Carbon::now()->subDays(40),
             'akhir' => Carbon::now()->addDays(10),
-            'reminder' => Carbon::now()->addDay(5),
+            'reminder' => Carbon::now(),
             'pdf' => 'media/kontrak/sample.pdf'
         ]);
     }

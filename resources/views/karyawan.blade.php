@@ -23,15 +23,12 @@
                         <!-- <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons"> -->
                     <thead>
                         <tr>
-                            <th class="text-center">#</th>
+                            <th>Foto</th>
                             <th>NIP</th>
                             <th>Nama</th>
-                            <th>No. KTP</th>
+                            <th>Email</th>
                             <th>Handphone</th>
-                            <th>Jenis Kelamin</th>
                             <th>Jabatan</th>
-                            <th>Photo</th>
-                            <th>Alamat</th>
                             <th class="text-center" style="width: 15%;">Aksi</th>
                         </tr>
                     </thead>
@@ -153,6 +150,83 @@
 </main>
 <!-- END Main Container -->
 
+        <!-- Normal Modal -->
+        <div class="modal" id="modal_karyawan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="block block-rounded shadow-none mb-0">
+                        <div class="block-header block-header-default">
+                            <h3 class="block-title">Detail Karyawan</h3>
+                            <div class="block-options">
+                                <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="block-content fs-sm" id="body-modal">
+                            <div class="row">
+                                <div class="col-5">
+                                    <img class="rounded w-100 mt-5" src="" alt="">
+                                </div>
+                                <div class="col-7">
+                                    <div class="mb-2">
+                                        <label class="form-label" for="nip">Nomor Induk Karyawan</label>
+                                        <input type="text" class="form-control" id="nip" name="nip" readonly >
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <label class="form-label" for="no_ktp">Nomor KTP</label>
+                                        <input type="text" class="form-control" id="no_ktp" name="no_ktp" readonly >
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label" for="nama">Nama</label>
+                                        <input type="text" class="form-control" id="nama" name="nama" readonly >
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <label class="form-label" for="email">Email</label>
+                                        <input type="text" class="form-control" id="email" name="email" readonly>
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <label class="form-label" for="telepon">Handphone</label>
+                                        <input type="text" class="form-control" id="telepon" name="telepon" readonly >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5">
+                                    <div class="mb-2">
+                                        <label class="form-label" for="role">Jabatan</label>
+                                        <input type="text" class="form-control" id="role" name="role" readonly >
+                                    </div>
+                                </div>
+                                <div class="col-7">
+                                    <div class="mb-2">
+                                        <label class="form-label" for="jenis_kelamin">Jenis Kelamin</label>
+                                        <input type="text" class="form-control" id="jenis_kelamin" name="jenis_kelamin" readonly >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label class="form-label" for="alamat">Alamat</label>
+                                    <textarea class="form-control" readonly name="alamat" id="alamat" cols="30" rows="5"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block-content block-content-full block-content-sm text-end border-top">
+                            <button type="button" class="btn btn-alt-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END Normal Modal -->
+
+
 <script>
     function show_password() {
         if ($('#password').attr('type') == 'password') {
@@ -186,15 +260,12 @@
             responsive: true,
             ajax: url_datatable,
             columns: [
-                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                {data: 'foto', name: 'foto'},
                 {data: 'nip', name: 'nip'},
                 {data: 'nama', name: 'nama'},
-                {data: 'no_ktp', name: 'no_ktp'},
+                {data: 'email', name: 'email'},
                 {data: 'telepon', name: 'telepon'},
-                {data: 'jenis_kelamin', name: 'jenis_kelamin'},
                 {data: 'role', name: 'role'},
-                {data: 'foto', name: 'foto'},
-                {data: 'alamat', name: 'alamat'},
                 {data: 'action', name: 'action'}
             ]
         });
@@ -418,6 +489,31 @@
                 }
             });
         }
+    }
+
+    function detail(id) {
+        var url = url_get;
+        url = url.replace(':id', id);
+        $.ajaxSetup({
+            headers: ajax_header
+        });
+        $.ajax({
+            type:'GET',
+            url : url,
+            success : function(res) {
+                var items = res.data;
+                var imgurl = "{{ asset(':url') }}";
+                imgurl = imgurl.replace(':url', res.data.foto);
+                $('.modal img').attr('src', imgurl);
+                $('.modal img').attr('alt', res.data.nama);
+                Object.entries(items).forEach(([key, value]) => {
+                    $('.modal textarea[name='+key+']').val(value);
+                    $('.modal').find('input[type="text"][name='+key+']').val(value);
+                });
+            }
+        });
+
+        $('#modal_karyawan').modal('show');
     }
 </script>
 @endsection
