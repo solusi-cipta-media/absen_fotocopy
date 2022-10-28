@@ -33,20 +33,34 @@
 
     <!-- Fonts and Codebase framework -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap">
+    
     <link rel="stylesheet" id="css-main" href="{{ asset('css/codebase.min.css') }}">
+    @if (isset($_COOKIE['color']) && $_COOKIE['color'] != 'text-default')
+        <link id="css-theme" rel="stylesheet" href="{{$_COOKIE['color']}}">
+    @endif
     <link rel="stylesheet" href=" {{ asset('js/plugins/sweetalert2/sweetalert2.min.css') }}">
 
     <!-- jQuery (required for DataTables plugin) -->
     <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css"> --}}
+
+    {{-- select 2 --}}
+    <link rel="stylesheet" href=" {{ asset('js/plugins/select2/css/select2.min.css') }}">
+    {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
+
+    {{-- Flat picker --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 </head>
 
 <body>
-
-    <div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-modern main-content-boxed">
-
+    @if (!isset($_COOKIE['mode']) || $_COOKIE['mode'] == 'light')
+        <div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-modern main-content-boxed">
+    @else
+        <div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-modern main-content-boxed sidebar-dark page-header-dark dark-mode">        
+    @endif
+    
         <nav id="sidebar">
             <!-- Sidebar Content -->
             <div class="sidebar-content">
@@ -83,27 +97,27 @@
                     <div class="content-side content-side-user px-0 py-0">
                         <!-- Visible only in mini mode -->
                         <div class="smini-visible-block animated fadeIn px-3">
-                            <img class="img-avatar img-avatar32" src="{{ asset('/media/avatars/asa.jpg') }}" alt="">
+                            <img class="img-avatar img-avatar32" src="{{ asset(auth()->user()->foto) }}" alt="">
                         </div>
                         <!-- END Visible only in mini mode -->
 
                         <!-- Visible only in normal mode -->
                         <div class="smini-hidden text-center mx-auto">
-                            <a class="img-link" href="be_pages_generic_profile.html">
-                                <img class="img-avatar" src="{{ asset('media/avatars/asa.jpg') }}" alt="">
+                            <a class="img-link" href="{{ asset(auth()->user()->foto) }}">
+                                <img class="img-avatar" src="{{ asset(auth()->user()->foto) }}" alt="">
                             </a>
                             <ul class="list-inline mt-3 mb-0">
                                 <li class="list-inline-item">
-                                    <a class="link-fx text-dual fs-sm fw-semibold text-uppercase" href="{{ route('profil') }}">Agus Salim</a>
+                                    <a class="link-fx text-dual fs-sm fw-semibold text-uppercase" href="{{ route('profil') }}">{{auth()->user()->nama}}</a>
                                 </li>
                                 <li class="list-inline-item">
                                     <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                                    <a class="link-fx text-dual" data-toggle="layout" data-action="dark_mode_toggle" href="javascript:void(0)">
+                                    <a class="link-fx text-dual" data-toggle="layout" data-action="dark_mode_toggle" href="javascript:void(0)" onclick="change_mode()">
                                         <i class="fa fa-burn"></i>
                                     </a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="link-fx text-dual" href="{{ route('login') }}">
+                                    <a class="link-fx text-dual" href="{{ route('logout') }}">
                                         <i class="fa fa-sign-out-alt"></i>
                                     </a>
                                 </li>
@@ -173,41 +187,41 @@
                                     <span class="nav-main-link-name">Register Periode</span>
                                 </a>
                             </li>
+                            @if (auth()->user()->role === 'admin')
+                                <li class="nav-main-heading">Overhaul</li>
+                                <li class="nav-main-item">
+                                    <a class="nav-main-link {{ (Route::is('overhaul_list') ? "active" : "") }}" href="{{ route('overhaul_list') }}">
+                                        <i class="nav-main-link-icon fa fa-cash-register"></i>
+                                        <span class="nav-main-link-name">List Mesin</span>
+                                    </a>
+                                </li>
+                                <li class="nav-main-item">
+                                    <a class="nav-main-link {{ (Route::is('overhaul_proses') ? "active" : "") }}" href="{{ route('overhaul_proses') }}">
+                                        <i class="nav-main-link-icon fa fa-dumpster-fire"></i>
+                                        <span class="nav-main-link-name">Proses Overhaul</span>
+                                    </a>
+                                </li>
+                                <li class="nav-main-item">
+                                    <a class="nav-main-link {{ (Route::is('cekqr') ? "active" : "") }}" href="{{ route('cekqr') }}">
+                                        <i class="nav-main-link-icon fa fa-qrcode"></i>
+                                        <span class="nav-main-link-name">Cek QR</span>
+                                    </a>
+                                </li>
 
-                            <li class="nav-main-heading">Overhaul</li>
-                            <li class="nav-main-item">
-                                <a class="nav-main-link {{ (Route::is('overhaul_list') ? "active" : "") }}" href="{{ route('overhaul_list') }}">
-                                    <i class="nav-main-link-icon fa fa-cash-register"></i>
-                                    <span class="nav-main-link-name">List Mesin</span>
-                                </a>
-                            </li>
-                            <li class="nav-main-item">
-                                <a class="nav-main-link {{ (Route::is('overhaul_proses') ? "active" : "") }}" href="{{ route('overhaul_proses') }}">
-                                    <i class="nav-main-link-icon fa fa-dumpster-fire"></i>
-                                    <span class="nav-main-link-name">Proses Overhaul</span>
-                                </a>
-                            </li>
-                            <li class="nav-main-item">
-                                <a class="nav-main-link {{ (Route::is('cekqr') ? "active" : "") }}" href="{{ route('cekqr') }}">
-                                    <i class="nav-main-link-icon fa fa-qrcode"></i>
-                                    <span class="nav-main-link-name">Cek QR</span>
-                                </a>
-                            </li>
-
-                            <li class="nav-main-heading">Kerja Luar</li>
-                            <li class="nav-main-item">
-                                <a class="nav-main-link {{ (Route::is('jadwal_spk') ? "active" : "") }}" href="{{ route('jadwal_spk') }}">
-                                    <i class="nav-main-link-icon fa fa-business-time"></i>
-                                    <span class="nav-main-link-name">Jadwal SPK</span>
-                                </a>
-                            </li>
-                            <li class="nav-main-item">
-                                <a class="nav-main-link {{ (Route::is('machine') ? "active" : "") }}" href="#">
-                                    <i class="nav-main-link-icon fa fa-file-contract"></i>
-                                    <span class="nav-main-link-name">Machine Record</span>
-                                </a>
-                            </li>
-
+                                <li class="nav-main-heading">Kerja Luar</li>
+                                <li class="nav-main-item">
+                                    <a class="nav-main-link {{ (Route::is('jadwal_spk') ? "active" : "") }}" href="{{ route('jadwal_spk') }}">
+                                        <i class="nav-main-link-icon fa fa-business-time"></i>
+                                        <span class="nav-main-link-name">Jadwal SPK</span>
+                                    </a>
+                                </li>
+                                <li class="nav-main-item">
+                                    <a class="nav-main-link {{ (Route::is('machine') ? "active" : "") }}" href="#">
+                                        <i class="nav-main-link-icon fa fa-file-contract"></i>
+                                        <span class="nav-main-link-name">Machine Record</span>
+                                    </a>
+                                </li>
+                            @endif
 
                             <li class="nav-main-heading">Setting</li>
                             <li class="nav-main-item">
@@ -217,7 +231,7 @@
                                 </a>
                             </li>
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="">
+                                <a class="nav-main-link" href="{{ route('logout') }}">
                                     <i class="nav-main-link-icon fa fa-sign-out-alt"></i>
                                     <span class="nav-main-link-name">Logout</span>
                                 </a>
@@ -244,13 +258,6 @@
                         <i class="fa fa-fw fa-bars"></i>
                     </button>
                     <!-- END Toggle Sidebar -->
-
-                    <!-- Open Search Section -->
-                    <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                    <button type="button" class="btn btn-sm btn-alt-secondary" data-toggle="layout" data-action="header_search_on">
-                        <i class="fa fa-fw fa-search"></i>
-                    </button>
-                    <!-- END Open Search Section -->
 
                     <!-- Color Themes -->
                     <div class="dropdown d-inline-block">
@@ -329,11 +336,11 @@
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications">
                             <div class="px-2 py-3 bg-body-light rounded-top">
                                 <h5 class="h6 text-center mb-0">
-                                    Notifications
+                                    Notifikasi
                                 </h5>
                             </div>
-                            <ul class="nav-items my-2 fs-sm">
-                                <li>
+                            <ul class="nav-items my-2 fs-sm" id="notif-list">
+                                {{-- <li>
                                     <a class="text-dark d-flex py-2" href="javascript:void(0)">
                                         <div class="flex-shrink-0 me-2 ms-3">
                                             <i class="fa fa-fw fa-check text-success"></i>
@@ -387,10 +394,10 @@
                                             <div class="text-muted">1 day ago</div>
                                         </div>
                                     </a>
-                                </li>
+                                </li> --}}
                             </ul>
                             <div class="p-2 bg-body-light rounded-bottom">
-                                <a class="dropdown-item text-center mb-0" href="javascript:void(0)">
+                                <a class="dropdown-item text-center mb-0" href="{{ route('notifikasi') }}">
                                     <i class="fa fa-fw fa-flag opacity-50 me-1"></i> View All
                                 </a>
                             </div>
@@ -471,8 +478,50 @@
         <!-- END Page Container -->
 
     </body>
+
+    {{-- Themes Event --}}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script defer>
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('notifikasi.load') }}",
+                success: function (res) {
+                    res.data.forEach(item => {
+                        $('#notif-list').append(`
+                                        <li>
+                                            <a class="text-dark d-flex py-2" href="javascript:void(0)">
+                                                <div class="flex-shrink-0 me-2 ms-3">
+                                                    <i class="fa fa-fw fa-exclamation-triangle text-warning"></i>
+                                                </div>
+                                                <div class="flex-grow-1 pe-2">
+                                                    <p class="fw-medium mb-1">`+item.pesan+` !</p>
+                                                    <div class="text-muted">`+item.waktu+`</div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    `);
+                    });
+                }
+            });    
+        });
+        function change_mode(){
+            if ($.cookie('mode')=='light' || $.cookie('mode')== null ) {
+                $.cookie('mode', 'dark');
+            }else if ($.cookie('mode')=='dark') {
+                $.cookie('mode', 'light');
+            }
+        }
+
+        $('a[data-toggle="theme"]').on('click', function () {
+            var theme = $(this).attr('data-theme');
+            $.cookie('color', theme);
+        });
+    </script>
+    
     <!--
     Codebase JS
+    
 
     Core libraries and functionality
     webpack is putting everything together at assets/_js/main/app.js
@@ -503,8 +552,14 @@
 
     <script src="{{ asset('js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <script src="{{ asset('js/plugins/select2/js/select2.min.js') }}"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
 
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js"></script> --}}
+    {{-- <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script> --}}
+
+    
 </html>
