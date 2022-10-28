@@ -35,8 +35,10 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap">
     
     <link rel="stylesheet" id="css-main" href="{{ asset('css/codebase.min.css') }}">
-    @if ($_COOKIE['color'] != 'text-default')
+    @if (isset($_COOKIE['color']) && $_COOKIE['color'] != 'text-default')
         <link id="css-theme" rel="stylesheet" href="{{$_COOKIE['color']}}">
+    @else
+        {{ $_COOKIE['color'] = 'text-default' }}
     @endif
     <link rel="stylesheet" href=" {{ asset('js/plugins/sweetalert2/sweetalert2.min.css') }}">
 
@@ -55,7 +57,7 @@
 </head>
 
 <body>
-    @if ($_COOKIE['mode'] == 'light')
+    @if (!isset($_COOKIE['mode']) || $_COOKIE['mode'] == 'light')
         <div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-modern main-content-boxed">
     @else
         <div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-modern main-content-boxed sidebar-dark page-header-dark dark-mode">        
@@ -486,7 +488,7 @@
     <script defer>
 
         function change_mode(){
-            if ($.cookie('mode')=='light') {
+            if ($.cookie('mode')=='light' || $.cookie('mode')== null ) {
                 $.cookie('mode', 'dark');
             }else if ($.cookie('mode')=='dark') {
                 $.cookie('mode', 'light');
