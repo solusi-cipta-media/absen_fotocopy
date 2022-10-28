@@ -13,9 +13,7 @@ class AbsensiController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $absensis = Absensi::with(['periode' => function ($q){
-                    $q->orderBy('tanggal', 'DESC');
-                }])
+            $absensis = Absensi::with(['periode'])
                 ->whereRelation('periode', 'tanggal', '>=', Carbon::now()->subDays(30))
                 ->whereRelation('periode', 'tanggal', '<=', Carbon::now())->get();
             // if (isset($dateRange)) {
@@ -103,9 +101,7 @@ class AbsensiController extends Controller
             $date = explode(" to ",$data);
             $from = Carbon::createFromFormat('d-F-Y', $date[0])->format('Y-m-d');
             $to = Carbon::createFromFormat('d-F-Y', $date[1])->format('Y-m-d');
-            $absensis = Absensi::with(['periode' => function ($q){
-                    $q->orderBy('tanggal', 'DESC');
-                }])
+            $absensis = Absensi::with('periode')
                 ->whereRelation('periode', 'tanggal', '>=', $from)
                 ->whereRelation('periode', 'tanggal', '<=', $to)->get();
 
