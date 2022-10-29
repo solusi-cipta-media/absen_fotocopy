@@ -19,15 +19,15 @@ class KontrakController extends Controller
                 return $row->customer->nama;
             })
             ->addColumn('awal', function ($row){
-                $data = Carbon::createFromFormat('Y-m-d', $row->awal)->format('d-M-Y');
+                $data = Carbon::createFromFormat('Y-m-d', $row->awal)->format('d-F-Y');
                 return $data;
             })
             ->addColumn('akhir', function ($row){
-                $data = Carbon::createFromFormat('Y-m-d', $row->akhir)->format('d-M-Y');
+                $data = Carbon::createFromFormat('Y-m-d', $row->akhir)->format('d-F-Y');
                 return $data;
             })
             ->addColumn('reminder', function ($row){
-                $data = Carbon::createFromFormat('Y-m-d', $row->reminder)->format('d-M-Y'); 
+                $data = Carbon::createFromFormat('Y-m-d', $row->reminder)->format('d-F-Y'); 
                 return $data;
             })
             ->addColumn('pdf', function ($row)
