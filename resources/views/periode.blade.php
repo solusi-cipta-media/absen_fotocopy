@@ -20,7 +20,6 @@
             <div class="block-content block-content-full">
                 <!-- DataTables functionality is initialized with .js-dataTable-responsive class in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
                 <table class="table table-bordered table-striped table-vcenter w-100">
-                    <!-- <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons"> -->
                     <thead>
                         <tr>
                             <th class="text-center">#</th>
@@ -32,26 +31,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- <tr>
-                            <td class="text-center">1</td>
-                            <td class="fw-semibold">01-Oct-2022</td>
-                            <td><span class="badge bg-success">Aktif</span></td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-sm btn-danger" onclick=delete_data() data-bs-toggle="tooltip" title="Hapus">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">2</td>
-                            <td class="fw-semibold">02-Oct-2022</td>
-                            <td><span class="badge bg-danger">Libur</span></td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-sm btn-danger" onclick=delete_data() data-bs-toggle="tooltip" title="Hapus">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr> --}}
+                        
                     </tbody>
                 </table>
             </div>
@@ -101,12 +81,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="row-push">
-                        <div class="col-lg-12 col-xl-12">
-                            <button type="submit" class="btn btn-alt-primary"><i class="si si-cloud-upload"></i> Simpan</button>
-                            <button type="button" class="btn btn-alt-danger" id="clear-form"><i class="si si-close"></i> Clear</button>
-                        </div>
-                    </div> -->
+                    
                 </form>
             </div>
         </div>

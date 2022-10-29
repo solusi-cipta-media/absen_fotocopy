@@ -18,7 +18,6 @@ class KaryawanController extends Controller
         //Return Datatable
         if ($request->ajax()) {
             $karyawans = Karyawan::all();
-            //return response()->json(['data' => $karyawans],200);
             return DataTables::of($karyawans)
                 ->addIndexColumn()
                 ->addColumn('foto', function ($row){

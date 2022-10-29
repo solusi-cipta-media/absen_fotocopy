@@ -35,27 +35,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- <tr>
-                            <td class="text-center">1</td>
-                            <td class="fw-semibold">KLN-1</td>
-                            <td>PT. ABC</td>
-                            <td>Jl. Pramuka No. 48 Mangliawan Pakis Malang</td>
-                            <td><span class="badge bg-success">Rental</span></td>
-                            <td>Agus Salim</td>
-                            <td>087654321</td>
-                            <td><button type="button" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Lokasi Map">
-                                    <i class="fa fa-map"></i>
-                                </button>
-                            </td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-sm btn-danger" onclick=delete_data() data-bs-toggle="tooltip" title="Hapus">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit" id="btn-edit">
-                                    <i class="fa fa-edit"></i>
-                                </button>
-                            </td>
-                        </tr> --}}
+                        
                     </tbody>
                 </table>
             </div>

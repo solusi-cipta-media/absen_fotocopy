@@ -13,9 +13,6 @@
                 <h3 class="block-title">
                     Report Absensi Harian
                 </h3>
-                <!-- <button type="button" class="btn btn-outline-primary min-width-125" id="btn-add">
-                    <i class="fa fa-plus mr-5"></i> Register Kontrak
-                </button> -->
             </div>
             <div class="block-content block-content-full">
                 <div class="row">
@@ -49,19 +46,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- <tr>
-                            <td class="text-center">1</td>
-                            <td class="fw-semibold">Agus Salim</td>
-                            <td>12345</td>
-                            <td>05-Nov-2022</td>
-                            <td>08:00</td>
-                            <td>16:00</td>
-                            <td><button type="button" class="btn btn-primary"><i class="fa fa-location-dot"></i> IN</button></td>
-                            <td><button type="button" class="btn btn-danger"><i class="fa fa-location-pin"></i> OUT</button></td>
-                            <td>00:00</td>
-                            <td>00:00</td>
-                            <td>08:00</td>
-                        </tr> --}}
                     </tbody>
                 </table>
             </div>

@@ -33,26 +33,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- <tr>
-                            <td class="text-center">1</td>
-                            <td class="fw-semibold">P001</td>
-                            <td>Agus Salim</td>
-                            <td>Jl. Pramuka No. 48 Mangliawan Pakis Malang</td>
-                            <td>33502345638978</td>
-                            <td>087654321</td>
-                            <td>Laki-Laki</td>
-                            <td>
-                                <img class="img-avatar" src="{{asset('media/avatars/asa.jpg') }}" alt="">
-                            </td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-sm btn-danger" onclick="delete_data()" data-bs-toggle="tooltip" title="Hapus">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit" id="btn-edit">
-                                    <i class="fa fa-edit"></i>
-                                </button>
-                            </td>
-                        </tr> --}}
                     </tbody>
                 </table>
             </div>
@@ -134,12 +114,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="row-push">
-                        <div class="col-lg-12 col-xl-12">
-                            <button type="submit" class="btn btn-alt-primary"><i class="si si-cloud-upload"></i> Simpan</button>
-                            <button type="button" class="btn btn-alt-danger" id="clear-form"><i class="si si-close"></i> Clear</button>
-                        </div>
-                    </div> -->
+                   
                 </form>
             </div>
         </div>
