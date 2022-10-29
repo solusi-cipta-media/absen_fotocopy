@@ -74,8 +74,6 @@
                         <a class="link-fx fw-bold tracking-wide mx-auto" href="{{route('dashboard')}}">
                             <span class="smini-hidden d-flex justify-content-center">
                                 <img src="{{ asset('media/favicons/cms.png') }}" alt="cms" width="80%">
-                                <!-- <i class="fa fa-fire text-primary"></i> -->
-                                <!-- <span class="fs-4 text-dual">code</span><span class="fs-4 text-primary">base</span> -->
                             </span>
                         </a>
                     </div>
@@ -305,18 +303,7 @@
                                 </div>
                             </div>
                             <div class="p-3 bg-body-light rounded-bottom">
-                                <!-- <div class="row g-sm text-center">
-                                    <div class="col-6">
-                                        <a class="dropdown-item fs-sm fw-medium mb-0" href="be_layout_api.html">
-                                            <i class="fa fa-flask opacity-50 me-1"></i> Layout API
-                                        </a>
-                                    </div>
-                                    <div class="col-6">
-                                        <a class="dropdown-item fs-sm fw-medium mb-0" href="be_ui_color_themes.html">
-                                            <i class="fa fa-paint-brush opacity-50 me-1"></i> Themes
-                                        </a>
-                                    </div>
-                                </div> -->
+                                
                             </div>
                         </div>
                     </div>
@@ -340,61 +327,7 @@
                                 </h5>
                             </div>
                             <ul class="nav-items my-2 fs-sm" id="notif-list">
-                                {{-- <li>
-                                    <a class="text-dark d-flex py-2" href="javascript:void(0)">
-                                        <div class="flex-shrink-0 me-2 ms-3">
-                                            <i class="fa fa-fw fa-check text-success"></i>
-                                        </div>
-                                        <div class="flex-grow-1 pe-2">
-                                            <p class="fw-medium mb-1">Kontrak dengan PT. ABC akan segera berakhir pada 20-December-2022!</p>
-                                            <div class="text-muted">15 min ago</div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="text-dark d-flex py-2" href="javascript:void(0)">
-                                        <div class="flex-shrink-0 me-2 ms-3">
-                                            <i class="fa fa-fw fa-exclamation-triangle text-warning"></i>
-                                        </div>
-                                        <div class="flex-grow-1 pe-2">
-                                            <p class="fw-medium mb-1">Kontrak dengan PT. ABC akan segera berakhir pada 20-December-2022!</p>
-                                            <div class="text-muted">50 min ago</div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="text-dark d-flex py-2" href="javascript:void(0)">
-                                        <div class="flex-shrink-0 me-2 ms-3">
-                                            <i class="fa fa-fw fa-times text-danger"></i>
-                                        </div>
-                                        <div class="flex-grow-1 pe-2">
-                                            <p class="fw-medium mb-1">Kontrak dengan PT. ABC akan segera berakhir pada 20-December-2022!</p>
-                                            <div class="text-muted">4 hours ago</div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="text-dark d-flex py-2" href="javascript:void(0)">
-                                        <div class="flex-shrink-0 me-2 ms-3">
-                                            <i class="fa fa-fw fa-exclamation-triangle text-warning"></i>
-                                        </div>
-                                        <div class="flex-grow-1 pe-2">
-                                            <p class="fw-medium mb-1">Kontrak dengan PT. ABC akan segera berakhir pada 20-December-2022!</p>
-                                            <div class="text-muted">16 hours ago</div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="text-dark d-flex py-2" href="javascript:void(0)">
-                                        <div class="flex-shrink-0 me-2 ms-3">
-                                            <i class="fa fa-fw fa-plus text-primary"></i>
-                                        </div>
-                                        <div class="flex-grow-1 pe-2">
-                                            <p class="fw-medium mb-1">Kontrak dengan PT. ABC akan segera berakhir pada 20-December-2022!</p>
-                                            <div class="text-muted">1 day ago</div>
-                                        </div>
-                                    </a>
-                                </li> --}}
+                                
                             </ul>
                             <div class="p-2 bg-body-light rounded-bottom">
                                 <a class="dropdown-item text-center mb-0" href="{{ route('notifikasi') }}">
@@ -506,13 +439,6 @@
         });
     </script>
     
-    <!--
-    Codebase JS
-    
-
-    Core libraries and functionality
-    webpack is putting everything together at assets/_js/main/app.js
--->
     <script src="{{ asset('js/codebase.app.min.js') }}"></script>
 
     <!-- Page JS Plugins -->
@@ -543,8 +469,4 @@
     {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js"></script> --}}
-    {{-- <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script> --}}
 
