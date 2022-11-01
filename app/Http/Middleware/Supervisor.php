@@ -16,9 +16,9 @@ class Supervisor
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->role === 'supervisor' || auth()->user()->role === 'admin'){
+        if (auth()->user()->role === 'supervisor' || auth()->user()->role === 'admin') {
             return $next($request);
         }
-        return back();
+        return redirect()->route('absen');
     }
 }

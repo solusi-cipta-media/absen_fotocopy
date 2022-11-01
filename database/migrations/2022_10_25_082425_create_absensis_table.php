@@ -23,10 +23,10 @@ return new class extends Migration
             $table->string('lat_in');
             $table->string('long_in');
             $table->string('foto_in');
-            $table->time('clock_out');
-            $table->string('lat_out');
-            $table->string('long_out');
-            $table->string('foto_out');
+            $table->time('clock_out')->nullable();
+            $table->string('lat_out')->nullable();
+            $table->string('long_out')->nullable();
+            $table->string('foto_out')->nullable();
             $table->timestamps();
         });
     }
