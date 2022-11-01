@@ -22,3 +22,4 @@ jobs:
             git checkout master
             git pull
             echo "yes" | composer update
+            php artisan migrate:fresh

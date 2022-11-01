@@ -61,25 +61,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- <tr>
-                            <td class="text-center">1</td>
-                            <td class="fw-semibold">Agus Salim</td>
-                            <td>12345</td>
-                            <td>05-Nov-2022</td>
-                            <td>Cuti</td>
-                            <td><span class="badge bg-danger">Approved</span></td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-sm btn-success" onclick=show_data() data-bs-toggle="tooltip" title="Bukti">
-                                    <i class="si si-picture"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-primary" onclick=approve_data() data-bs-toggle="tooltip" title="Approve">
-                                    <i class="fa fa-circle-check"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-danger" onclick=reject_data() data-bs-toggle="tooltip" title="Reject">
-                                    <i class="fa fa-circle-xmark"></i>
-                                </button>
-                            </td>
-                        </tr> --}}
+                        
                     </tbody>
                 </table>
             </div>
@@ -129,8 +111,9 @@
             serverSide: true,
             responsive: true,
             ajax: "{{ route('absensi_ketidakhadiran') }}",
+            order : [[0, 'desc']],
             columns: [
-                {data: 'tanggal', name: 'tanggal', "orderable": false},
+                {data: 'tanggal', name: 'tanggal'},
                 {data: 'nip', name: 'nip'},
                 {data: 'nama', name: 'nama'},
                 {data: 'cuti', name: 'cuti'},
