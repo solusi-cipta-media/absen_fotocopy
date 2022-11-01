@@ -24,3 +24,4 @@ yarn-error.log
 !/public/media/absensi/kehadiran/in/index.html
 /public/media/absensi/kehadiran/out/*
 !/public/media/absensi/kehadiran/out/index.html
+/composer.lock
