@@ -26,35 +26,35 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::get('login', [AuthController::class, 'login_page'])->name('login.form');
+Route::get('absen', function () {
+    return view('absen');
+})->name('absen');
 
-Route::middleware(['auth', 'supervisor'])->group(function ()
-{
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::middleware(['auth', 'supervisor'])->group(function () {
 
     Route::get('/', function () {
         return view('dashboard');
     })->name('dashboard');
 
-    
     Route::get('karyawan', [KaryawanController::class, 'index'])->name('karyawan');
     Route::post('karyawan', [KaryawanController::class, 'store'])->name('karyawan.store');
     Route::get('karyawan/{id}', [KaryawanController::class, 'get'])->name('karyawan.get');
     Route::post('karyawan/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
     Route::delete('karyawan/{id}', [KaryawanController::class, 'destroy'])->name('karyawan.delete');
 
-    Route::get('mesin', [MesinController::class , 'index'])->name('mesin');
-    Route::post('mesin', [MesinController::class , 'store'])->name('mesin.add');
-    Route::post('mesin/{id}', [MesinController::class , 'update'])->name('mesin.update');
-    Route::get('mesin/{id}', [MesinController::class , 'get'])->name('mesin.get');
-    Route::delete('mesin/{id}', [MesinController::class , 'destroy'])->name('mesin.delete');
+    Route::get('mesin', [MesinController::class, 'index'])->name('mesin');
+    Route::post('mesin', [MesinController::class, 'store'])->name('mesin.add');
+    Route::post('mesin/{id}', [MesinController::class, 'update'])->name('mesin.update');
+    Route::get('mesin/{id}', [MesinController::class, 'get'])->name('mesin.get');
+    Route::delete('mesin/{id}', [MesinController::class, 'destroy'])->name('mesin.delete');
 
-    Route::post('customer/select',[CustomerController::class, 'select'])->name('customer.select');
-    Route::get('customer',[CustomerController::class, 'index'])->name('customer');
-    Route::post('customer',[CustomerController::class, 'store'])->name('customer.store');
-    Route::get('customer/code',[CustomerController::class, 'generateCode'])->name('customer.code');
-    Route::get('customer/{id}',[CustomerController::class, 'get'])->name('customer.get');
-    Route::post('customer/{id}',[CustomerController::class, 'update'])->name('customer.update');
-    Route::delete('customer/{id}',[CustomerController::class, 'destroy'])->name('customer.delete');
+    Route::post('customer/select', [CustomerController::class, 'select'])->name('customer.select');
+    Route::get('customer', [CustomerController::class, 'index'])->name('customer');
+    Route::post('customer', [CustomerController::class, 'store'])->name('customer.store');
+    Route::get('customer/code', [CustomerController::class, 'generateCode'])->name('customer.code');
+    Route::get('customer/{id}', [CustomerController::class, 'get'])->name('customer.get');
+    Route::post('customer/{id}', [CustomerController::class, 'update'])->name('customer.update');
+    Route::delete('customer/{id}', [CustomerController::class, 'destroy'])->name('customer.delete');
 
 
     Route::get('kontrak', [KontrakController::class, 'index'])->name('kontrak');
@@ -71,7 +71,7 @@ Route::middleware(['auth', 'supervisor'])->group(function ()
 
     Route::get('absensi', [AbsensiController::class, 'index'])->name('absensi');
     Route::get('absensi/{data}', [AbsensiController::class, 'indexDate'])->name('absensi.dateRange');
-    
+
     Route::get('absensi_ketidakhadiran', [AbsensiKetidakhadiranController::class, 'index'])->name('absensi_ketidakhadiran');
     Route::get('absensi_ketidakhadiran/{data}', [AbsensiKetidakhadiranController::class, 'indexDate'])->name('absensi_ketidakhadiran.dateRange');
     Route::get('absensi_ketidakhadiran/approve/{id}', [AbsensiKetidakhadiranController::class, 'approve'])->name('absensi_ketidakhadiran.approve');
@@ -81,13 +81,8 @@ Route::middleware(['auth', 'supervisor'])->group(function ()
     Route::post('periode', [PeriodeController::class, 'store'])->name('periode.store');
     Route::delete('periode/{id}', [PeriodeController::class, 'destroy'])->name('periode.delete');
 
-    Route::get('profil', [ProfilController::class, 'index'])->name('profil');
-    Route::post('profil/user', [ProfilController::class, 'update_user_profile'])->name('profil.user');
-    Route::post('profil/password', [ProfilController::class, 'update_password'])->name('profil.password');
-    Route::post('profil/info', [ProfilController::class, 'update_informasi_pribadi'])->name('profil.informasi');
-
-    Route::get('notifikasi/load',[NotifikasiController::class, 'load'])->name('notifikasi.load');
-    Route::get('notifikasi',[NotifikasiController::class, 'index'])->name('notifikasi');
+    Route::get('notifikasi/load', [NotifikasiController::class, 'load'])->name('notifikasi.load');
+    Route::get('notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -106,4 +101,19 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('jadwal_spk', function () {
         return view('jadwal_spk');
     })->name('jadwal_spk');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::get('absen', function () {
+        return view('absen');
+    })->name('absen');
+    Route::post('absen/in', [AbsensiController::class, 'clock_in'])->name('absen.in');
+    Route::post('absen/out', [AbsensiController::class, 'clock_out'])->name('absen.out');
+
+    Route::get('profil', [ProfilController::class, 'index'])->name('profil');
+    Route::post('profil/user', [ProfilController::class, 'update_user_profile'])->name('profil.user');
+    Route::post('profil/password', [ProfilController::class, 'update_password'])->name('profil.password');
+    Route::post('profil/info', [ProfilController::class, 'update_informasi_pribadi'])->name('profil.informasi');
 });
