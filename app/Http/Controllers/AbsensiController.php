@@ -40,6 +40,9 @@ class AbsensiController extends Controller
                     return $btn;
                 })
                 ->addColumn('clock_out', function ($row) {
+                    if (!isset($row->clock_out)) {
+                        return $row->clock_out;
+                    }
                     $time = substr($row->clock_out, 0, 5);
                     $btn = '<button class="btn btn-sm btn-light" onclick="open_foto(' . $row->id . ',`out`)">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-camera"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
@@ -53,6 +56,9 @@ class AbsensiController extends Controller
                             </a>';
                 })
                 ->addColumn('lokasi_out', function ($row) {
+                    if (!isset($row->clock_out)) {
+                        return $row->clock_out;
+                    }
                     return '<a href="https://www.google.com/maps/place/' . $row->lat_out . ',' . $row->long_out . '" target="_blank" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Lokasi Map">
                                 <i class="fa fa-map"></i>
                             </a>';
@@ -67,15 +73,9 @@ class AbsensiController extends Controller
                     }
                 })
                 ->addColumn('pulang', function ($row) {
-                    if (strtotime($row->periode->clock_out) > strtotime($row->clock_out)) {
-                        $timeawal = (strtotime($row->periode->clock_out) - strtotime($row->clock_out)) / 60;
-                        $time = date("i:s", $timeawal);
-                        return $time;
-                    } else {
-                        return '-';
+                    if (!isset($row->clock_out)) {
+                        return $row->clock_out;
                     }
-                })
-                ->addColumn('action', function ($row) {
                     if (strtotime($row->periode->clock_out) > strtotime($row->clock_out)) {
                         $timeawal = (strtotime($row->periode->clock_out) - strtotime($row->clock_out)) / 60;
                         $time = date("i:s", $timeawal);
@@ -174,6 +174,12 @@ class AbsensiController extends Controller
 
     public function clock_in(Request $request)
     {
+        $periode = Periode::where('tanggal', Carbon::today()->toDateString())->first();
+
+        if ($periode->status == 'libur') {
+            return response()->json(['message' => 'Tidak dapat melakukan absen di hari libur'], 400);
+        }
+
         $validator = Validator::make($request->all(), [
             'latitude' => 'required',
             'longitude' => 'required',
@@ -184,7 +190,8 @@ class AbsensiController extends Controller
             return response()->json(['errors' => $validator->errors()], 400);
         }
 
-        $periode = Periode::where('tanggal', Carbon::today()->toDateString())->first();
+
+
         $user = auth()->user();
         if (Absensi::where('periode_id', $periode->id)->where('karyawan_id', $user->id)->count() > 0) {
             return response()->json(['message' => 'Anda sudah melakukan absen masuk'], 400);
@@ -214,6 +221,12 @@ class AbsensiController extends Controller
 
     public function clock_out(Request $request)
     {
+        $periode = Periode::where('tanggal', Carbon::today()->toDateString())->first();
+
+        if ($periode->status == 'libur') {
+            return response()->json(['message' => 'Tidak dapat melakukan absen di hari libur'], 400);
+        }
+
         $validator = Validator::make($request->all(), [
             'latitude' => 'required',
             'longitude' => 'required',
@@ -224,7 +237,6 @@ class AbsensiController extends Controller
             return response()->json(['errors' => $validator->errors()], 400);
         }
 
-        $periode = Periode::where('tanggal', Carbon::today()->toDateString())->first();
         $user = auth()->user();
         if (Absensi::where('periode_id', $periode->id)->where('karyawan_id', $user->id)->count() == 0) {
             return response()->json(['message' => 'Anda belum melakukan absen masuk'], 400);
