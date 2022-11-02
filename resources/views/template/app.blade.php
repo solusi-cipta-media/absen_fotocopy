@@ -213,8 +213,8 @@
                             </a>
                         </li>
                         <li class="nav-main-item">
-                            <a class="nav-main-link {{ Route::is('absen') ? 'active' : '' }}"
-                                href="{{ route('absen') }}">
+                            <a class="nav-main-link {{ Route::is('pengajuancuti') ? 'active' : '' }}"
+                                href="{{ route('pengajuancuti') }}">
                                 <i class="nav-main-link-icon fa fa-clock"></i>
                                 <span class="nav-main-link-name">Pengajuan Cuti</span>
                             </a>
