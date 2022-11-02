@@ -31,9 +31,8 @@
                         <div class="col-6 align-item-right">
                             <label for="tipe" class="form-label">Filter Status</label>
                             <select name="tipe" id="tipe" class="form-select">
-                                <option value="masuk">Masuk</option>
-                                <option value="izin">Izin</option>
-                                <option value="alpha">Tanpa Keterangan</option>
+                                <option value="masuk" selected>Masuk</option>
+                                <option value="alpha">Tanpa Keterangan / Alpha</option>
                             </select>
                         </div>
                     </div>
@@ -46,12 +45,11 @@
                                 <th>Tanggal</th>
                                 <th>Nomor Induk Karyawan</th>
                                 <th>Nama</th>
-                                <th>Clock IN</th>
-                                <th>Clock OUT</th>
+                                <th>Clock IN / OUT</th>
+                                <th style="width: 10%;">Lokasi IN/OUT</th>
                                 <th>Terlambat</th>
                                 <th>Pulang Cepat</th>
-                                <th style="width: 10%;">Lokasi IN</th>
-                                <th style="width: 10%;">Lokasi OUT</th>
+                                <th>Total Jam Kerja</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -95,8 +93,8 @@
     <!-- END Main Container -->
 
     <script>
-        var from;
-        var to;
+        var dateRange = null;
+        var tipe = 'masuk';
         $(document).ready(function() {
             $('table').DataTable({
                 serverSide: true,
@@ -118,12 +116,12 @@
                         name: 'nama'
                     },
                     {
-                        data: 'clock_in',
-                        name: 'clock_in'
+                        data: 'clock',
+                        name: 'clock'
                     },
                     {
-                        data: 'clock_out',
-                        name: 'clock_out'
+                        data: 'lokasi',
+                        name: 'lokasi'
                     },
                     {
                         data: 'terlambat',
@@ -134,13 +132,10 @@
                         name: 'pulang'
                     },
                     {
-                        data: 'lokasi_in',
-                        name: 'lokasi_in'
+                        data: 'work',
+                        name: 'work'
                     },
-                    {
-                        data: 'lokasi_out',
-                        name: 'lokasi_out'
-                    }
+
                 ]
             });
 
@@ -150,16 +145,37 @@
                 wrap: true,
                 onChange: function(dates, dateStr) {
                     if (dates.length == 2) {
-                        filter(dateStr);
+                        dateRange = dateStr;
+                        tipe = $('#tipe').val();
+                        filter();
                     }
                 }
             });
+
+            $('#tipe').on('change', function() {
+                tipe = $('#tipe').val();
+                filter();
+            })
         });
 
-        function filter(dateRange) {
+        function filter() {
+            var url;
+            if (tipe === 'masuk') {
+                if (dateRange !== null) {
+                    url = "{{ route('absensi.dateRange', ':data') }}";
+                    url = url.replace(':data', dateRange);
+                } else {
+                    url = "{{ route('absensi') }}";
+                }
+            } else {
+                if (dateRange !== null) {
+                    url = "{{ route('absensi.alpha.dateRange', ':data') }}";
+                    url = url.replace(':data', dateRange);
+                } else {
+                    url = "{{ route('absensi.alpha') }}";
+                }
+            }
             var table = $('table').DataTable();
-            var url = "{{ route('absensi.dateRange', ':data') }}";
-            url = url.replace(':data', dateRange);
             table.ajax.url(url).load();
         }
 

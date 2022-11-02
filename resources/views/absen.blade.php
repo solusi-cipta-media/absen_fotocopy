@@ -191,8 +191,8 @@
                         message = 'Error tidak diketahui';
                     }
                     Swal.fire({
-                        icon: 'error',
-                        title: 'Errors',
+                        icon: 'warning',
+                        title: 'Warning',
                         text: message,
                     });
                 }

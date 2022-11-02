@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Absensi;
+use App\Models\Karyawan;
 use App\Models\Periode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -31,36 +32,40 @@ class AbsensiController extends Controller
                     $data = Carbon::createFromFormat('Y-m-d', $row->periode->tanggal)->format('d-F-Y');
                     return $data;
                 })
-                ->addColumn('clock_in', function ($row) {
+                ->addColumn('clock', function ($row) {
                     $time = substr($row->clock_in, 0, 5);
-                    $btn = '<button class="btn btn-sm btn-light" onclick="open_foto(' . $row->id . ', `in`)">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-camera"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                            </button>' . $time . '
+                    $btn = '<button class="btn btn-sm btn-success" onclick="open_foto(' . $row->id . ', `in`)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+                                    <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                                </svg> 
+                                ' . $time . '
+                            </button>
                             <a id="link_in' . $row->id . '" href="' . asset($row->foto_in) . '" style="display:none;"></a>';
-                    return $btn;
-                })
-                ->addColumn('clock_out', function ($row) {
+
                     if (!isset($row->clock_out)) {
-                        return $row->clock_out;
+                        return $btn;
                     }
                     $time = substr($row->clock_out, 0, 5);
-                    $btn = '<button class="btn btn-sm btn-light" onclick="open_foto(' . $row->id . ',`out`)">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-camera"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                            </button>' . $time . '
+                    $btnout = '<button class="btn btn-sm btn-danger" onclick="open_foto(' . $row->id . ',`out`)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                                </svg>
+                                ' . $time . '
+                            </button>
                             <a id="link_out' . $row->id . '" href="' . asset($row->foto_out) . '" style="display:none;"></a>';
-                    return $btn;
+                    return $btn . $btnout;
                 })
-                ->addColumn('lokasi_in', function ($row) {
-                    return '<a href="https://www.google.com/maps/place/' . $row->lat_in . ',' . $row->long_in . '" target="_blank" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Lokasi Map">
-                                <i class="fa fa-map"></i>
+                ->addColumn('lokasi', function ($row) {
+                    $btn = '<a href="https://www.google.com/maps/place/' . $row->lat_in . ',' . $row->long_in . '" target="_blank" class="btn btn-sm btn-success" data-bs-toggle="tooltip" title="Lokasi Map">
+                                <i class="fa fa-map"></i> IN
                             </a>';
-                })
-                ->addColumn('lokasi_out', function ($row) {
                     if (!isset($row->clock_out)) {
-                        return $row->clock_out;
+                        return $btn;
                     }
-                    return '<a href="https://www.google.com/maps/place/' . $row->lat_out . ',' . $row->long_out . '" target="_blank" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Lokasi Map">
-                                <i class="fa fa-map"></i>
+                    return $btn . '<a href="https://www.google.com/maps/place/' . $row->lat_out . ',' . $row->long_out . '" target="_blank" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Lokasi Map">
+                                <i class="fa fa-map"></i> OUT
                             </a>';
                 })
                 ->addColumn('terlambat', function ($row) {
@@ -74,7 +79,7 @@ class AbsensiController extends Controller
                 })
                 ->addColumn('pulang', function ($row) {
                     if (!isset($row->clock_out)) {
-                        return $row->clock_out;
+                        return ' - ';
                     }
                     if (strtotime($row->periode->clock_out) > strtotime($row->clock_out)) {
                         $timeawal = (strtotime($row->periode->clock_out) - strtotime($row->clock_out)) / 60;
@@ -84,7 +89,16 @@ class AbsensiController extends Controller
                         return '-';
                     }
                 })
-                ->rawColumns(['clock_in', 'clock_out', 'lokasi_in', 'lokasi_out'])
+                ->addColumn('work', function ($row) {
+                    if (isset($row->clock_out)) {
+                        $timeawal = (strtotime($row->clock_out) - strtotime($row->clock_in)) / 60;
+                        $time = date("i:s", $timeawal);
+                        return $time;
+                    } else {
+                        return ' - ';
+                    }
+                })
+                ->rawColumns(['clock', 'lokasi'])
                 ->make(true);
         }
 
@@ -112,30 +126,40 @@ class AbsensiController extends Controller
                     $data = Carbon::createFromFormat('Y-m-d', $row->periode->tanggal)->format('d-F-Y');
                     return $data;
                 })
-                ->addColumn('clock_in', function ($row) {
+                ->addColumn('clock', function ($row) {
                     $time = substr($row->clock_in, 0, 5);
-                    $btn = '<button class="btn btn-sm btn-light" onclick="open_foto(' . $row->id . ', `in`)">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-camera"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                            </button>' . $time . '
+                    $btn = '<button class="btn btn-sm btn-success" onclick="open_foto(' . $row->id . ', `in`)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+                                    <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                                </svg> 
+                                ' . $time . '
+                            </button>
                             <a id="link_in' . $row->id . '" href="' . asset($row->foto_in) . '" style="display:none;"></a>';
-                    return $btn;
-                })
-                ->addColumn('clock_out', function ($row) {
+
+                    if (!isset($row->clock_out)) {
+                        return $btn;
+                    }
                     $time = substr($row->clock_out, 0, 5);
-                    $btn = '<button class="btn btn-sm btn-light" onclick="open_foto(' . $row->id . ',`out`)">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-camera"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                            </button>' . $time . '
+                    $btnout = '<button class="btn btn-sm btn-danger" onclick="open_foto(' . $row->id . ',`out`)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                                </svg>
+                                ' . $time . '
+                            </button>
                             <a id="link_out' . $row->id . '" href="' . asset($row->foto_out) . '" style="display:none;"></a>';
-                    return $btn;
+                    return $btn . $btnout;
                 })
-                ->addColumn('lokasi_in', function ($row) {
-                    return '<a href="https://www.google.com/maps/place/' . $row->lat_in . ',' . $row->long_in . '" target="_blank" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Lokasi Map">
-                                <i class="fa fa-map"></i>
+                ->addColumn('lokasi', function ($row) {
+                    $btn = '<a href="https://www.google.com/maps/place/' . $row->lat_in . ',' . $row->long_in . '" target="_blank" class="btn btn-sm btn-success" data-bs-toggle="tooltip" title="Lokasi Map">
+                                <i class="fa fa-map"></i> IN
                             </a>';
-                })
-                ->addColumn('lokasi_out', function ($row) {
-                    return '<a href="https://www.google.com/maps/place/' . $row->lat_out . ',' . $row->long_out . '" target="_blank" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Lokasi Map">
-                                <i class="fa fa-map"></i>
+                    if (!isset($row->clock_out)) {
+                        return $btn;
+                    }
+                    return $btn . '<a href="https://www.google.com/maps/place/' . $row->lat_out . ',' . $row->long_out . '" target="_blank" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Lokasi Map">
+                                <i class="fa fa-map"></i> OUT
                             </a>';
                 })
                 ->addColumn('terlambat', function ($row) {
@@ -148,6 +172,9 @@ class AbsensiController extends Controller
                     }
                 })
                 ->addColumn('pulang', function ($row) {
+                    if (!isset($row->clock_out)) {
+                        return ' - ';
+                    }
                     if (strtotime($row->periode->clock_out) > strtotime($row->clock_out)) {
                         $timeawal = (strtotime($row->periode->clock_out) - strtotime($row->clock_out)) / 60;
                         $time = date("i:s", $timeawal);
@@ -156,20 +183,18 @@ class AbsensiController extends Controller
                         return '-';
                     }
                 })
-                ->addColumn('action', function ($row) {
-                    if (strtotime($row->periode->clock_out) > strtotime($row->clock_out)) {
-                        $timeawal = (strtotime($row->periode->clock_out) - strtotime($row->clock_out)) / 60;
+                ->addColumn('work', function ($row) {
+                    if (isset($row->clock_out)) {
+                        $timeawal = (strtotime($row->clock_out) - strtotime($row->clock_in)) / 60;
                         $time = date("i:s", $timeawal);
                         return $time;
                     } else {
-                        return '-';
+                        return ' - ';
                     }
                 })
-                ->rawColumns(['clock_in', 'clock_out', 'lokasi_in', 'lokasi_out'])
+                ->rawColumns(['clock', 'lokasi'])
                 ->make(true);
         }
-
-        return view('absensi');
     }
 
     public function clock_in(Request $request)
@@ -264,5 +289,102 @@ class AbsensiController extends Controller
         $absensi->save();
 
         return response()->json(['message' => 'Berhasil melakukan absensi masuk'], 200);
+    }
+
+    public function indexAlpha(Request $request)
+    {
+        $periodes = Periode::where('status', 'aktif')->whereBetween('tanggal', [Carbon::now()->subDays(30), Carbon::now()])->get();
+        $karyawans = Karyawan::all();
+        $data = [];
+        foreach ($periodes as $periode) {
+            foreach ($karyawans as $karyawan) {
+                if (Absensi::where('karyawan_id', $karyawan->id)->where('periode_id', $periode->id)->count() == 0) {
+                    array_push($data, [
+                        'nama' => $karyawan->nama,
+                        'nip' => $karyawan->nip,
+                        'tanggal' => $periode->tanggal,
+                    ]);
+                }
+            }
+        }
+        if ($request->ajax()) {
+            return DataTables::of($data)
+                ->addColumn('nama', function ($row) {
+                    return $row['nama'];
+                })
+                ->addColumn('nip', function ($row) {
+                    return $row['nip'];
+                })
+                ->addColumn('tanggal', function ($row) {
+                    $data = Carbon::createFromFormat('Y-m-d', $row['tanggal'])->format('d-F-Y');
+                    return $data;
+                })
+                ->addColumn('clock', function ($row) {
+                    return '-';
+                })
+                ->addColumn('lokasi', function ($row) {
+                    return '-';
+                })
+                ->addColumn('terlambat', function ($row) {
+                    return '-';
+                })
+                ->addColumn('pulang', function ($row) {
+                    return '-';
+                })
+                ->addColumn('work', function ($row) {
+                    return '-';
+                })
+                ->make(true);
+        }
+    }
+
+    public function indexAlphaDate(Request $request, $date)
+    {
+        $date = explode(" to ", $date);
+        $from = Carbon::createFromFormat('d-F-Y', $date[0])->format('Y-m-d');
+        $to = Carbon::createFromFormat('d-F-Y', $date[1])->format('Y-m-d');
+        $periodes = Periode::where('status', 'aktif')->whereBetween('tanggal', [$from, $to])->get();
+        $karyawans = Karyawan::all();
+        $data = [];
+        foreach ($periodes as $periode) {
+            foreach ($karyawans as $karyawan) {
+                if (Absensi::where('karyawan_id', $karyawan->id)->where('periode_id', $periode->id)->count() == 0) {
+                    array_push($data, [
+                        'nama' => $karyawan->nama,
+                        'nip' => $karyawan->nip,
+                        'tanggal' => $periode->tanggal,
+                    ]);
+                }
+            }
+        }
+        if ($request->ajax()) {
+            return DataTables::of($data)
+                ->addColumn('nama', function ($row) {
+                    return $row['nama'];
+                })
+                ->addColumn('nip', function ($row) {
+                    return $row['nip'];
+                })
+                ->addColumn('tanggal', function ($row) {
+                    $data = Carbon::createFromFormat('Y-m-d', $row['tanggal'])->format('d-F-Y');
+                    return $data;
+                })
+                ->addColumn('clock', function ($row) {
+                    return '-';
+                })
+                ->addColumn('lokasi', function ($row) {
+                    return '-';
+                })
+                ->addColumn('terlambat', function ($row) {
+                    return '-';
+                })
+                ->addColumn('pulang', function ($row) {
+                    return '-';
+                })
+                ->addColumn('work', function ($row) {
+                    return '-';
+                })
+                ->make(true);
+        }
     }
 }

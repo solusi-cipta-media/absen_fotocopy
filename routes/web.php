@@ -67,7 +67,9 @@ Route::middleware(['auth', 'supervisor'])->group(function () {
     Route::delete('cuti/{id}', [CutiController::class, 'destroy'])->name('cuti.delete');
 
     Route::get('absensi', [AbsensiController::class, 'index'])->name('absensi');
+    Route::get('absensi/alpha', [AbsensiController::class, 'indexAlpha'])->name('absensi.alpha');
     Route::get('absensi/{data}', [AbsensiController::class, 'indexDate'])->name('absensi.dateRange');
+    Route::get('absensi/alpha/{data}', [AbsensiController::class, 'indexAlphaDate'])->name('absensi.alpha.dateRange');
 
     Route::get('absensi_ketidakhadiran', [AbsensiKetidakhadiranController::class, 'index'])->name('absensi_ketidakhadiran');
     Route::get('absensi_ketidakhadiran/{data}', [AbsensiKetidakhadiranController::class, 'indexDate'])->name('absensi_ketidakhadiran.dateRange');
