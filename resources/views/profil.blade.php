@@ -21,8 +21,8 @@
                     <h1 class="h3 text-white fw-bold mb-2">{{ auth()->user()->nama }}</h1>
                     @if (auth()->user()->role === 'admin')
                         <h2 class="h5 text-white-75">Administrator</h2>
-                    @elseif (auth()->user()->role === 'supervisor')
-                        <h2 class="h5 text-white-75">Supervisor</h2>
+                    @else
+                        <h2 class="h5 text-white-75">{{ ucfirst(auth()->user()->role) }}</h2>
                     @endif
 
                     <!-- END Personal -->
