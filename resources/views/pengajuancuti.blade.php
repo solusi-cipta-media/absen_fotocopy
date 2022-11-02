@@ -21,8 +21,7 @@
                                 <label for="cuti" class="col-form-label col-xl-2 col-md-6">Jenis Cuti</label>
                                 <div class="col-md-6 col-xl-10">
                                     <select name="cuti" id="cuti" class="form-select" required>
-                                        <option value="sakit">Sakit</option>
-                                        <option value="izin">Izin</option>
+                                        <option value="">Izin/Sakit</option>
                                         @foreach ($cutis as $cuti)
                                             <option value="{{ $cuti->id }}">{{ $cuti->nama }}</option>
                                         @endforeach
@@ -60,7 +59,7 @@
     <!-- END Main Container -->
     <script>
         $("select[name='cuti']").on('change', function() {
-            if ($(this).val() == 'sakit' || $(this).val() == 'izin') {
+            if ($(this).val() === '') {
                 $("div[id='bukti']").show();
             } else {
                 $("div[id='bukti']").hide();
