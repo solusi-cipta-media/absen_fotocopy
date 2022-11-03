@@ -1,10 +1,5 @@
 @extends('template.app')
 @section('content')
-    <style>
-        #body-modal {
-            padding: 1rem;
-        }
-    </style>
     <!-- Main Container -->
     <main id="main-container">
         <!-- Page Content -->
@@ -12,87 +7,66 @@
             <div class="col-md-6 col-xl-12">
                 <a class="block block-rounded block-link-shadow text-center" href="javascript:void(0)">
                     <div class="block-content block-content-full">
-                        <img class="img-avatar" src="{{ asset(auth()->user()->foto) }}" alt="">
+                        <h3 style="margin-bottom: 0px">Pengajuan Cuti</h3>
                     </div>
                     <div class="block-content block-content-full block-content-sm bg-body-light">
-                        <div class="fw-semibold mb-1">{{ auth()->user()->nama }}</div>
-                        <div class="fs-sm text-muted">{{ ucwords(auth()->user()->role) }}</div>
-                        <div class="bg-primary rounded text-light mt-2 p-1">
-                            <span class="fw-bolder" id="time">
-                                00:00
-                            </span>
-                        </div>
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            <div class="row mb-3">
+                                <label for="tanggal" class="col-form-label col-xl-2 col-md-6">Tanggal</label>
+                                <div class="col-md-6 col-xl-10">
+                                    <input type="date" name="tanggal" id="tanggal" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="cuti" class="col-form-label col-xl-2 col-md-6">Jenis Cuti</label>
+                                <div class="col-md-6 col-xl-10">
+                                    <select name="cuti" id="cuti" class="form-select" required>
+                                        <option value="">Izin/Sakit</option>
+                                        @foreach ($cutis as $cuti)
+                                            <option value="{{ $cuti->id }}">{{ $cuti->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3" id="bukti">
+                                <label for="bukti" class="col-form-label col-xl-2 col-md-6">Bukti Foto</label>
+                                <div class="col-md-6 col-xl-10">
+                                    <input type="file" name="bukti" id="bukti" class="form-control"
+                                        accept="image/png, image/jpeg" multiple>
+                                </div>
+                            </div>
                     </div>
                     <div class="block-content">
                         <div class="row items-push text-center">
                             <div class="col">
-                                <button type="button" class="btn btn-success" onclick="open_clock('in')">
-                                    <i class="nav-main-link-icon fa fa-clock"></i>
-                                    In
+                                <button type="submit" class="btn btn-success">
+                                    Submit
                                 </button>
-                                <button type="button" class="btn btn-primary" onclick="open_clock('out')">
-                                    <i class="nav-main-link-icon fa fa-clock"></i>
-                                    Out
+                                <button type="reset" class="btn btn-danger" onclick="open_clock('out')">
+                                    Reset
                                 </button>
                             </div>
                         </div>
+                        </form>
                     </div>
                 </a>
             </div>
 
-            <!-- Normal Modal -->
-            <div class="modal" id="modal_clock" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="block block-rounded shadow-none mb-0">
-                            <div class="block-header block-header-default">
-                                <h3 class="block-title">Foto <span id="type"></span></h3>
-                                <div class="block-options">
-                                    <button type="button" class="btn-block-option" data-bs-dismiss="modal"
-                                        aria-label="Close">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="block-content fs-sm" id="body-modal">
-                                <form action="#" method="post" enctype="multipart/form-data">
-                                    @csrf
-                                    <input type="hidden" readonly name="latitude">
-                                    <input type="hidden" readonly name="longitude">
-                                    <div class="row">
-                                        <div class="col-12" id="camera">
-                                            <div id="my_camera" class="w-100"></div>
-                                            <input type="hidden" readonly name="image" class="image-tag">
-                                        </div>
-                                        <div class="col-12" id="preview">
-                                            <div id="results">Your captured image will appear here...</div>
-                                        </div>
-                                    </div>
-                            </div>
-                            <div class="block-content block-content-full block-content-sm text-end border-top">
-                                <input type=button class="btn btn-sm btn-primary" value="Ambil Foto"
-                                    onClick="take_snapshot()">
-                                <button type="submit" class="btn btn-success">Submit</button>
-                                <button type="reset" class="btn btn-alt-secondary" data-bs-dismiss="modal">
-                                    Close
-                                </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- END Normal Modal -->
             <!-- Dynamic Table Responsive -->
         </div>
         <!-- END Page Content -->
     </main>
     <!-- END Main Container -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.js"
-        integrity="sha512-AQMSn1qO6KN85GOfvH6BWJk46LhlvepblftLHzAv1cdIyTWPBKHX+r+NOXVVw6+XQpeW4LJk/GTmoP48FLvblQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
+        $("select[name='cuti']").on('change', function() {
+            if ($(this).val() === '') {
+                $("div[id='bukti']").show();
+            } else {
+                $("div[id='bukti']").hide();
+            }
+        })
+    </script>
+    {{-- <script>
         var typeClock = 'in';
 
         function live_time() {
@@ -191,12 +165,12 @@
                         message = 'Error tidak diketahui';
                     }
                     Swal.fire({
-                        icon: 'warning',
-                        title: 'Warning',
+                        icon: 'error',
+                        title: 'Errors',
                         text: message,
                     });
                 }
             });
         });
-    </script>
+    </script> --}}
 @endsection

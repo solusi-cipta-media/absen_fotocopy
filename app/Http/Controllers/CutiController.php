@@ -14,15 +14,14 @@ class CutiController extends Controller
             $cuti = Cuti::all();
             return DataTables::of($cuti)
                 ->addIndexColumn()
-                ->addColumn('action', function ($row)
-                {
-                    $btndel = '<button type="button" class="btn btn-sm btn-danger" onclick="delete_data('.$row->id.')" data-bs-toggle="tooltip" title="Hapus">
+                ->addColumn('action', function ($row) {
+                    $btndel = '<button type="button" class="btn btn-sm btn-danger" onclick="delete_data(' . $row->id . ')" data-bs-toggle="tooltip" title="Hapus">
                                     <i class="fa fa-trash"></i>
                                 </button>';
-                    $btnedit = '<button type="button" class="btn btn-sm btn-info" onclick="open_form('.$row->id.')" data-bs-toggle="tooltip" title="Edit">
+                    $btnedit = '<button type="button" class="btn btn-sm btn-info" onclick="open_form(' . $row->id . ')" data-bs-toggle="tooltip" title="Edit">
                                     <i class="fa fa-edit"></i>
                                 </button>';
-                    return $btndel.$btnedit;
+                    return $btndel . $btnedit;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -34,7 +33,7 @@ class CutiController extends Controller
     public function get($id)
     {
         $cuti = Cuti::find($id);
-        return response()->json(['data' => $cuti],200);
+        return response()->json(['data' => $cuti], 200);
     }
 
     public function store(Request $request)
@@ -44,7 +43,7 @@ class CutiController extends Controller
         $cuti->waktu = $request->waktu;
         $cuti->save();
 
-        return response()->json(['message' => 'Data telah ditambahkan'],200);
+        return response()->json(['message' => 'Data telah ditambahkan'], 200);
     }
 
     public function update(Request $request, $id)
@@ -54,14 +53,20 @@ class CutiController extends Controller
         $cuti->waktu = $request->waktu;
         $cuti->save();
 
-        return response()->json(['message' => 'Data telah diupdate'],200);
+        return response()->json(['message' => 'Data telah diupdate'], 200);
     }
 
     public function destroy($id)
     {
         $cuti = Cuti::find($id);
         $cuti->delete();
-        
-        return response()->json(['message' => 'Data telah dihapus'],200);
+
+        return response()->json(['message' => 'Data telah dihapus'], 200);
+    }
+
+    public function pengajuanindex()
+    {
+        $cutis = Cuti::all();
+        return view('pengajuancuti', ['cutis' => $cutis]);
     }
 }
