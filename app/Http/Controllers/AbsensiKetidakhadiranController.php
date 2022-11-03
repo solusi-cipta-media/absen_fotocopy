@@ -13,8 +13,8 @@ class AbsensiKetidakhadiranController extends Controller
     {
         if ($request->ajax()) {
             $ak = AK::with('periode')
-                ->whereRelation('periode', 'tanggal', '>=', Carbon::now()->subDays(30))
-                ->whereRelation('periode', 'tanggal', '<=', Carbon::now())->get();
+                ->whereRelation('periode', 'tanggal', '>=', Carbon::now()->subDays(15))
+                ->whereRelation('periode', 'tanggal', '<=', Carbon::now()->addDays(15))->get();
             return DataTables::of($ak)
                 ->addIndexColumn()
                 ->addColumn('nama', function ($row) {
