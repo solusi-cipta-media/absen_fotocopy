@@ -4,7 +4,11 @@
     <main id="main-container">
         <!-- Page Content -->
         <div class="content">
-            <div class="col-md-6 col-xl-12">
+            <div class=" d-flex justify-content-end mb-3">
+                <button class="btn btn-primary">+ Buat pengajuan</button>
+            </div>
+
+            {{-- <div class="col-md-6 col-xl-12">
                 <a class="block block-rounded block-link-shadow text-center" href="javascript:void(0)">
                     <div class="block-content block-content-full">
                         <h3 style="margin-bottom: 0px">Pengajuan Cuti</h3>
@@ -42,7 +46,7 @@
                                 <button type="submit" class="btn btn-success">
                                     Submit
                                 </button>
-                                <button type="reset" class="btn btn-danger" onclick="open_clock('out')">
+                                <button type="reset" class="btn btn-danger">
                                     Reset
                                 </button>
                             </div>
@@ -50,8 +54,21 @@
                         </form>
                     </div>
                 </a>
-            </div>
+            </div> --}}
 
+            <div class="col-md-6 col-xl-12">
+                <a class="block block-rounded block-link-shadow text-center" href="javascript:void(0)">
+                    <div class="block-content block-content-full block-content-sm bg-body-light">
+                        <div class="row">
+                            <div class="col text-start">
+                                <span class="fs-5 fw-bold">12 Desember 2022</span><br>
+                                Cuti Tahunan
+                                <span class="badge bg-success w-100 d-flex text-end">Approved</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
             <!-- Dynamic Table Responsive -->
         </div>
         <!-- END Page Content -->
