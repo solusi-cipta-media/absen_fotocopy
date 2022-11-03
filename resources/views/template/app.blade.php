@@ -208,14 +208,14 @@
                         <li class="nav-main-item">
                             <a class="nav-main-link {{ Route::is('absen') ? 'active' : '' }}"
                                 href="{{ route('absen') }}">
-                                <i class="nav-main-link-icon fa fa-clock"></i>
+                                <i class="nav-main-link-icon fa fa-calendar-check"></i>
                                 <span class="nav-main-link-name">Absen</span>
                             </a>
                         </li>
                         <li class="nav-main-item">
                             <a class="nav-main-link {{ Route::is('pengajuancuti') ? 'active' : '' }}"
                                 href="{{ route('pengajuancuti') }}">
-                                <i class="nav-main-link-icon fa fa-clock"></i>
+                                <i class="nav-main-link-icon fa fa-calendar-xmark"></i>
                                 <span class="nav-main-link-name">Pengajuan Cuti</span>
                             </a>
                         </li>

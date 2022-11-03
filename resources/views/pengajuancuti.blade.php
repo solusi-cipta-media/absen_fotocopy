@@ -151,7 +151,7 @@
                             </div>
                             <div class="position-absolute top-0 start-0 translate-middle-y">
                                 <span
-                                    class="badge bg-dark">{{ Illuminate\Support\Carbon::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('d F Y') }}</span>
+                                    class="badge bg-secondary">{{ Illuminate\Support\Carbon::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('d F Y') }}</span>
                             </div>
                         </div>
                     </a>
@@ -219,7 +219,7 @@
                                     <span class="badge bg-warning w-100 d-flex text-end">Waiting</span>
                                 </div>
                                 <div class="position-absolute top-0 start-0 translate-middle-y">
-                                    <span class="badge bg-dark">` + res.data.tanggal_pengajuan + `</span>
+                                    <span class="badge bg-secondary">` + res.data.tanggal_pengajuan + `</span>
                                 </div>
                             </div>
                         </a>
