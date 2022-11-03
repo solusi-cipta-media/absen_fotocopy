@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Absensi;
+use App\Models\AbsensiKetidakhadiran;
 use App\Models\Karyawan;
 use App\Models\Periode;
 use Illuminate\Http\Request;
@@ -205,6 +206,10 @@ class AbsensiController extends Controller
             return response()->json(['message' => 'Tidak dapat melakukan absen di hari libur'], 400);
         }
 
+        if (AbsensiKetidakhadiran::where('periode_id', $periode->id)->where('karyawan_id', auth()->user()->id)->where('status', 'approved')->count() > 0) {
+            return response()->json(['message' => 'Tidak dapat melakukan absen. Anda memiliki pengajuan cuti yang sudah disetujui.'], 400);
+        }
+
         $validator = Validator::make($request->all(), [
             'latitude' => 'required',
             'longitude' => 'required',
@@ -214,8 +219,6 @@ class AbsensiController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
-
-
 
         $user = auth()->user();
         if (Absensi::where('periode_id', $periode->id)->where('karyawan_id', $user->id)->count() > 0) {
