@@ -105,7 +105,8 @@
                     <!-- Visible only in normal mode -->
                     <div class="smini-hidden text-center mx-auto">
                         <a class="img-link" href="{{ asset(auth()->user()->foto) }}">
-                            <img class="img-avatar" src="{{ asset(auth()->user()->foto) }}" alt="">
+                            <img class="img-avatar" src="{{ asset(auth()->user()->foto) }}"
+                                onerror="this.src='{{ asset('media/avatars/avatar0.jpg') }}'" alt="">
                         </a>
                         <ul class="list-inline mt-3 mb-0">
                             <li class="list-inline-item">
