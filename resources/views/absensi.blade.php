@@ -142,6 +142,7 @@
             $('.flatpickr').flatpickr({
                 mode: "range",
                 dateFormat: "d-F-Y",
+                maxDate: "today",
                 wrap: true,
                 onChange: function(dates, dateStr) {
                     if (dates.length == 2) {
