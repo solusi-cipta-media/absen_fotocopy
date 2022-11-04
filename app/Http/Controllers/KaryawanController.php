@@ -20,22 +20,21 @@ class KaryawanController extends Controller
             $karyawans = Karyawan::all();
             return DataTables::of($karyawans)
                 ->addIndexColumn()
-                ->addColumn('foto', function ($row){
-                    $img = '<img class="img-avatar" src="'.asset($row->foto).'" alt="'.$row->nama.'">';
+                ->addColumn('foto', function ($row) {
+                    $img = '<img class="img-avatar" src="' . asset($row->foto) . '" alt="' . $row->nama . '" onerror="this.src=`' . asset('media/avatars/avatar0.jpg') . '`">';
                     return $img;
                 })
-                ->addColumn('action', function ($row)
-                {
-                    $btndel = '<button type="button" class="btn btn-sm btn-danger" onclick="delete_data('.$row->id.')" data-bs-toggle="tooltip" title="Hapus">
+                ->addColumn('action', function ($row) {
+                    $btndel = '<button type="button" class="btn btn-sm btn-danger" onclick="delete_data(' . $row->id . ')" data-bs-toggle="tooltip" title="Hapus">
                                     <i class="fa fa-trash"></i>
                                 </button>';
-                    $btnedit = '<button type="button" class="btn btn-sm btn-info" onclick="open_form('.$row->id.')" data-bs-toggle="tooltip" title="Edit">
+                    $btnedit = '<button type="button" class="btn btn-sm btn-info" onclick="open_form(' . $row->id . ')" data-bs-toggle="tooltip" title="Edit">
                                     <i class="fa fa-edit"></i>
                                 </button>';
-                    $btndetail = '<button type="button" class="btn btn-sm btn-outline-info" onclick="detail('.$row->id.')" data-bs-toggle="tooltip" title="Detail">
+                    $btndetail = '<button type="button" class="btn btn-sm btn-outline-info" onclick="detail(' . $row->id . ')" data-bs-toggle="tooltip" title="Detail">
                                     <i class="fa fa-eye"></i>
                                 </button>';
-                    return $btndel.$btnedit.$btndetail;
+                    return $btndel . $btnedit . $btndetail;
                 })
                 ->rawColumns(['foto', 'action'])
                 ->make(true);
@@ -43,7 +42,7 @@ class KaryawanController extends Controller
         return view('karyawan');
     }
 
-    public function store(Request $request) 
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:karyawans,email',
@@ -69,13 +68,13 @@ class KaryawanController extends Controller
         $name = $file->hashName(); // Generate a unique, random name...
         $imageName = $name;
         $img = Image::make($file->path());
-        
+
         // resize image
         $img->fit(400, 400, function ($constraint) {
             $constraint->aspectRatio();
-        })->save('media/karyawan/'.$imageName);
+        })->save('media/karyawan/' . $imageName);
 
-        $karyawan->foto = 'media/karyawan/'.$imageName;
+        $karyawan->foto = 'media/karyawan/' . $imageName;
         $karyawan->email = $request->email;
         $karyawan->password = Hash::make($request->password);
         $karyawan->role = $request->role;
@@ -87,7 +86,7 @@ class KaryawanController extends Controller
         $karyawan->jenis_kelamin = $request->jenis_kelamin;
         $karyawan->save();
 
-        return response()->json(['message' => 'Data telah ditambahkan'],201);
+        return response()->json(['message' => 'Data telah ditambahkan'], 201);
     }
 
     // get data for edit
@@ -102,13 +101,13 @@ class KaryawanController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email|unique:karyawans,email,'.$id,
+            'email' => 'required|email|unique:karyawans,email,' . $id,
             'password' => 'nullable|min:6',
             'role' => 'required',
             'nama' => 'required|min:2',
-            'nip' => 'required|unique:karyawans,nip,'.$id,
+            'nip' => 'required|unique:karyawans,nip,' . $id,
             'alamat' => 'required',
-            'no_ktp' => 'required|unique:karyawans,no_ktp,'.$id,
+            'no_ktp' => 'required|unique:karyawans,no_ktp,' . $id,
             'telepon' => 'required|min:8',
             'jenis_kelamin' => 'required',
             'foto' =>  'nullable|file|mimes:png,jpg|max:2048'
@@ -123,7 +122,7 @@ class KaryawanController extends Controller
 
         // cek foto
         if ($request->file()) {
-            if(File::exists($karyawan->foto)){
+            if (File::exists($karyawan->foto)) {
                 File::delete($karyawan->foto);
             }
 
@@ -131,15 +130,15 @@ class KaryawanController extends Controller
             $name = $file->hashName(); // Generate a unique, random name...
             $imageName = $name;
             $img = Image::make($file->path());
-            
+
             // resize image
             $img->fit(400, 400, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save('media/karyawan/'.$imageName);
+            })->save('media/karyawan/' . $imageName);
 
-            $karyawan->foto = 'media/karyawan/'.$imageName;
+            $karyawan->foto = 'media/karyawan/' . $imageName;
         }
-        
+
         $karyawan->email = $request->email;
         if ($request->password != '') {
             $karyawan->password = Hash::make($request->password);
@@ -153,13 +152,13 @@ class KaryawanController extends Controller
         $karyawan->jenis_kelamin = $request->jenis_kelamin;
         $karyawan->save();
 
-        return response()->json(['message' => 'Data telah diupdate'],200);
+        return response()->json(['message' => 'Data telah diupdate'], 200);
     }
 
     public function destroy($id)
     {
         $karyawan = Karyawan::find($id);
-        if(File::exists($karyawan->foto)){
+        if (File::exists($karyawan->foto)) {
             File::delete($karyawan->foto);
         }
         $karyawan->delete();
