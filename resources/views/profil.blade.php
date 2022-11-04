@@ -5,14 +5,14 @@
     <main id="main-container">
         <!-- Page Content -->
         <!-- User Info -->
-        <div class="bg-image bg-image-bottom" style="background-image: url('{{ asset('media/photos/photo13@2x.jpg') }}');">
+        <div class="bg-image bg-image-bottom">
             <div class="bg-black-75 py-4">
                 <div class="content content-full text-center">
                     <!-- Avatar -->
                     <div class="mb-3">
                         <a class="img-link" href="{{ asset(auth()->user()->foto) }}">
                             <img class="img-avatar img-avatar96 img-avatar-thumb" src="{{ asset(auth()->user()->foto) }}"
-                                alt="">
+                                alt="" onerror="this.src='{{ asset('media/avatars/avatar0.jpg') }}'">
                         </a>
                     </div>
                     <!-- END Avatar -->
@@ -64,7 +64,8 @@
                                 <div class="row mb-4">
                                     <div class="col-md-10 col-xl-6">
                                         <div class="push">
-                                            <img class="img-avatar" src="{{ asset(auth()->user()->foto) }}" alt="">
+                                            <img class="img-avatar" src="{{ asset(auth()->user()->foto) }}" alt=""
+                                                onerror="this.src='{{ asset('media/avatars/avatar0.jpg') }}'">
                                         </div>
                                         <div class="mb-4">
                                             <label class="form-label" for="foto" class="form-label">Pilih foto
