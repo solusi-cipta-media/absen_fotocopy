@@ -12,7 +12,8 @@
             <div class="col-md-6 col-xl-12">
                 <a class="block block-rounded block-link-shadow text-center" href="javascript:void(0)">
                     <div class="block-content block-content-full">
-                        <img class="img-avatar" src="{{ asset(auth()->user()->foto) }}" alt="">
+                        <img class="img-avatar" src="{{ asset(auth()->user()->foto) }}"
+                            onerror="this.src='{{ asset('media/avatars/avatar0.jpg') }}'" alt="">
                     </div>
                     <div class="block-content block-content-full block-content-sm bg-body-light">
                         <div class="fw-semibold mb-1">{{ auth()->user()->nama }}</div>
