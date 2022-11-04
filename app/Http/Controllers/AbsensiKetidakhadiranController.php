@@ -75,8 +75,13 @@ class AbsensiKetidakhadiranController extends Controller
     {
         if ($request->ajax()) {
             $date = explode(" to ", $data);
-            $from = Carbon::createFromFormat('d-F-Y', $date[0])->format('Y-m-d');
-            $to = Carbon::createFromFormat('d-F-Y', $date[1])->format('Y-m-d');
+            if (count($date) > 1) {
+                $from = Carbon::createFromFormat('d-F-Y', $date[0])->format('Y-m-d');
+                $to = Carbon::createFromFormat('d-F-Y', $date[1])->format('Y-m-d');
+            } else {
+                $from = Carbon::createFromFormat('d-F-Y', $date[0])->format('Y-m-d');
+                $to = Carbon::createFromFormat('d-F-Y', $date[0])->format('Y-m-d');
+            }
             $ak = AK::with('periode')
                 ->whereRelation('periode', 'tanggal', '>=', $from)
                 ->whereRelation('periode', 'tanggal', '<=', $to)->get();
