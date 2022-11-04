@@ -11,7 +11,6 @@ use App\Http\Controllers\MesinController;
 use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\PeriodeController;
-use App\Models\AbsensiKetidakhadiran;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -112,6 +111,7 @@ Route::middleware('auth')->group(function () {
     Route::post('absen/out', [AbsensiController::class, 'clock_out'])->name('absen.out');
 
     Route::get('pengajuancuti', [CutiController::class, 'pengajuanindex'])->name('pengajuancuti');
+    Route::post('pengajuancuti', [CutiController::class, 'pengajuanstore'])->name('pengajuancuti.store');
 
     Route::get('profil', [ProfilController::class, 'index'])->name('profil');
     Route::post('profil/user', [ProfilController::class, 'update_user_profile'])->name('profil.user');

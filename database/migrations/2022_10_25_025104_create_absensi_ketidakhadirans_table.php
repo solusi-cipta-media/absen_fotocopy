@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreign('periode_id')->references('id')->on('periodes')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('cuti_id')->nullable();
             $table->foreign('cuti_id')->references('id')->on('cutis')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('bukti');
+            $table->string('bukti')->nullable();
             $table->enum('status', ['waiting', 'approved', 'rejected']);
             $table->timestamps();
         });
