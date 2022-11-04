@@ -150,8 +150,7 @@
                                 @endif
                             </div>
                             <div class="position-absolute top-0 start-0 translate-middle-y">
-                                <span
-                                    class="badge bg-secondary text-dark bg-opacity-25">{{ Illuminate\Support\Carbon::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('d F Y') }}</span>
+                                <span class="badge bg-secondary text-dark bg-opacity-25">{{ Illuminate\Support\Carbon::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('d F Y') }}</span>
                             </div>
                         </div>
                     </a>
