@@ -110,8 +110,13 @@ class AbsensiController extends Controller
     {
         if ($request->ajax()) {
             $date = explode(" to ", $data);
-            $from = Carbon::createFromFormat('d-F-Y', $date[0])->format('Y-m-d');
-            $to = Carbon::createFromFormat('d-F-Y', $date[1])->format('Y-m-d');
+            if (count($date) > 1) {
+                $from = Carbon::createFromFormat('d-F-Y', $date[0])->format('Y-m-d');
+                $to = Carbon::createFromFormat('d-F-Y', $date[1])->format('Y-m-d');
+            } else {
+                $from = Carbon::createFromFormat('d-F-Y', $date[0])->format('Y-m-d');
+                $to = Carbon::createFromFormat('d-F-Y', $date[0])->format('Y-m-d');
+            }
             $absensis = Absensi::with('periode')
                 ->whereRelation('periode', 'tanggal', '>=', $from)
                 ->whereRelation('periode', 'tanggal', '<=', $to)->get();
@@ -301,7 +306,7 @@ class AbsensiController extends Controller
         $data = [];
         foreach ($periodes as $periode) {
             foreach ($karyawans as $karyawan) {
-                if (Absensi::where('karyawan_id', $karyawan->id)->where('periode_id', $periode->id)->count() == 0) {
+                if (Absensi::where('karyawan_id', $karyawan->id)->where('periode_id', $periode->id)->count() == 0 && AbsensiKetidakhadiran::where('karyawan_id', $karyawan->id)->where('periode_id', $periode->id)->where('status', 'approved')->count() == 0) {
                     array_push($data, [
                         'nama' => $karyawan->nama,
                         'nip' => $karyawan->nip,
@@ -344,14 +349,19 @@ class AbsensiController extends Controller
     public function indexAlphaDate(Request $request, $date)
     {
         $date = explode(" to ", $date);
-        $from = Carbon::createFromFormat('d-F-Y', $date[0])->format('Y-m-d');
-        $to = Carbon::createFromFormat('d-F-Y', $date[1])->format('Y-m-d');
+        if (count($date) > 1) {
+            $from = Carbon::createFromFormat('d-F-Y', $date[0])->format('Y-m-d');
+            $to = Carbon::createFromFormat('d-F-Y', $date[1])->format('Y-m-d');
+        } else {
+            $from = Carbon::createFromFormat('d-F-Y', $date[0])->format('Y-m-d');
+            $to = Carbon::createFromFormat('d-F-Y', $date[0])->format('Y-m-d');
+        }
         $periodes = Periode::where('status', 'aktif')->whereBetween('tanggal', [$from, $to])->get();
         $karyawans = Karyawan::all();
         $data = [];
         foreach ($periodes as $periode) {
             foreach ($karyawans as $karyawan) {
-                if (Absensi::where('karyawan_id', $karyawan->id)->where('periode_id', $periode->id)->count() == 0) {
+                if (Absensi::where('karyawan_id', $karyawan->id)->where('periode_id', $periode->id)->count() == 0 && AbsensiKetidakhadiran::where('karyawan_id', $karyawan->id)->where('periode_id', $periode->id)->where('status', 'approved')->count() == 0) {
                     array_push($data, [
                         'nama' => $karyawan->nama,
                         'nip' => $karyawan->nip,
