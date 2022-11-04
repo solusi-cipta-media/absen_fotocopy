@@ -23,3 +23,4 @@ jobs:
             git pull
             echo "yes" | composer update
             php artisan migrate:fresh
+            php artisan db:seed KaryawanSeeder
